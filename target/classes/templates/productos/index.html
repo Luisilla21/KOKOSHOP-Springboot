@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>listado de Productos</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Control de empleados</a>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/productos/index}">Control de Productos</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <h1 class="text-primary">Lista de Prodcutos</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <a th:href="@{productos/nuevo}" class="btn btn-primary btn-sm mb3"> Agregar Producto</a>
+            </div>
+        </div>
+        <br>
+
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Tipo de Prenda</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.producNom}">Nombre</td>
+                    <td th:text="${producto.producPrecio}">Precio</td>
+                    <td th:text="${producto.cantidad}">Cantidad</td>
+                    <td th:text="${producto.tipoPrenda}">Tipo de Prenda</td>
+                    <td>
+                        <a th:href="@{/productos/editar/{id}(id=${producto.idProducto})}"
+                            class="btn btn-info">Editar</a>
+                        <a th:href="@{/productos/{id}(id=${producto.idProducto})}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -34,8 +34,6 @@ public class Empleado {
         
     }
 
-    
-
     public Empleado(Long id, String nombre, Double salario, String horaEntrada, String horaSalida,
             String horasTrabajadas) {
         this.id = id;
@@ -56,82 +54,51 @@ public class Empleado {
        this.horasTrabajadas = horasTrabajadas;
 }
 
-
-
     public Long getId() {
         return id;
     }
-
-
 
     public void setId(Long id) {
         this.id = id;
     }
 
-
-
     public String getNombre() {
         return nombre;
     }
-
-
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-
-
     public Double getSalario() {
         return salario;
     }
-
-
 
     public void setSalario(Double salario) {
         this.salario = salario;
     }
 
-
-
     public String getHoraEntrada() {
         return horaEntrada;
     }
-
-
 
     public void setHoraEntrada(String horaEntrada) {
         this.horaEntrada = horaEntrada;
     }
 
-
-
     public String getHoraSalida() {
         return horaSalida;
     }
-
-
 
     public void setHoraSalida(String horaSalida) {
         this.horaSalida = horaSalida;
     }
 
-
-
     public String getHorasTrabajadas() {
         return horasTrabajadas;
     }
 
-
-
     public void setHorasTrabajadas(String horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
     }
-
-
-
-    
-
-    
-
 }

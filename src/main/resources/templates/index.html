@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <style>
         * {
@@ -113,7 +114,7 @@
 
         .button:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .button:active {
@@ -141,6 +142,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -152,6 +154,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Sistema de Gestión</h1>
@@ -162,10 +165,11 @@
             <a th:href="@{productos}" class="button-wrapper">
                 <button class="button productos">CRUD Productos</button>
             </a>
-            <a th:href="@{clientes}" class="button-wrapper">
+            <a th:href="@{usuarios}" class="button-wrapper">
                 <button class="button clientes">Clientes</button>
             </a>
         </div>
     </div>
 </body>
+
 </html>

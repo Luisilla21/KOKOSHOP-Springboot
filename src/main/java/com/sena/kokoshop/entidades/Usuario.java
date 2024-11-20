@@ -1,22 +1,23 @@
 package com.sena.kokoshop.entidades;
 
+import java.sql.Timestamp;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.sql.Timestamp;
-
-import org.hibernate.annotations.CreationTimestamp;
  
 @Entity
-@Table(name = "Clientes")
-public class Cliente {
+@Table(name = "Usuarios")
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long clienteID;
+    private Long usuarioID;
 
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
@@ -47,13 +48,13 @@ public class Cliente {
     private String historialCompras;
 
     // Constructor sin parámetros
-    public Cliente() {
+    public Usuario() {
     }
 
     // Constructor con todos los parámetros
-    public Cliente(Long clienteID, String nombre, String apellido, String direccion, String ciudad, String estado,
+    public Usuario(Long usuarioID, String nombre, String apellido, String direccion, String ciudad, String estado,
                    String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras) {
-        this.clienteID = clienteID;
+        this.usuarioID = usuarioID;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
@@ -66,7 +67,7 @@ public class Cliente {
     }
 
     // Constructor sin el ID
-    public Cliente(String nombre, String apellido, String direccion, String ciudad, String estado,
+    public Usuario(String nombre, String apellido, String direccion, String ciudad, String estado,
                    String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -81,12 +82,12 @@ public class Cliente {
 
     // Getters y Setters
 
-    public Long getClienteID() {
-        return clienteID;
+    public Long getUsuarioID() {
+        return usuarioID;
     }
 
-    public void setClienteID(Long clienteID) {
-        this.clienteID = clienteID;
+    public void setUsuarioID(Long usuarioID) {
+        this.usuarioID = usuarioID;
     }
 
     public String getNombre() {

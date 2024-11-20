@@ -9,4 +9,3 @@ import com.sena.kokoshop.entidades.Usuario;
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
 
 }
- 

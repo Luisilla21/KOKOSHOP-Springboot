@@ -36,6 +36,10 @@
             <thead class="table-dark">
                 <tr>
                     <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Dirección</th>
+                    <th>Correo Electrónico</th>
+                    <th>Telefono</th>
                     <th>Salario</th>
                     <th>horaEntrada</th>
                     <th>horaSalida</th>
@@ -44,15 +48,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="empleado : ${empleados}">
-                    <td th:text="${empleado.Nombre}">Nombre</td>
-                    <td th:text="${empleado.Salario}">Salario</td>
-                    <td th:text="${empleado.horaEntrada}">horaEntrada</td>
-                    <td th:text="${empleado.horaSalida}">horaSalida</td>
-                    <td th:text="${empleado.horasTrabajadas}">horasTrabajadas</td>
+                <tr th:each="usuariosEmpleado : ${usuariosEmpleados}">
+                    <td th:text="${usuariosEmpleado.usuario.nombre}"></td>
+                    <td th:text="${usuariosEmpleado.usuario.apellido}"></td>
+                    <td th:text="${usuariosEmpleado.usuario.direccion}"></td>
+                    <td th:text="${usuariosEmpleado.usuario.correoElectronico}"></td>
+                    <td th:text="${usuariosEmpleado.usuario.telefono}"></td>
+                    <td th:text="${usuariosEmpleado.empleado.Salario}">Salario</td>
+                    <td th:text="${usuariosEmpleado.empleado.horaEntrada}">horaEntrada</td>
+                    <td th:text="${usuariosEmpleado.empleado.horaSalida}">horaSalida</td>
+                    <td th:text="${usuariosEmpleado.empleado.horasTrabajadas}">horasTrabajadas</td>
                     <td>
-                        <a th:href="@{/empleados/editar/{id}(id=${empleado.id})}" class="btn btn-info">Editar</a>
-                        <a th:href="@{/empleados/{id}(id=${empleado.id})}" class="btn btn-danger">Eliminar</a>
+                        <a th:href="@{/empleados/editar/{id}(id=${usuariosEmpleado.empleado.id})}"
+                            class="btn btn-info">Editar</a>
+                        <a th:href="@{/empleados/{id}(id=${usuariosEmpleado.empleado.id})}"
+                            class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             </tbody>

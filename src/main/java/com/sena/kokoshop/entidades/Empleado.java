@@ -5,69 +5,64 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "empleados")
-public class Empleado { 
+public class Empleado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idEmp;
 
-    @Column(name = "nombre", nullable = false,length = 20)
-    private String nombre;
+    @OneToOne
+    @JoinColumn(name = "idUser") // Foreign Key
+    private Usuario usuario;
 
-    @Column(name = "salario", nullable = false,length = 10)
+    @Column(name = "salario", nullable = false, length = 10)
     private Double salario;
 
-    @Column(name = "horaEntrada", nullable = false,length = 5)
+    @Column(name = "horaEntrada", nullable = false, length = 5)
     private String horaEntrada;
 
-    @Column(name = "horaSalida", nullable = false,length = 5)
+    @Column(name = "horaSalida", nullable = false, length = 5)
     private String horaSalida;
 
-    @Column(name = "horasTrabajadas", nullable = false,length = 10)
+    @Column(name = "horasTrabajadas", nullable = false, length = 10)
     private String horasTrabajadas;
-    
-    public Empleado(){
-        
+
+    public Empleado() {
+
     }
 
-    public Empleado(Long id, String nombre, Double salario, String horaEntrada, String horaSalida,
+    public Empleado(Long idEmp, Usuario usuario, Double salario, String horaEntrada, String horaSalida,
             String horasTrabajadas) {
-        this.id = id;
-        this.nombre = nombre;
+        this.idEmp = idEmp;
+        this.usuario = usuario;
         this.salario = salario;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public Empleado(String nombre, Double salario, String horaEntrada, String horaSalida,
-    String horasTrabajadas) {
+    public Empleado(Usuario usuario, Double salario, String horaEntrada, String horaSalida,
+            String horasTrabajadas) {
 
-       this.nombre = nombre;
-       this.salario = salario;
-       this.horaEntrada = horaEntrada;
-       this.horaSalida = horaSalida;
-       this.horasTrabajadas = horasTrabajadas;
-}
+        this.usuario = usuario;
+        this.salario = salario;
+        this.horaEntrada = horaEntrada;
+        this.horaSalida = horaSalida;
+        this.horasTrabajadas = horasTrabajadas;
+    }
 
     public Long getId() {
-        return id;
+        return idEmp;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setId(Long idEmp) {
+        this.idEmp = idEmp;
     }
 
     public Double getSalario() {
@@ -101,4 +96,31 @@ public class Empleado {
     public void setHorasTrabajadas(String horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Long getUserId() {
+        return usuario.getUsuarioID();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Empleado{");
+        sb.append("idEmp=").append(idEmp);
+        sb.append(", usuario=").append(usuario.getNombre());
+        sb.append(", salario=").append(salario);
+        sb.append(", horaEntrada=").append(horaEntrada);
+        sb.append(", horaSalida=").append(horaSalida);
+        sb.append(", horasTrabajadas=").append(horasTrabajadas);
+        sb.append('}');
+        return sb.toString();
+    }
+
 }

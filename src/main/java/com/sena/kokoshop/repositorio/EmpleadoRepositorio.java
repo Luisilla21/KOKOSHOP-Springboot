@@ -6,8 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.sena.kokoshop.entidades.Empleado;
 
 @Repository
-
-public interface EmpleadoRepositorio extends JpaRepository<Empleado, Long>  {
+public interface EmpleadoRepositorio extends JpaRepository<Empleado, Long> {
 
 }
- 

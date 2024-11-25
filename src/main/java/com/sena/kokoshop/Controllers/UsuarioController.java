@@ -10,29 +10,30 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.interfaz.UsuarioInterfaz;
-  
+
 @Controller
 public class UsuarioController {
- @Autowired
+
+    @Autowired
     private UsuarioInterfaz interfaz;
+
     @GetMapping("/usuarios")
-    public String listarUsuarios(Model modelo){
+    public String listarUsuarios(Model modelo) {
         modelo.addAttribute("usuarios", interfaz.listarTodosLosUsuarios());
         return "usuarios/index"; //retorna al archivo usuarios
     }
 
     @GetMapping("/usuarios/nuevo")
-    public String crearUsuarioFormulario(Model modelo){
+    public String crearUsuarioFormulario(Model modelo) {
         Usuario usuario = new Usuario();
         modelo.addAttribute("usuario", usuario);
         return "usuarios/crear_usuario";
     }
 
     @PostMapping("/usuarios")
-    public String guardarUsuario(@ModelAttribute("usuario")Usuario usuario){
+    public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario) {
         interfaz.guardarUsuario(usuario);
-        return "redirect:/usuario";
-
+        return "redirect:/usuarios";
 
     }
 
@@ -48,9 +49,9 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuarios/{usuarioID}")
-    public String actualizarUsuario(@PathVariable Long usuarioID, @ModelAttribute("usuario") Usuario usuario, Model modelo){
+    public String actualizarUsuario(@PathVariable Long usuarioID, @ModelAttribute("usuario") Usuario usuario, Model modelo) {
         Usuario usuarioExistente = interfaz.obtenerUsuarioporId(usuarioID);
-        if (usuarioExistente != null){
+        if (usuarioExistente != null) {
             usuarioExistente.setUsuarioID(usuarioID); // Aquí puedes ignorarlo si es autogenerado
             usuarioExistente.setNombre(usuario.getNombre());
             usuarioExistente.setApellido(usuario.getApellido());
@@ -68,7 +69,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuarios/{usuarioID}")
-    public String eliminarUsuario(@PathVariable Long usuarioID){
+    public String eliminarUsuario(@PathVariable Long usuarioID) {
         interfaz.eliminarUsuario(usuarioID);
         return "redirect:/usuarios";
     }

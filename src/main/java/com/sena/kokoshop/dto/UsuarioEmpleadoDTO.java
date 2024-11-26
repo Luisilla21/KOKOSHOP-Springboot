@@ -32,4 +32,12 @@ public class UsuarioEmpleadoDTO {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
+
+    public Long getIdUsuario() {
+        return usuario.getUsuarioID();
+    }
+
+    public Long getIdEmpleado() {
+        return empleado.getId();
+    }
 }

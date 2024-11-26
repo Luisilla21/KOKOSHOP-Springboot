@@ -19,37 +19,92 @@ import jakarta.transaction.Transactional;
 public class UsuarioEmpleadoService {
 
     @Autowired
-    private UsuarioRepositorio usuarioRepository;
+    private UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
-    private EmpleadoRepositorio empleadoRepository;
+    private EmpleadoRepositorio empleadoRepositorio;
 
     @Transactional
     public void crearUsuarioYEmpleado(Usuario usuario, Empleado empleado) {
         // Primero se guarda el Usuario
-        Usuario usuarioGuardado = usuarioRepository.save(usuario);
+        Usuario usuarioGuardado = usuarioRepositorio.save(usuario);
 
         // Luego se asigna el Usuario al Empleado y se guarda el Empleado
         empleado.setUsuario(usuarioGuardado);
 
-        empleadoRepository.save(empleado);
+        empleadoRepositorio.save(empleado);
     }
 
     public List<UsuarioEmpleadoDTO> listarTodosLosEmpleados() {
         List<UsuarioEmpleadoDTO> listaDTO = new ArrayList<>();
-
-        List<Empleado> empleados = empleadoRepository.findAll();
+        List<Empleado> empleados = empleadoRepositorio.findAll();
 
         for (Empleado empleado : empleados) {
             Usuario usuario = empleado.getUsuario();
-
             UsuarioEmpleadoDTO dto = new UsuarioEmpleadoDTO(usuario, empleado);
-
             listaDTO.add(dto);
         }
 
         return listaDTO;
     }
 
-    
+    public UsuarioEmpleadoDTO buscUsuarioEmpleadoDTO(long id) {
+
+        Empleado empleado = empleadoRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario usuario = empleado.getUsuario();
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado para el empleado");
+        }
+
+        return new UsuarioEmpleadoDTO(usuario, empleado);
+    }
+
+    public void actualizarUsuarioEmpleado(UsuarioEmpleadoDTO dto) {
+
+        Empleado empleadoExistente = empleadoRepositorio.findById(dto.getIdEmpleado())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Empleado empleado = dto.getEmpleado();
+
+        Usuario usuarioExistente = empleadoExistente.getUsuario();
+        Usuario usuario = dto.getUsuario();
+        if (usuarioExistente == null) {
+            throw new RuntimeException("Usuario no encontrado para el empleado");
+        }
+
+        // Actualizar Usuario
+        usuarioExistente.setNombre(usuario.getNombre());
+        usuarioExistente.setApellido(usuario.getApellido());
+        usuarioExistente.setDireccion(usuario.getDireccion());
+        usuarioExistente.setCiudad(usuario.getCiudad());
+        usuarioExistente.setEstado(usuario.getEstado());
+        usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
+        usuarioExistente.setTelefono(usuario.getTelefono());
+        usuarioExistente.setFechaRegistro(usuario.getFechaRegistro());
+        usuarioExistente.setHistorialCompras(usuario.getHistorialCompras());
+
+        usuarioRepositorio.save(usuarioExistente);
+
+        // Actualizar Empleado
+
+        empleadoExistente.setSalario(empleado.getSalario());
+        empleadoExistente.setHoraEntrada(empleado.getHoraEntrada());
+        empleadoExistente.setHoraSalida(empleado.getHoraSalida());
+        empleadoExistente.setHorasTrabajadas(empleado.getHorasTrabajadas());
+
+        empleadoRepositorio.save(empleadoExistente);
+    }
+
+    public void eliminarUsuarioEmpleado(long idEmp) {
+        Empleado empleado = empleadoRepositorio.findById(idEmp)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Usuario usuario = empleado.getUsuario();
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado para el empleado");
+        }
+
+        empleadoRepositorio.deleteById(empleado.getId());
+        usuarioRepositorio.deleteById(usuario.getUsuarioID());
+    }
 }

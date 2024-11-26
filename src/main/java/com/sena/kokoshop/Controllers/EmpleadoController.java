@@ -26,7 +26,7 @@ public class EmpleadoController {
     @GetMapping("/empleados")
     public String listarEmpleados(Model modelo) {
         modelo.addAttribute("usuariosEmpleados", usuarioEmpleadoService.listarTodosLosEmpleados());
-        return "empleados/index"; //retorna al archivo empleados
+        return "empleados/index"; // retorna al archivo empleados
     }
 
     @GetMapping("/empleados/nuevo")
@@ -48,33 +48,24 @@ public class EmpleadoController {
 
     @GetMapping("/empleados/editar/{id}")
     public String mostrarFormularioDeEditar(@PathVariable Long id, Model modelo) {
-        Empleado empleado = interfaz.obtenerEmpleadoPorId(id);
-        if (empleado == null) {
-            // Redirige o muestra un mensaje de error si el empleado no existe
+        UsuarioEmpleadoDTO uDto = usuarioEmpleadoService.buscUsuarioEmpleadoDTO(id);
+        if (uDto == null) {
             return "redirect:/empleados";
         }
-        modelo.addAttribute("empleado", empleado);
+        modelo.addAttribute("usuarioEmpleado", uDto);
         return "empleados/editar_empleado";
     }
 
-    @PostMapping("/empleados/{id}")
-    public String actualizarEmpleado(@PathVariable Long id, @ModelAttribute("empleado") Empleado empleado, Model modelo) {
-        Empleado empleadoExistente = interfaz.obtenerEmpleadoPorId(id);
-        if (empleadoExistente != null) {
-            empleadoExistente.setId(id);
-            empleadoExistente.setSalario(empleado.getSalario());
-            empleadoExistente.setHoraEntrada(empleado.getHoraEntrada());
-            empleadoExistente.setHoraSalida(empleado.getHoraSalida());
-            empleadoExistente.setHorasTrabajadas(empleado.getHorasTrabajadas());
-            interfaz.actualizarEmpleado(empleadoExistente);
-        }
+    @PostMapping("/empleados/actualizar")
+    public String actualizarEmpleado(@ModelAttribute("usuarioEmpleado") UsuarioEmpleadoDTO uDto) {
+        usuarioEmpleadoService.actualizarUsuarioEmpleado(uDto);
         return "redirect:/empleados";
 
     }
 
     @GetMapping("/empleados/{id}")
     public String eliminarEmpleado(@PathVariable Long id) {
-        interfaz.eliminarEmpleado(id);
+        usuarioEmpleadoService.eliminarUsuarioEmpleado(id);
         return "redirect:/empleados";
     }
 

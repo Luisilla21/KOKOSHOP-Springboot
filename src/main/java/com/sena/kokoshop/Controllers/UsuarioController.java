@@ -20,7 +20,7 @@ public class UsuarioController {
     @GetMapping("/usuarios")
     public String listarUsuarios(Model modelo) {
         modelo.addAttribute("usuarios", interfaz.listarTodosLosUsuarios());
-        return "usuarios/index"; //retorna al archivo usuarios
+        return "usuarios/index"; // retorna al archivo usuarios
     }
 
     @GetMapping("/usuarios/nuevo")
@@ -49,10 +49,10 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuarios/{usuarioID}")
-    public String actualizarUsuario(@PathVariable Long usuarioID, @ModelAttribute("usuario") Usuario usuario, Model modelo) {
+    public String actualizarUsuario(@PathVariable Long usuarioID, @ModelAttribute("usuario") Usuario usuario,
+            Model modelo) {
         Usuario usuarioExistente = interfaz.obtenerUsuarioporId(usuarioID);
         if (usuarioExistente != null) {
-            usuarioExistente.setUsuarioID(usuarioID); // Aquí puedes ignorarlo si es autogenerado
             usuarioExistente.setNombre(usuario.getNombre());
             usuarioExistente.setApellido(usuario.getApellido());
             usuarioExistente.setDireccion(usuario.getDireccion());

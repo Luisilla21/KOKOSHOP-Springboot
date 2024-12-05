@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/empleados}">Control de empleados</a>
+                    <a class="nav-link" th:href="@{/empleados/}">Control de empleados</a>
                 </li>
             </ul>
         </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             <div class="col-lg-3">
-                <a th:href="@{empleados/nuevo}" class="btn btn-primary btn-sm mb3"> Agregar empleado</a>
+                <a th:href="@{/empleados/nuevo}" class="btn btn-primary btn-sm mb3"> Agregar empleado</a>
             </div>
         </div>
         <br>
@@ -52,7 +52,7 @@
             </thead>
             <tbody>
                 <tr th:each="usuariosEmpleado : ${usuariosEmpleados}">
-                    <td th:text="${usuariosEmpleado.usuario.id}"></td>
+                    <td th:text="${usuariosEmpleado.usuario.usuarioID}"></td>
                     <td th:text="${usuariosEmpleado.usuario.nombre}"></td>
                     <td th:text="${usuariosEmpleado.usuario.apellido}"></td>
                     <td th:text="${usuariosEmpleado.usuario.tipoDocumento}">Tipo de Documento</td>

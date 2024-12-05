@@ -19,7 +19,7 @@ public class EmpleadoController {
     @Autowired
     private UsuarioEmpleadoService usuarioEmpleadoService;
 
-    @GetMapping("/empleados")
+    @GetMapping("/empleados/")
     public String listarEmpleados(Model modelo) {
         modelo.addAttribute("usuariosEmpleados", usuarioEmpleadoService.listarTodosLosEmpleados());
         return "empleados/index"; // retorna al archivo empleados
@@ -39,14 +39,14 @@ public class EmpleadoController {
         Empleado empleado = dto.getEmpleado();
 
         usuarioEmpleadoService.crearUsuarioYEmpleado(usuario, empleado); // Lógica de servicio
-        return "redirect:/empleados";
+        return "redirect:/empleados/";
     }
 
     @GetMapping("/empleados/editar/{id}")
     public String mostrarFormularioDeEditar(@PathVariable Long id, Model modelo) {
         UsuarioEmpleadoDTO uDto = usuarioEmpleadoService.buscUsuarioEmpleadoDTO(id);
         if (uDto == null) {
-            return "redirect:/empleados";
+            return "redirect:/empleados/";
         }
         modelo.addAttribute("usuarioEmpleado", uDto);
         return "empleados/editar_empleado";
@@ -55,16 +55,16 @@ public class EmpleadoController {
     @PostMapping("/empleados/actualizar/{id}")
     public String actualizarEmpleado(@PathVariable Long id,
             @ModelAttribute("usuarioEmpleado") UsuarioEmpleadoDTO uDto) {
-            
+
         usuarioEmpleadoService.actualizarUsuarioEmpleado(uDto);
-        return "redirect:/empleados";
+        return "redirect:/empleados/";
 
     }
 
     @GetMapping("/empleados/{id}")
     public String eliminarEmpleado(@PathVariable Long id) {
         usuarioEmpleadoService.eliminarUsuarioEmpleado(id);
-        return "redirect:/empleados";
+        return "redirect:/empleados/";
     }
 
 }

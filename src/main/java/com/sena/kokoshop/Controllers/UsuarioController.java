@@ -33,7 +33,7 @@ public class UsuarioController {
     @PostMapping("/usuarios/")
     public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario) {
         interfaz.guardarUsuario(usuario);
-        return "redirect:/usuarios";
+        return "redirect:/usuarios/";
 
     }
 
@@ -71,7 +71,7 @@ public class UsuarioController {
     @GetMapping("/usuarios/{usuarioID}")
     public String eliminarUsuario(@PathVariable Long usuarioID) {
         interfaz.eliminarUsuario(usuarioID);
-        return "redirect:/usuarios";
+        return "redirect:/usuarios/";
     }
 
 }

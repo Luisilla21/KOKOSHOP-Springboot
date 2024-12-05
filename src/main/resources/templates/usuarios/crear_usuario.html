@@ -27,7 +27,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
                 <h1 class="text-center">Registro de usuarios</h1>
                 <div class="card-body">
-                    <form th:action="@{/usuarios}" th:object="${usuario}" method="POST">
+                    <form th:action="@{/usuarios/}" th:object="${usuario}" method="POST">
                         <div class="form-group">
                             <label>Nombre:</label>
                             <input type="text" name="nombre" th:field="*{nombre}" class="form-control"

@@ -1,9 +1,5 @@
 package com.sena.kokoshop.entidades;
 
-import java.sql.Timestamp;
-
-import org.hibernate.annotations.CreationTimestamp;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,11 +23,12 @@ public class Usuario {
     @Column(name = "apellido", nullable = true, length = 100)
     private String apellido;
 
-    @Column(name = "numeroDocumento", nullable = true, unique = true, length = 10)
-    private String numeroDocumento;
-
     @Column(name = "tipoDocumento", nullable = true, length = 30)
     private String tipoDocumento;
+
+    
+    @Column(name = "numeroDocumento", nullable = true, unique = true, length = 10)
+    private String numeroDocumento;
 
     @Column(name = "direccion", nullable = true, length = 255)
     private String direccion;
@@ -45,12 +42,8 @@ public class Usuario {
     @Column(name = "correoElectronico", nullable = false, unique = true, length = 150)
     private String correoElectronico;
 
-    @Column(name = "telefono", nullable = true, length = 20)
+    @Column(name = "telefono", nullable = true, length = 10)
     private String telefono;
-
-    @Column(name = "fechaRegistro", nullable = true, updatable = false)
-    @CreationTimestamp
-    private Timestamp fechaRegistro;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Empleado empleado;
@@ -62,7 +55,7 @@ public class Usuario {
     // Constructor con todos los parámetros
     public Usuario(Long id, String nombre, String apellido, String numeroDocumento, String tipoDocumento,
             String direccion, String ciudad, String estado,
-            String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras,
+            String correoElectronico, String telefono, String historialCompras,
             Empleado empleado) {
         this.id = id;
         this.nombre = nombre;
@@ -74,14 +67,13 @@ public class Usuario {
         this.estado = estado;
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
-        this.fechaRegistro = fechaRegistro;
         this.empleado = empleado;
     }
 
     // Constructor sin el ID
     public Usuario(String nombre, String apellido, String numeroDocumento, String tipoDocumento, String direccion,
             String ciudad, String estado,
-            String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras,
+            String correoElectronico, String telefono, String historialCompras,
             Empleado empleado) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -92,12 +84,11 @@ public class Usuario {
         this.estado = estado;
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
-        this.fechaRegistro = fechaRegistro;
         this.empleado = empleado;
     }
 
     // Getters y Setters
-    public Long getUsuarioID() {
+    public long getUsuarioID() {
         return id;
     }
 
@@ -177,14 +168,6 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public Timestamp getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(Timestamp fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
-
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -205,7 +188,6 @@ public class Usuario {
         sb.append(", estado=").append(estado);
         sb.append(", correoElectronico=").append(correoElectronico);
         sb.append(", telefono=").append(telefono);
-        sb.append(", fechaRegistro=").append(fechaRegistro);
         sb.append(", empleado=").append(empleado.getSalario());
         sb.append('}');
         return sb.toString();

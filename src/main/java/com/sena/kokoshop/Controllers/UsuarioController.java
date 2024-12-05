@@ -17,10 +17,10 @@ public class UsuarioController {
     @Autowired
     private UsuarioInterfaz interfaz;
 
-    @GetMapping("/usuarios")
+    @GetMapping("/usuarios/")
     public String listarUsuarios(Model modelo) {
         modelo.addAttribute("usuarios", interfaz.listarTodosLosUsuarios());
-        return "usuarios/index"; // retorna al archivo usuarios
+        return "/usuarios/index"; // retorna al archivo usuarios
     }
 
     @GetMapping("/usuarios/nuevo")
@@ -30,7 +30,7 @@ public class UsuarioController {
         return "usuarios/crear_usuario";
     }
 
-    @PostMapping("/usuarios")
+    @PostMapping("/usuarios/")
     public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario) {
         interfaz.guardarUsuario(usuario);
         return "redirect:/usuarios";
@@ -62,10 +62,9 @@ public class UsuarioController {
             usuarioExistente.setEstado(usuario.getEstado());
             usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
             usuarioExistente.setTelefono(usuario.getTelefono());
-            usuarioExistente.setFechaRegistro(usuario.getFechaRegistro());
             interfaz.actualizarUsuario(usuarioExistente);
         }
-        return "redirect:/usuarios";
+        return "redirect:/usuarios/";
 
     }
 

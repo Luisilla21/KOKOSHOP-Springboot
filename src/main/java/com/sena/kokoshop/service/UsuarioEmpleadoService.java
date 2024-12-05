@@ -80,8 +80,6 @@ public class UsuarioEmpleadoService {
         usuarioExistente.setEstado(usuario.getEstado());
         usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
         usuarioExistente.setTelefono(usuario.getTelefono());
-        usuarioExistente.setFechaRegistro(usuario.getFechaRegistro());
-
         usuarioRepositorio.save(usuarioExistente);
 
         // Actualizar Empleado

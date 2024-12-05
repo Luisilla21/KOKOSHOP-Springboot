@@ -4,13 +4,13 @@ import java.sql.Timestamp;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
-
 import jakarta.persistence.Table;
 
 @Entity
@@ -49,7 +49,7 @@ public class Usuario {
     @Column(name = "historialCompras", columnDefinition = "TEXT")
     private String historialCompras;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Empleado empleado;
 
     // Constructor sin parámetros
@@ -58,7 +58,8 @@ public class Usuario {
 
     // Constructor con todos los parámetros
     public Usuario(Long id, String nombre, String apellido, String direccion, String ciudad, String estado,
-            String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras, Empleado empleado) {
+            String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras,
+            Empleado empleado) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -74,7 +75,8 @@ public class Usuario {
 
     // Constructor sin el ID
     public Usuario(String nombre, String apellido, String direccion, String ciudad, String estado,
-            String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras, Empleado empleado) {
+            String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras,
+            Empleado empleado) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;

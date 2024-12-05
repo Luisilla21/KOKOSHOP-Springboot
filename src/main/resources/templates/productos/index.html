@@ -37,21 +37,24 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Precio</th>
-                    <th>Cantidad</th>
+                    <th>Cantidad total</th>
                     <th>Tipo de Prenda</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="producto : ${productos}">
-                    <td th:text="${producto.producNom}">Nombre</td>
-                    <td th:text="${producto.producPrecio}">Precio</td>
-                    <td th:text="${producto.cantidad}">Cantidad</td>
-                    <td th:text="${producto.tipoPrenda}">Tipo de Prenda</td>
+                <tr th:each="productoTallas : ${productosTallas}">
+                    <td th:text="${productoTallas.producto.producNom}">Nombre</td>
+
+                    <td th:text="${productoTallas.producto.producPrecio}">Precio</td>
+                    <td th:text="${productoTallas.cantidadTotal}"></td>
+                    <td th:text="${productoTallas.producto.tipoPrenda}">Tipo de Prenda</td>
                     <td>
-                        <a th:href="@{/productos/editar/{id}(id=${producto.idProducto})}"
+
+                        <a th:href="@{/productos/editar/{id}(id=${productoTallas.producto.idProducto})}"
                             class="btn btn-info">Editar</a>
-                        <a th:href="@{/productos/{id}(id=${producto.idProducto})}" class="btn btn-danger">Eliminar</a>
+                        <a th:href="@{/productos/{id}(id=${productoTallas.producto.idProducto})}"
+                            class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             </tbody>

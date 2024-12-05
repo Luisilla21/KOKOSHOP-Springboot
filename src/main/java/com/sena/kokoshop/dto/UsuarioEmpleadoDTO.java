@@ -16,6 +16,8 @@ public class UsuarioEmpleadoDTO {
         this.empleado = empleado;
     }
 
+
+
     // Getters y Setters
     public Usuario getUsuario() {
         return usuario;

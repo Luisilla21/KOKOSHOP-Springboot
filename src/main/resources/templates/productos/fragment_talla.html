@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div th:fragment="nueva-talla" class="tallas-row">
+        <h3>Nuevo Producto</h3>
+        <br>
+        <div class="form-group">
+            <label>Talla:</label>
+            <input type="text" name="cantidad" th:field="*{tallas[0].talla}" class="form-control"
+                placeholder="Digite la cantidad del producto:" required>
+        </div>
+        <br>
+        <div class="form-group">
+            <label>Cantidad:</label>
+            <input type="text" name="cantidad" th:field="*{tallas[0].cantidad}" class="form-control"
+                placeholder="Digite la cantidad del producto:" required>
+        </div>
+        <hr>
+    </div>
+</body>
+
+</html>

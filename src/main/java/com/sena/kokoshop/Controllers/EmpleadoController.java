@@ -20,9 +20,6 @@ public class EmpleadoController {
     @Autowired
     private UsuarioEmpleadoService usuarioEmpleadoService;
 
-    @Autowired
-    private EmpleadoInterfaz interfaz;
-
     @GetMapping("/empleados")
     public String listarEmpleados(Model modelo) {
         modelo.addAttribute("usuariosEmpleados", usuarioEmpleadoService.listarTodosLosEmpleados());
@@ -57,7 +54,9 @@ public class EmpleadoController {
     }
 
     @PostMapping("/empleados/actualizar")
-    public String actualizarEmpleado(@ModelAttribute("usuarioEmpleado") UsuarioEmpleadoDTO uDto) {
+    public String actualizarEmpleado(@PathVariable Long id,
+            @ModelAttribute("usuarioEmpleado") UsuarioEmpleadoDTO uDto) {
+            
         usuarioEmpleadoService.actualizarUsuarioEmpleado(uDto);
         return "redirect:/empleados";
 

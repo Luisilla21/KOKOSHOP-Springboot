@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explora Kokoshop: la tienda online para encontrar las mejores prendas de moda. ¡Novedades, personalización y beneficios exclusivos!">
+    <meta name="keywords" content="moda femenina, tienda online, ropa personalizada, estilo único, Kokoshop">
+    <meta name="cache-control" content="no-cache">
+    <title>KOKOSHOP | Tu Estilo Único</title>
+    <link rel="icon" href="images/KSLogo-transformed.jpeg" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilo general */
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background-color: #000000;
+            color: #f5ccd4;
+        }
+
+        /* Catálogo */
+        .catalogo {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .catalogo h1 {
+            font-family: "Lilita One", sans-serif;
+            font-size: 2.5rem;
+            color: #f5ccd4;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .catalogo h1::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #f5ccd4;
+            margin: 10px auto 0;
+        }
+
+        /* Productos */
+        .productos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .producto {
+            max-width: 22%;
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .producto:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .img-producto {
+            width: 100%;
+            height: 80%;
+            object-fit: cover;
+        }
+
+        .text-product {
+            padding: 15px;
+            text-align: left;
+        }
+
+        .nom-producto {
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: #f5ccd4;
+            transition: color 0.3s ease;
+        }
+
+        .nom-producto:hover {
+            color: #b8a4c9;
+        }
+
+        .precio {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff86c4;
+    text-align: right; /* Alinea el texto hacia la derecha */
+    margin-top: 10px;
+    display: block; /* Asegura que el precio sea un bloque independiente */
+}
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .producto {
+                max-width: 45%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .producto {
+                max-width: 100%;
+            }
+
+            .catalogo h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="catalogo">
+        <h1>Catálogo</h1>
+        <div class="productos">
+            <!-- Producto 1 -->
+            <div class="producto">
+                <a href="producto_falda.html">
+                    <img src="imagenes/faldacuero.jpg" alt="Falda de Cuero" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_falda.html">Falda de Cuero</a>
+                    <span class="precio">$ 50,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="producto">
+                <a href="vistaProductos.html">
+                    <img src="imagenes/chaquetaCuero.png" alt="Chaqueta de Cuero" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_chaqueta_cuero.html">Chaqueta de Cuero</a>
+                    <span class="precio">$ 70,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="producto">
+                <a href="producto_jean.html">
+                    <img src="imagenes/pantalon mezclilla.png" alt="Pantalón de Mezclilla" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_jean.html">Pantalón de Mezclilla</a>
+                    <span class="precio">$ 55,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 4 -->
+            <div class="producto">
+                <a href="producto_airforce.html">
+                    <img src="imagenes/af1.webp" alt="Air Force One" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_airforce.html">Air Force One</a>
+                    <span class="precio">$ 100,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 5 -->
+            <div class="producto">
+                <a href="producto_faldaCargoPana.html">
+                    <img src="imagenes/faldaCargoPana.png" alt="falda Cargo Pana" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_faldaCargoPana.html">falda Cargo Pana</a>
+                    <span class="precio">$ 75,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 6 -->
+            <div class="producto">
+                <a href="producto_faldaGloboCorazon.html">
+                    <img src="imagenes/faldaGloboCorazon.png" alt="falda globo con detalle de corazon" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_faldaGloboCorazon.html">falda globo y blusa con detalle de corazon</a>
+                    <span class="precio">$ 70,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 7 -->
+            <div class="producto">
+                <a href="producto_vestidoBengalina.html">
+                    <img src="imagenes/vestidoBengalina.png" alt="Vestido Bengalina" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_vestidoBengalina.html">vestido Bengalina</a>
+                    <span class="precio">$ 40,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 8 -->
+            <div class="producto">
+                <a href="producto_leguinsTipoCuero.html">
+                    <img src="imagenes/leguinsTipoCuero.png" alt="leguins Tipo Cuero" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_leguinsTipoCuero.html">leguins Tipo Cuero</a>
+                    <span class="precio">$ 80,000</span>
+                </div>
+            </div>
+        
+
+       
+            <!-- Producto 9 -->
+            <div class="producto">
+                <a href="producto_faldaCueroPitillo.html">
+                    <img src="imagenes/faldaCueroPitillo.png" alt="falda Cuerpo tipo Pitillo" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_faldaCueroPitillo.html">falda de cuero tipo pitillo</a>
+                    <span class="precio">$ 68,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 10 -->
+            <div class="producto">
+                <a href="producto_chalecoDeViena.html">
+                    <img src="imagenes/chalecoDeViena.png" alt="chaleco De Viena" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_chalecoDeViena.html">Chaleco de Viena</a>
+                    <span class="precio">$ 65,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 11 -->
+            <div class="producto">
+                <a href="producto_blusaCorazon.html">
+                    <img src="imagenes/BlusaCorazon.png" alt="Blusa Corazon" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_blusaCorazon.html">Blusa con detalle de corazon</a>
+                    <span class="precio">$ 40,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 12 -->
+            <div class="producto">
+                <a href="producto_shortCuero.html">
+                    <img src="imagenes/shortCuero.png" alt="short Cuero" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_shortCuero.html">Short tipo cuero</a>
+                    <span class="precio">$ 50,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 13 -->
+            <div class="producto">
+                <a href="producto_AdidasSamba.html">
+                    <img src="imagenes/adidaSamba.png" alt="Adisas Samba" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_AdidasSamba.html">Adidas Samba</a>
+                    <span class="precio">$ 100,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 14 -->
+            <div class="producto">
+                <a href="producto_pantalonCampana.html">
+                    <img src="imagenes/pantalonCampana.png" alt="Pantalon Campana" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_pantalonCampana.html">Pantalon tipo Campana</a>
+                    <span class="precio">$ 80,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 15 -->
+            <div class="producto">
+                <a href="producto_nikeJordan.html">
+                    <img src="imagenes/nikeJordan.png" alt="Nike Jordan" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_nikeJordan.html">Nike Jordan</a>
+                    <span class="precio">$ 120,000</span>
+                </div>
+            </div>
+
+            <!-- Producto 16 -->
+            <div class="producto">
+                <a href="producto_vestidoPlizado.html">
+                    <img src="imagenes/vestidoPlizado.png" alt="vestido Plizado" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <a class="nom-producto" href="producto_vestidoPlizado.html">Vestido de plizado</a>
+                    <span class="precio">$ 55,000</span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</body>
+</html>

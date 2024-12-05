@@ -37,6 +37,8 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
+                    <th>Tipo de Documento</th>
+                    <th>Número de Documento</th>
                     <th>Dirección</th>
                     <th>Correo Electrónico</th>
                     <th>Telefono</th>
@@ -51,6 +53,8 @@
                 <tr th:each="usuariosEmpleado : ${usuariosEmpleados}">
                     <td th:text="${usuariosEmpleado.usuario.nombre}"></td>
                     <td th:text="${usuariosEmpleado.usuario.apellido}"></td>
+                    <td th:text="${usuariosEmpleado.usuario.tipoDocumento}">Tipo de Documento</td>
+                    <td th:text="${usuariosEmpleado.usuario.numeroDocumento}">Número de Documento</td>
                     <td th:text="${usuariosEmpleado.usuario.direccion}"></td>
                     <td th:text="${usuariosEmpleado.usuario.correoElectronico}"></td>
                     <td th:text="${usuariosEmpleado.usuario.telefono}"></td>

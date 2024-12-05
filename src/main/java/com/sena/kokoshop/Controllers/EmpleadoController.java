@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.sena.kokoshop.dto.UsuarioEmpleadoDTO;
 import com.sena.kokoshop.entidades.Empleado;
 import com.sena.kokoshop.entidades.Usuario;
-import com.sena.kokoshop.interfaz.EmpleadoInterfaz;
 import com.sena.kokoshop.service.UsuarioEmpleadoService;
 
 @Controller
@@ -53,7 +52,7 @@ public class EmpleadoController {
         return "empleados/editar_empleado";
     }
 
-    @PostMapping("/empleados/actualizar")
+    @PostMapping("/empleados/actualizar/{id}")
     public String actualizarEmpleado(@PathVariable Long id,
             @ModelAttribute("usuarioEmpleado") UsuarioEmpleadoDTO uDto) {
             

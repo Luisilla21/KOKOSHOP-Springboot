@@ -7,19 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.sena.kokoshop.dto.ProductoTallaDTO;
 import com.sena.kokoshop.entidades.CantidadTalla;
-import com.sena.kokoshop.entidades.Producto;
-import com.sena.kokoshop.interfaz.ProductoInterfaz;
 import com.sena.kokoshop.service.ProductoTallaService;
 
 @Controller
 public class ProductoController {
-
-    @Autowired
-    private ProductoInterfaz interfaz;
 
     @Autowired
     private ProductoTallaService productoService;

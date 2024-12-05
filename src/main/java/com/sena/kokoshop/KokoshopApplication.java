@@ -5,14 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CrudempleadosApplication implements CommandLineRunner {
+public class KokoshopApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CrudempleadosApplication.class, args);
+		SpringApplication.run(KokoshopApplication.class, args);
 	}
 
 	@Override
-	public void run(String... args) throws Exception{
+	public void run(String... args) throws Exception {
 	}
 
 }

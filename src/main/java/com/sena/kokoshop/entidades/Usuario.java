@@ -21,33 +21,36 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", nullable = false, length = 100)
+    @Column(name = "nombre", nullable = true, length = 100)
     private String nombre;
 
-    @Column(name = "apellido", nullable = false, length = 100)
+    @Column(name = "apellido", nullable = true, length = 100)
     private String apellido;
 
-    @Column(name = "direccion", length = 255)
+    @Column(name = "numeroDocumento", nullable = true, unique = true, length = 10)
+    private String numeroDocumento;
+
+    @Column(name = "tipoDocumento", nullable = true, length = 30)
+    private String tipoDocumento;
+
+    @Column(name = "direccion", nullable = true, length = 255)
     private String direccion;
 
-    @Column(name = "ciudad", length = 100)
+    @Column(name = "ciudad", nullable = true, length = 100)
     private String ciudad;
 
-    @Column(name = "estado", length = 100)
+    @Column(name = "estado", nullable = true, length = 100)
     private String estado;
 
     @Column(name = "correoElectronico", nullable = false, unique = true, length = 150)
     private String correoElectronico;
 
-    @Column(name = "telefono", length = 20)
+    @Column(name = "telefono", nullable = true, length = 20)
     private String telefono;
 
-    @Column(name = "fechaRegistro", updatable = false)
+    @Column(name = "fechaRegistro", nullable = true, updatable = false)
     @CreationTimestamp
     private Timestamp fechaRegistro;
-
-    @Column(name = "historialCompras", columnDefinition = "TEXT")
-    private String historialCompras;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Empleado empleado;
@@ -57,35 +60,39 @@ public class Usuario {
     }
 
     // Constructor con todos los parámetros
-    public Usuario(Long id, String nombre, String apellido, String direccion, String ciudad, String estado,
+    public Usuario(Long id, String nombre, String apellido, String numeroDocumento, String tipoDocumento,
+            String direccion, String ciudad, String estado,
             String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras,
             Empleado empleado) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
+        this.numeroDocumento = numeroDocumento;
+        this.tipoDocumento = tipoDocumento;
         this.direccion = direccion;
         this.ciudad = ciudad;
         this.estado = estado;
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
-        this.historialCompras = historialCompras;
         this.empleado = empleado;
     }
 
     // Constructor sin el ID
-    public Usuario(String nombre, String apellido, String direccion, String ciudad, String estado,
+    public Usuario(String nombre, String apellido, String numeroDocumento, String tipoDocumento, String direccion,
+            String ciudad, String estado,
             String correoElectronico, String telefono, Timestamp fechaRegistro, String historialCompras,
             Empleado empleado) {
         this.nombre = nombre;
         this.apellido = apellido;
+        this.numeroDocumento = numeroDocumento;
+        this.tipoDocumento = tipoDocumento;
         this.direccion = direccion;
         this.ciudad = ciudad;
         this.estado = estado;
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
         this.fechaRegistro = fechaRegistro;
-        this.historialCompras = historialCompras;
         this.empleado = empleado;
     }
 
@@ -112,6 +119,22 @@ public class Usuario {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getNumeroDocumento() {
+        return numeroDocumento;
+    }
+
+    public void setNumeroDocumento(String numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
     }
 
     public String getDireccion() {
@@ -162,14 +185,6 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public String getHistorialCompras() {
-        return historialCompras;
-    }
-
-    public void setHistorialCompras(String historialCompras) {
-        this.historialCompras = historialCompras;
-    }
-
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -191,7 +206,6 @@ public class Usuario {
         sb.append(", correoElectronico=").append(correoElectronico);
         sb.append(", telefono=").append(telefono);
         sb.append(", fechaRegistro=").append(fechaRegistro);
-        sb.append(", historialCompras=").append(historialCompras);
         sb.append(", empleado=").append(empleado.getSalario());
         sb.append('}');
         return sb.toString();

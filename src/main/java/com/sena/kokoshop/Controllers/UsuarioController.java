@@ -55,13 +55,14 @@ public class UsuarioController {
         if (usuarioExistente != null) {
             usuarioExistente.setNombre(usuario.getNombre());
             usuarioExistente.setApellido(usuario.getApellido());
+            usuarioExistente.setTipoDocumento(usuario.getTipoDocumento());
+            usuarioExistente.setNumeroDocumento(usuario.getNumeroDocumento());
             usuarioExistente.setDireccion(usuario.getDireccion());
             usuarioExistente.setCiudad(usuario.getCiudad());
             usuarioExistente.setEstado(usuario.getEstado());
             usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
             usuarioExistente.setTelefono(usuario.getTelefono());
             usuarioExistente.setFechaRegistro(usuario.getFechaRegistro());
-            usuarioExistente.setHistorialCompras(usuario.getHistorialCompras());
             interfaz.actualizarUsuario(usuarioExistente);
         }
         return "redirect:/usuarios";

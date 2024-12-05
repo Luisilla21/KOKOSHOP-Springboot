@@ -27,7 +27,8 @@
             <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
                 <h1 class="text-center">Edicion de empleados</h1>
                 <div class="card-body">
-                    <form th:action="@{/empleados/actualizar}" th:object="${usuarioEmpleado}" method="POST">
+                    <form th:action="@{/empleados/actualizar/{id}(id=${usuarioEmpleado.empleado.id})}"
+                        th:object="${usuarioEmpleado}" method="POST">
                         <input type="hidden" th:field="*{empleado.id}">
                         <div class="form-group">
                             <label>Nombre:</label>
@@ -39,6 +40,25 @@
                             <label>Apellido:</label>
                             <input type="text" name="apellido" th:field="*{usuario.apellido}" class="form-control"
                                 placeholder="Escriba el apellido del cliente:" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label>Tipo de Documento:</label>
+                            <select name="tipoDocumento" th:field="*{usuario.tipoDocumento}" class="form-control"
+                                required>
+                                <option value="" disabled selected>Seleccione un tipo de documento</option>
+                                <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                                <option value="Cédula de extranjería">Cédula de extranjería</option>
+                                <option value="Permiso Especial de Permanencia">Permiso Especial de Permanencia</option>
+                                <option value="Documento de identificación extranjero">Documento de identificación
+                                    extranjero</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label>Número de Documento:</label>
+                            <input type="text" name="numeroDocumento" th:field="*{usuario.numeroDocumento}"
+                                class="form-control" placeholder="Escriba el número de documento del usuario" required>
                         </div>
                         <br>
                         <div class="form-group">

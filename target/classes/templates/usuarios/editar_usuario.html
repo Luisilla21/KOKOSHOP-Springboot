@@ -41,6 +41,24 @@
                         </div>
                         <br>
                         <div class="form-group">
+                            <label>Tipo de Documento:</label>
+                            <select name="tipoDocumento" th:field="*{tipoDocumento}" class="form-control" required>
+                                <option value="" disabled selected>Seleccione un tipo de documento</option>
+                                <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                                <option value="Cédula de extranjería">Cédula de extranjería</option>
+                                <option value="Permiso Especial de Permanencia">Permiso Especial de Permanencia</option>
+                                <option value="Documento de identificación extranjero">Documento de identificación
+                                    extranjero</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label>Número de Documento:</label>
+                            <input type="text" name="numeroDocumento" th:field="*{numeroDocumento}" class="form-control"
+                                placeholder="Escriba el número de documento del usuario" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
                             <label>Dirección:</label>
                             <input type="text" name="direccion" th:field="*{direccion}" class="form-control"
                                 placeholder="Digite la dirección:" required>

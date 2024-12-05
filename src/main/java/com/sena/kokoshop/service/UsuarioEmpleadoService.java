@@ -2,8 +2,6 @@ package com.sena.kokoshop.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,13 +73,14 @@ public class UsuarioEmpleadoService {
         // Actualizar Usuario
         usuarioExistente.setNombre(usuario.getNombre());
         usuarioExistente.setApellido(usuario.getApellido());
+        usuarioExistente.setTipoDocumento(usuario.getTipoDocumento());
+        usuarioExistente.setNumeroDocumento(usuario.getNumeroDocumento());
         usuarioExistente.setDireccion(usuario.getDireccion());
         usuarioExistente.setCiudad(usuario.getCiudad());
         usuarioExistente.setEstado(usuario.getEstado());
         usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
         usuarioExistente.setTelefono(usuario.getTelefono());
         usuarioExistente.setFechaRegistro(usuario.getFechaRegistro());
-        usuarioExistente.setHistorialCompras(usuario.getHistorialCompras());
 
         usuarioRepositorio.save(usuarioExistente);
 

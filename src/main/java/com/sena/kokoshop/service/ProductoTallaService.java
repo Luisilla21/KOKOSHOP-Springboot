@@ -97,6 +97,6 @@ public class ProductoTallaService {
             tallaRepositorio.deleteById(talla.getId());
         }
 
-        productoRepositorio.deleteById(idPro);
+        productoRepositorio.deleteById(producto.getIdProducto());
     }
 }

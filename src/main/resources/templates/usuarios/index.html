@@ -29,6 +29,13 @@
             <div class="col-lg-3">
                 <a th:href="@{/usuarios/nuevo}" class="btn btn-primary btn-sm mb3"> Agregar usuario</a>
             </div>
+            <div class="col-lg-9">
+                <a th:href="@{/usuarios/(format=pdf)}" class="nav-link float-end" title="Exportar a pdf"
+                    target="_blank">
+                    <img class="img-resposive center-box" th:src="@{/images/pdf.png}" height="auto">
+                </a>
+            </div>
+
         </div>
         <br>
 
@@ -42,7 +49,6 @@
                     <th>Número de Documento</th>
                     <th>Dirección</th>
                     <th>Ciudad</th>
-                    <th>Estado</th>
                     <th>Correo Electrónico</th>
                     <th>Teléfono</th>
                     <th>Acciones</th>
@@ -57,7 +63,6 @@
                     <td th:text="${usuario.numeroDocumento}">Número de Documento</td>
                     <td th:text="${usuario.direccion}">Dirección</td>
                     <td th:text="${usuario.Ciudad}">Ciudad</td>
-                    <td th:text="${usuario.Estado}">Estado</td>
                     <td th:text="${usuario.correoElectronico}">Correo Electrónico</td>
                     <td th:text="${usuario.telefono}">Teléfono</td>
                     <td>

@@ -26,7 +26,6 @@ public class Usuario {
     @Column(name = "tipoDocumento", nullable = true, length = 30)
     private String tipoDocumento;
 
-    
     @Column(name = "numeroDocumento", nullable = true, unique = true, length = 10)
     private String numeroDocumento;
 
@@ -35,9 +34,6 @@ public class Usuario {
 
     @Column(name = "ciudad", nullable = true, length = 100)
     private String ciudad;
-
-    @Column(name = "estado", nullable = true, length = 100)
-    private String estado;
 
     @Column(name = "correoElectronico", nullable = false, unique = true, length = 150)
     private String correoElectronico;
@@ -54,7 +50,7 @@ public class Usuario {
 
     // Constructor con todos los parámetros
     public Usuario(Long id, String nombre, String apellido, String numeroDocumento, String tipoDocumento,
-            String direccion, String ciudad, String estado,
+            String direccion, String ciudad,
             String correoElectronico, String telefono, String historialCompras,
             Empleado empleado) {
         this.id = id;
@@ -64,7 +60,6 @@ public class Usuario {
         this.tipoDocumento = tipoDocumento;
         this.direccion = direccion;
         this.ciudad = ciudad;
-        this.estado = estado;
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
         this.empleado = empleado;
@@ -72,7 +67,7 @@ public class Usuario {
 
     // Constructor sin el ID
     public Usuario(String nombre, String apellido, String numeroDocumento, String tipoDocumento, String direccion,
-            String ciudad, String estado,
+            String ciudad,
             String correoElectronico, String telefono, String historialCompras,
             Empleado empleado) {
         this.nombre = nombre;
@@ -81,7 +76,6 @@ public class Usuario {
         this.tipoDocumento = tipoDocumento;
         this.direccion = direccion;
         this.ciudad = ciudad;
-        this.estado = estado;
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
         this.empleado = empleado;
@@ -144,14 +138,6 @@ public class Usuario {
         this.ciudad = ciudad;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public String getCorreoElectronico() {
         return correoElectronico;
     }
@@ -185,7 +171,6 @@ public class Usuario {
         sb.append(", apellido=").append(apellido);
         sb.append(", direccion=").append(direccion);
         sb.append(", ciudad=").append(ciudad);
-        sb.append(", estado=").append(estado);
         sb.append(", correoElectronico=").append(correoElectronico);
         sb.append(", telefono=").append(telefono);
         sb.append(", empleado=").append(empleado.getSalario());

@@ -1,11 +1,16 @@
 package com.sena.kokoshop.entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -33,28 +38,33 @@ public class Empleado {
     @Column(name = "horasTrabajadas", nullable = false, length = 10)
     private String horasTrabajadas;
 
+    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
+    private List<Ventas> ventas = new ArrayList<>();
+
+
     public Empleado() {
 
     }
 
     public Empleado(Long idEmp, Usuario usuario, Double salario, String horaEntrada, String horaSalida,
-            String horasTrabajadas) {
+            String horasTrabajadas, List<Ventas> ventas) {
         this.idEmp = idEmp;
         this.usuario = usuario;
         this.salario = salario;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
         this.horasTrabajadas = horasTrabajadas;
+        this.ventas = ventas;
     }
 
     public Empleado(Usuario usuario, Double salario, String horaEntrada, String horaSalida,
-            String horasTrabajadas) {
-
+            String horasTrabajadas, List<Ventas> ventas) {
         this.usuario = usuario;
         this.salario = salario;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
         this.horasTrabajadas = horasTrabajadas;
+        this.ventas = ventas;
     }
 
     public Long getId() {
@@ -107,6 +117,14 @@ public class Empleado {
 
     public Long getUserId() {
         return usuario.getUsuarioID();
+    }
+
+    public List<Ventas> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Ventas> ventas) {
+        this.ventas = ventas;
     }
 
     @Override

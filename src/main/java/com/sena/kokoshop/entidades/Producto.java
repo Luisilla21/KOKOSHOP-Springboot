@@ -32,27 +32,32 @@ public class Producto {
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<CantidadTalla> tallas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    private List<ProductoVenta> productosVenta = new ArrayList<>();
+
     // Constructor vacío
     public Producto() {
     }
 
     // Constructor con todos los atributos, incluyendo idProducto
     public Producto(Long idProducto, String producNom, Float producPrecio, String tipoPrenda,
-            List<CantidadTalla> tallas) {
+            List<CantidadTalla> tallas, List<ProductoVenta> productosVenta) {
         this.idProducto = idProducto;
         this.producNom = producNom;
         this.producPrecio = producPrecio;
         this.tipoPrenda = tipoPrenda;
         this.tallas = tallas;
+        this.productosVenta = productosVenta;
     }
 
     // Constructor sin idProducto, ideal para nuevos productos
     public Producto(String producNom, Float producPrecio, String tipoPrenda,
-            List<CantidadTalla> tallas) {
+            List<CantidadTalla> tallas, List<ProductoVenta> productosVenta) {
         this.producNom = producNom;
         this.producPrecio = producPrecio;
         this.tipoPrenda = tipoPrenda;
         this.tallas = tallas;
+        this.productosVenta = productosVenta;
     }
 
     // Getters y Setters
@@ -95,6 +100,14 @@ public class Producto {
 
     public void setTallas(List<CantidadTalla> tallas) {
         this.tallas = tallas;
+    }
+
+    public List<ProductoVenta> getProductosVenta() {
+        return productosVenta;
+    }
+
+    public void setProductosVenta(List<ProductoVenta> productosVenta) {
+        this.productosVenta = productosVenta;
     }
 
     @Override

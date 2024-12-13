@@ -25,8 +25,11 @@ public class ListarUsuariosExcel extends AbstractXlsxView {
         Sheet hoja = workbook.createSheet("Usuarios");
 
         Row filaTitulo = hoja.createRow(0);
+
         Cell celda = filaTitulo.createCell(0);
+
         celda.setCellValue("LISTADO DE USUARIOS");
+
 
         Row filaData = hoja.createRow(2);
         String[] columnas = { "ID", "NOMBRE", "APELLIDOS", "TIPO DOC", "NUMERO DOC", "DIRECCIÓN", "CIUDAD",

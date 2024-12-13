@@ -61,6 +61,7 @@ public class UsuarioController {
             usuarioExistente.setCiudad(usuario.getCiudad());
             usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
             usuarioExistente.setTelefono(usuario.getTelefono());
+            usuarioExistente.setCompras(usuario.getCompras());
             interfaz.actualizarUsuario(usuarioExistente);
         }
         return "redirect:/usuarios/";

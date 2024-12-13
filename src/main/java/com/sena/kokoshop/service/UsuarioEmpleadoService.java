@@ -79,6 +79,7 @@ public class UsuarioEmpleadoService {
         usuarioExistente.setCiudad(usuario.getCiudad());
         usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
         usuarioExistente.setTelefono(usuario.getTelefono());
+        usuarioExistente.setCompras(usuario.getCompras());
         usuarioRepositorio.save(usuarioExistente);
 
         // Actualizar Empleado
@@ -87,6 +88,7 @@ public class UsuarioEmpleadoService {
         empleadoExistente.setHoraEntrada(empleado.getHoraEntrada());
         empleadoExistente.setHoraSalida(empleado.getHoraSalida());
         empleadoExistente.setHorasTrabajadas(empleado.getHorasTrabajadas());
+        empleadoExistente.setVentas(empleado.getVentas());
 
         empleadoRepositorio.save(empleadoExistente);
     }

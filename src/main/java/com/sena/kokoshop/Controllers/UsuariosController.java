@@ -1,5 +1,7 @@
 package com.sena.kokoshop.Controllers;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,10 +54,15 @@ public class UsuariosController {
         return "redirect:/login?registroExitoso"; // Redirige al login con un mensaje
     }
 
-    // Página de inicio después del login exitoso
     @GetMapping("/index")
-    public String mostrarPaginaDeInicio() {
-        return "index"; // Asegúrate de que la vista "inicio.html" exista
+    public String mostrarPaginaDeInicio(@AuthenticationPrincipal User user, Model model) {
+        if (user != null) {
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("isAuthenticated", true);
+        } else {
+            model.addAttribute("isAuthenticated", false);
+        }
+        return "index"; // Asegúrate de que la vista "index.html" exista
     }
 }
     

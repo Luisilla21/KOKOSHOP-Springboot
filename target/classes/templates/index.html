@@ -566,6 +566,42 @@
                 margin: 0 auto;
             }
         }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            /* Alinea los elementos a la derecha */
+            gap: 10px;
+            /* Espaciado entre el nombre y el botón */
+        }
+
+        .user-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #f5ccd4;
+        }
+
+        .logout-button {
+            background: linear-gradient(to right, #391f53, #b8a4c9);
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: #f5ccd4;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background: linear-gradient(to right, #b8a4c9, #391f53);
+            color: #ff86c4;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-crud {
+            color: #000000;
+        }
     </style>
 </head>
 
@@ -579,22 +615,24 @@
                     </div>
                 </div>
                 <div class="col-5 menu-bar">
-                    <div class="grapper">
-                        <div class="box-search">
-                            <input type="search" class="search-bar" value="Buscar">
-                        </div>
+
+                    <!-- Verifica que el usuario haya iniciado sesión -->
+                    <div th:if="${isAuthenticated}" >
+                        <a th:href="@{/empleados/}" class="button-wrapper btn-crud">Empleados</a>
+                        <a th:href="@{/productos}" class="button-wrapper btn-crud">Productos</a>
+                        <a th:href="@{/usuarios/}" class="button-wrapper btn-crud">Usuarios</a>
                     </div>
 
                 </div>
 
-                <div class="col-4 login">
+                <div class="col-4 login" style="display: inline;">
                     <div class="login-registrarse" th:unless="${isAuthenticated}">
                         <a class="btn-lr" href="/login">Iniciar sesión</a>
                         <a class="btn-lr" href="/registro">Registrarse</a>
                     </div>
-                    <div th:if="${isAuthenticated}" class="login-registrarse">
-                        <p>Hola, <span th:text="${username}"></span>!</p>
-                        <a href="/logout" class="btn-lr">Cerrar sesión</a>
+                    <div th:if="${isAuthenticated}" class="user-section">
+                        <span class="user-name" th:text="${username}"></span>
+                        <a href="/logout" class="logout-button">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
@@ -721,18 +759,6 @@
                     estilo único.
                 </p>
                 <div class="container">
-                    <h1>Sistema de Gestión</h1>
-                    <div class="buttons-container">
-                        <a th:href="@{empleados/}" class="button-wrapper">
-                            <button class="button empleados">CRUD Empleados</button>
-                        </a>
-                        <a th:href="@{productos}" class="button-wrapper">
-                            <button class="button productos">CRUD Productos</button>
-                        </a>
-                        <a th:href="@{/usuarios/}" class="button-wrapper">
-                            <button class="button clientes">Usuarios</button>
-                        </a>
-                    </div>
                 </div>
                 <div class="copyright">
                     <p>&copy; 2024 Kokoshop. Todos los derechos reservados.</p>

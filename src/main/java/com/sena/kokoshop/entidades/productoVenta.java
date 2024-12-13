@@ -23,10 +23,4 @@ public class ProductoVenta {
     @ManyToOne
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
-
-
-
-
-
-
 }

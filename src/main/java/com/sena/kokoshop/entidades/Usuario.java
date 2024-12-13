@@ -48,8 +48,8 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Empleado empleado;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Ventas> compras = new ArrayList<>();
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Venta> compras = new ArrayList<>();
 
     // Constructor sin parámetros
     public Usuario() {
@@ -59,7 +59,7 @@ public class Usuario {
     public Usuario(Long id, String nombre, String apellido, String numeroDocumento, String tipoDocumento,
             String direccion, String ciudad,
             String correoElectronico, String telefono, String historialCompras,
-            Empleado empleado) {
+            Empleado empleado, List<Venta> compras) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -70,13 +70,14 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
         this.empleado = empleado;
+        this.compras = compras;
     }
 
     // Constructor sin el ID
     public Usuario(String nombre, String apellido, String numeroDocumento, String tipoDocumento, String direccion,
             String ciudad,
             String correoElectronico, String telefono, String historialCompras,
-            Empleado empleado) {
+            Empleado empleado, List<Venta> compras) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.numeroDocumento = numeroDocumento;
@@ -86,6 +87,7 @@ public class Usuario {
         this.correoElectronico = correoElectronico;
         this.telefono = telefono;
         this.empleado = empleado;
+        this.compras = compras;
     }
 
     // Getters y Setters
@@ -169,11 +171,11 @@ public class Usuario {
         this.empleado = empleado;
     }
 
-    public List<Ventas> getCompras() {
+    public List<Venta> getCompras() {
         return compras;
     }
 
-    public void setCompras(List<Ventas> compras) {
+    public void setCompras(List<Venta> compras) {
         this.compras = compras;
     }
 

@@ -39,15 +39,14 @@ public class Empleado {
     private String horasTrabajadas;
 
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
-    private List<Ventas> ventas = new ArrayList<>();
-
+    private List<Venta> ventas = new ArrayList<>();
 
     public Empleado() {
 
     }
 
     public Empleado(Long idEmp, Usuario usuario, Double salario, String horaEntrada, String horaSalida,
-            String horasTrabajadas, List<Ventas> ventas) {
+            String horasTrabajadas, List<Venta> ventas) {
         this.idEmp = idEmp;
         this.usuario = usuario;
         this.salario = salario;
@@ -58,7 +57,7 @@ public class Empleado {
     }
 
     public Empleado(Usuario usuario, Double salario, String horaEntrada, String horaSalida,
-            String horasTrabajadas, List<Ventas> ventas) {
+            String horasTrabajadas, List<Venta> ventas) {
         this.usuario = usuario;
         this.salario = salario;
         this.horaEntrada = horaEntrada;
@@ -119,11 +118,11 @@ public class Empleado {
         return usuario.getUsuarioID();
     }
 
-    public List<Ventas> getVentas() {
+    public List<Venta> getVentas() {
         return ventas;
     }
 
-    public void setVentas(List<Ventas> ventas) {
+    public void setVentas(List<Venta> ventas) {
         this.ventas = ventas;
     }
 

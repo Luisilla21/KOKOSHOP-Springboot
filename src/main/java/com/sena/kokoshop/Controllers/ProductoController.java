@@ -72,4 +72,5 @@ public class ProductoController {
         model.addAttribute("talla", new CantidadTalla());
         return "fragments :: nueva-talla";
     }
+
 }

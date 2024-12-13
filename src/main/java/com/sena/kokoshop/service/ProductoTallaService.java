@@ -26,7 +26,6 @@ public class ProductoTallaService {
     @Transactional
     public Producto guardarProductoConTallas(ProductoTallaDTO productoTallaDTO) {
         Producto producto = productoTallaDTO.getProducto();
-        System.out.println(producto.toString());
         // Guardar el producto primero
         Producto productoGuardado = productoRepositorio.save(producto);
 
@@ -69,18 +68,15 @@ public class ProductoTallaService {
         productoExistente.setProducNom(producto.getProducNom());
         productoExistente.setProducPrecio(producto.getProducPrecio());
         productoExistente.setTipoPrenda(producto.getTipoPrenda());
+        productoExistente.setProductosVenta(producto.getProductosVenta());
 
         productoRepositorio.save(productoExistente);
 
         for (CantidadTalla tallaExistente : tallasExistentes) {
-            System.out.println("Talla Id");
-            System.out.println(tallaExistente.getId());
             tallaRepositorio.deleteById(tallaExistente.getId());
         }
 
         for (CantidadTalla tallaNueva : tallasNuevas) {
-            System.out.println("Talla Id nueva");
-            System.out.println(tallaNueva.getId());
             tallaNueva.setProducto(productoExistente);
             tallaRepositorio.save(tallaNueva);
         }

@@ -1,5 +1,6 @@
 package com.sena.kokoshop.entidades;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,16 +18,76 @@ public class ProductoVenta {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "idVenta", nullable=false)
+    @JoinColumn(name = "idVenta", nullable = false)
     private Venta venta;
 
     @ManyToOne
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
 
+    @ManyToOne
+    @JoinColumn(name = "idCentidadTalla", nullable = false)
+    private CantidadTalla cantidadTalla;
 
+    @Column(name = "cantidad", nullable = false)
+    private Integer cantidad;
 
+    public ProductoVenta() {
+    }
 
+    public ProductoVenta(Long id, Venta venta, Producto producto, CantidadTalla cantidadTalla, Integer cantidad) {
+        this.id = id;
+        this.venta = venta;
+        this.producto = producto;
+        this.cantidadTalla = cantidadTalla;
+        this.cantidad = cantidad;
+    }
 
+    public ProductoVenta(Venta venta, Producto producto, CantidadTalla cantidadTalla, Integer cantidad) {
+        this.venta = venta;
+        this.producto = producto;
+        this.cantidadTalla = cantidadTalla;
+        this.cantidad = cantidad;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public CantidadTalla getCantidadTalla() {
+        return cantidadTalla;
+    }
+
+    public void setCantidadTalla(CantidadTalla cantidadTalla) {
+        this.cantidadTalla = cantidadTalla;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
 
 }

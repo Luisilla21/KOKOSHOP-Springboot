@@ -1,5 +1,9 @@
 package com.sena.kokoshop.entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,8 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
+ 
 @Entity
 @Table(name = "cantidadTalla")
 public class CantidadTalla {
@@ -26,21 +31,26 @@ public class CantidadTalla {
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
 
+    @OneToMany(mappedBy = "cantidadTalla", cascade = CascadeType.ALL)
+    private List<ProductoVenta> productosVenta = new ArrayList<>();
+
     public CantidadTalla() {
 
     }
 
-    public CantidadTalla(Long id, Integer cantidad, Producto producto, String talla) {
+    public CantidadTalla(Long id, Integer cantidad, Producto producto, String talla, List<ProductoVenta> productosVenta) {
         this.id = id;
         this.cantidad = cantidad;
         this.producto = producto;
         this.talla = talla;
+        this.productosVenta = productosVenta;
     }
 
-    public CantidadTalla(Integer cantidad, Producto producto, String talla) {
+    public CantidadTalla(Integer cantidad, Producto producto, String talla, List<ProductoVenta> productosVenta) {
         this.cantidad = cantidad;
         this.producto = producto;
         this.talla = talla;
+        this.productosVenta = productosVenta;
     }
 
     public Long getId() {
@@ -74,5 +84,15 @@ public class CantidadTalla {
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
+
+    public List<ProductoVenta> getProductosVenta() {
+        return productosVenta;
+    }
+
+    public void setProductosVenta(List<ProductoVenta> productosVenta) {
+        this.productosVenta = productosVenta;
+    }
+
+
 
 }

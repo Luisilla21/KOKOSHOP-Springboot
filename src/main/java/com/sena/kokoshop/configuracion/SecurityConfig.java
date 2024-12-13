@@ -11,8 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -33,23 +31,21 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/registro", "/login", "/css/**", "/js/**", "/img/**").permitAll()
-                        .anyRequest().authenticated()
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/", "/index", "/registro", "/css/**", "/js/**").permitAll() // Rutas públicas
+                        .anyRequest().authenticated() // Todas las demás rutas requieren autenticación
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/index", true)
-                        .permitAll()
-                )
+                        .loginPage("/login") // Página de inicio de sesión personalizada
+                        .defaultSuccessUrl("/index", true) // Redirige a /index después de iniciar sesión
+                        .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
-                )
-                .build();
+                        .logoutSuccessUrl("/index") // Redirige a /index después de cerrar sesión
+                        .permitAll());
+
+        return http.build();
     }
 
     @Bean
@@ -57,4 +53,3 @@ public class SecurityConfig {
         return authConfig.getAuthenticationManager();
     }
 }
-

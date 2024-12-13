@@ -586,10 +586,15 @@
                     </div>
 
                 </div>
+
                 <div class="col-4 login">
-                    <div class="login-registrarse">
+                    <div class="login-registrarse" th:unless="${isAuthenticated}">
                         <a class="btn-lr" href="login.html">Iniciar sesión</a>
                         <a class="btn-lr" href="registrarse.html">Registrarse</a>
+                    </div>
+                    <div th:if="${isAuthenticated}" class="login-registrarse">
+                        <p>Hola, <span th:text="${username}"></span>!</p>
+                        <a href="/logout" class="btn-lr">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
@@ -654,7 +659,8 @@
                 <div class="producto">
                     <div class="uni-producto">
                         <a href="producto_jean.html">
-                            <img th:src="@{images/pantalon mezclilla.png}" alt="Pantalon de Mezclilla" class="img-producto">
+                            <img th:src="@{images/pantalon mezclilla.png}" alt="Pantalon de Mezclilla"
+                                class="img-producto">
                             <div class="capa-oscura-producto"></div>
                         </a>
                     </div>
@@ -689,7 +695,8 @@
             <div class="redes">
                 <h5>Síguenos en</h5>
                 <ul>
-                    <li><a class="logo-social" href="#"><img th:src="@{images/facebook-logo-3-1.png}" alt="Facebook"></a>
+                    <li><a class="logo-social" href="#"><img th:src="@{images/facebook-logo-3-1.png}"
+                                alt="Facebook"></a>
                     </li>
                     <li><a class="logo-social" href="#"><img th:src="@{images/imagen ig.png}" alt="Instagram"></a></li>
                     <li><a class="logo-social" href="#"><img th:src="@{images/X-Logo.png}" alt="Twitter"></a></li>

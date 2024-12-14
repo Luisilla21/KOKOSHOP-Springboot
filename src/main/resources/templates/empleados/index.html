@@ -7,6 +7,121 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>listado de empleados</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #c9a4a4, #391f53);
+            /* Color de fondo claro */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Sombra sutil debajo del navbar */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            font-size: 1rem;
+            text-transform: capitalize;
+        }
+
+        /* Header */
+        h1 {
+            font-weight: bold;
+            margin-top: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 3px solid #000000;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 50px;
+            /* Bordes redondeados */
+            padding: 8px 20px;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            /* Efecto hover */
+            opacity: 0.9;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        /* Table */
+        .table {
+            margin-top: 20px;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+            /* Sutil cambio de color al pasar el ratón */
+        }
+
+        .table td,
+        .table th {
+            text-align: center;
+            /* Centrar contenido */
+            vertical-align: middle;
+            /* Alinear verticalmente */
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 0;
+            margin-top: 30px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .btn {
+                padding: 6px 16px;
+            }
+
+            .table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 
 <body>

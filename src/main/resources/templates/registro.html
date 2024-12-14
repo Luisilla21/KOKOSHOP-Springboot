@@ -81,13 +81,7 @@
                         <label for="password" class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="rol" class="form-label">Rol</label>
-                        <select id="rol" name="roles[0].nombre" class="form-select" required>
-                            <option value="Usuario">Usuario</option>
-                            <option value="Administrador">Administrador</option>
-                        </select>
-                    </div>
+                    <input type="hidden" name="roles[0].nombre" value="Usuario">
                     <button type="submit" class="btn btn-primary w-100">Registrar</button>
                 </form>
                 <p class="mt-3 text-center">¿Ya tienes una cuenta? <a href="/login" class="text-decoration-none">Inicia

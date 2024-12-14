@@ -8,6 +8,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Editar Producto</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #c9a4a4, #391f53);
+            /* Fondo claro */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Sombra debajo del navbar */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            font-size: 1rem;
+            color: #fff;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: #ffc107;
+            /* Amarillo al pasar el ratón */
+        }
+
+        /* Card */
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            /* Sombra para destacar la tarjeta */
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .card h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* Form */
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 50px;
+            font-weight: bold;
+            padding: 10px 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .card {
+                margin: 20px;
+            }
+
+            .card h1 {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 8px 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>

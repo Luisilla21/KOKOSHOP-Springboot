@@ -32,19 +32,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/registro", "/index", "/login", "/css/*", "/js/", "/images/*").permitAll()
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/registro", "/index", "/login", "/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated())
-        .formLogin(form -> form
+            .formLogin(form -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/index", true)
                 .permitAll())
-        .logout(logout -> logout
+            .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
                 .permitAll())
-        .build();
+            .build();
     }
 
     @Bean

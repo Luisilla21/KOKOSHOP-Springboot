@@ -27,6 +27,38 @@
             align-items: center;
         }
 
+        /* Estilos para el buscador */
+        .search-container {
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 2px solid #f5ccd4;
+            border-radius: 25px;
+            box-sizing: border-box;
+            background-color: #1a1a1a;
+            color: #f5ccd4;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #ff86c4;
+            box-shadow: 0 0 8px rgba(245, 204, 212, 0.5);
+        }
+
+        .search-box::placeholder {
+            color: #f5ccd4;
+            opacity: 0.7;
+        }
+
         /* Catálogo */
         .catalogo {
             padding: 40px 20px;
@@ -67,6 +99,10 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
+        .producto.hidden {
+            display: none;
+        }
+
         .producto:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
@@ -96,13 +132,13 @@
         }
 
         .precio {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ff86c4;
-    text-align: right; /* Alinea el texto hacia la derecha */
-    margin-top: 10px;
-    display: block; /* Asegura que el precio sea un bloque independiente */
-}
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff86c4;
+            text-align: right;
+            margin-top: 10px;
+            display: block;
+        }
 
         /* Responsividad */
         @media (max-width: 768px) {
@@ -127,20 +163,24 @@
     <br>
     <div class="nav-bar">
         <nav class="main-menu">
-
-
-            <a href="@{/index/#principal}">Principal</a>
-
-            <a th:href="@{catalogo}">Productos</a>
-
-            <a href="nosotros.html">Nosotros</a>
-
-            <a href="asesoria.html">Asesoria</a>
+            <a th:href="@{/index}">Principal</a>
+            <a th:href="@{/catalogo}">Productos</a>
+            <a th:href="@{/nosotros}">Nosotros</a>
+            <a th:href="@{/asesoria}">Asesoria</a>
         </nav>
     </div>
-</center>
+
     <section class="catalogo">
         <h1>Catálogo</h1>
+        
+        <!-- Buscador -->
+        <div class="search-container">
+            <input type="text" 
+                   class="search-box" 
+                   id="searchBox" 
+                   placeholder="Buscar productos por nombre, tipo o precio..."
+                   autocomplete="off">
+        </div>
         <div class="productos">
            <!-- Producto 1 -->
 <div class="producto">
@@ -320,5 +360,31 @@
         </div>
 
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBox = document.getElementById('searchBox');
+            const productos = document.querySelectorAll('.producto');
+
+            searchBox.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+
+                productos.forEach(producto => {
+                    const nombre = producto.querySelector('.nom-producto').textContent.toLowerCase();
+                    const precio = producto.querySelector('.precio').textContent.toLowerCase();
+                    const textoCompleto = nombre + ' ' + precio;
+
+                    if (textoCompleto.includes(searchTerm)) {
+                        producto.classList.remove('hidden');
+                    } else {
+                        producto.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Limpia la búsqueda cuando se carga la página
+            searchBox.value = '';
+            productos.forEach(producto => producto.classList.remove('hidden'));
+        });
+    </script>
 </body>
 </html>

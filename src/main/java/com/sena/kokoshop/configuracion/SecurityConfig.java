@@ -34,7 +34,10 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/registro", "/index", "/login", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/index", "/registro", "/login", 
+                               "/catalogo", "/vistaProductos","/nosotros","/asesoria",
+                               "/css/**", "/js/**", "/images/**",
+                               "/webjars/**", "/assets/**").permitAll()  // Agregados más recursos estáticos
                 .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginPage("/login")

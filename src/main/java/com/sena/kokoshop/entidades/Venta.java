@@ -1,18 +1,14 @@
 package com.sena.kokoshop.entidades;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,52 +18,46 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVenta;
 
-    @OneToOne
-    @JoinColumn(name = "idCli", nullable = false)
-    private Usuario cliente;
+    @Column(nullable = false, length = 100)
+    private String cliente;
 
-    @OneToOne
-    @JoinColumn(name = "idEmp", nullable = false)
-    private Empleado empleado;
+    @Column(nullable = false, length = 100)
+    private String empleado;
 
     @Column(nullable = false)
-    private Float precioTatal;
+    private Integer cantidad;
 
     @Column(nullable = false)
-    private Date fechaVenta;
+    private Float precioTotal;
 
-    @Column(nullable = false, length = 20)
-    private String tipoVenta;
+    @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+private Date fechaVenta;
 
-    @Column(nullable = false, length = 10)
-    private String estadoVenta;
 
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
-    private List<ProductoVenta> productos = new ArrayList<>();
+    @Column(nullable = false, length = 100)
+    private String productoVendido;
 
-    public Venta(){
+    public Venta() {
     }
 
-    public Venta(Long idVenta, Usuario cliente, Empleado empleado, Float precioTatal, Date fechaVenta, String tipoVenta, String estadoVenta, List<ProductoVenta> productos) {
+    public Venta(Long idVenta, String cliente, String empleado, Integer cantidad, Float precioTotal, Date fechaVenta, String productoVendido) {
         this.idVenta = idVenta;
         this.cliente = cliente;
         this.empleado = empleado;
-        this.precioTatal = precioTatal;
+        this.cantidad = cantidad;
+        this.precioTotal = precioTotal;
         this.fechaVenta = fechaVenta;
-        this.tipoVenta = tipoVenta;
-        this.estadoVenta = estadoVenta;
-        this.productos = productos;
-
+        this.productoVendido = productoVendido;
     }
 
-    public Venta(Usuario cliente, Empleado empleado, Float precioTatal, Date fechaVenta, String tipoVenta, String estadoVenta, List<ProductoVenta> productos) {
+    public Venta(String cliente, String empleado, Integer cantidad, Float precioTotal, Date fechaVenta, String productoVendido) {
         this.cliente = cliente;
         this.empleado = empleado;
-        this.precioTatal = precioTatal;
+        this.cantidad = cantidad;
+        this.precioTotal = precioTotal;
         this.fechaVenta = fechaVenta;
-        this.tipoVenta = tipoVenta;
-        this.estadoVenta = estadoVenta;
-        this.productos = productos;
+        this.productoVendido = productoVendido;
     }
 
     public Long getIdVenta() {
@@ -78,28 +68,36 @@ public class Venta {
         this.idVenta = idVenta;
     }
 
-    public Usuario getCliente() {
+    public String getCliente() {
         return cliente;
     }
 
-    public void setCliente(Usuario cliente) {
+    public void setCliente(String cliente) {
         this.cliente = cliente;
     }
 
-    public Empleado getEmpleado() {
+    public String getEmpleado() {
         return empleado;
     }
 
-    public void setEmpleado(Empleado empleado) {
+    public void setEmpleado(String empleado) {
         this.empleado = empleado;
     }
 
-    public Float getPrecioTatal() {
-        return precioTatal;
+    public Integer getCantidad() {
+        return cantidad;
     }
 
-    public void setPrecioTatal(Float precioTatal) {
-        this.precioTatal = precioTatal;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Float getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(Float precioTotal) {
+        this.precioTotal = precioTotal;
     }
 
     public Date getFechaVenta() {
@@ -110,31 +108,11 @@ public class Venta {
         this.fechaVenta = fechaVenta;
     }
 
-    public String getTipoVenta() {
-        return tipoVenta;
+    public String getProductoVendido() {
+        return productoVendido;
     }
 
-    public void setTipoVenta(String tipoVenta) {
-        this.tipoVenta = tipoVenta;
+    public void setProductoVendido(String productoVendido) {
+        this.productoVendido = productoVendido;
     }
-
-    public String getEstadoVenta() {
-        return estadoVenta;
-    }
-
-    public void setEstadoVenta(String estadoVenta) {
-        this.estadoVenta = estadoVenta;
-    }
-
-    public List<ProductoVenta> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<ProductoVenta> productos) {
-        this.productos = productos;
-    }
-
-
-
-
 }

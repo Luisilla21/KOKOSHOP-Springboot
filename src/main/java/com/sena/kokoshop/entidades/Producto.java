@@ -29,8 +29,8 @@ public class Producto {
     @Column(name = "tipoPrenda", nullable = false, length = 15)
     private String tipoPrenda;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<CantidadTalla> tallas = new ArrayList<>();
+    @Column(name = "cantidad", nullable = false)
+    private Integer cantidad;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<ProductoVenta> productosVenta = new ArrayList<>();
@@ -41,22 +41,22 @@ public class Producto {
 
     // Constructor con todos los atributos, incluyendo idProducto
     public Producto(Long idProducto, String producNom, Float producPrecio, String tipoPrenda,
-            List<CantidadTalla> tallas, List<ProductoVenta> productosVenta) {
+            Integer cantidad, List<ProductoVenta> productosVenta) {
         this.idProducto = idProducto;
         this.producNom = producNom;
         this.producPrecio = producPrecio;
         this.tipoPrenda = tipoPrenda;
-        this.tallas = tallas;
+        this.cantidad = cantidad;
         this.productosVenta = productosVenta;
     }
 
     // Constructor sin idProducto, ideal para nuevos productos
     public Producto(String producNom, Float producPrecio, String tipoPrenda,
-            List<CantidadTalla> tallas, List<ProductoVenta> productosVenta) {
+            Integer cantidad, List<ProductoVenta> productosVenta) {
         this.producNom = producNom;
         this.producPrecio = producPrecio;
         this.tipoPrenda = tipoPrenda;
-        this.tallas = tallas;
+        this.cantidad = cantidad;
         this.productosVenta = productosVenta;
     }
 
@@ -94,14 +94,6 @@ public class Producto {
         this.tipoPrenda = tipoPrenda;
     }
 
-    public List<CantidadTalla> getTallas() {
-        return tallas;
-    }
-
-    public void setTallas(List<CantidadTalla> tallas) {
-        this.tallas = tallas;
-    }
-
     public List<ProductoVenta> getProductosVenta() {
         return productosVenta;
     }
@@ -110,10 +102,20 @@ public class Producto {
         this.productosVenta = productosVenta;
     }
 
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
     @Override
     public String toString() {
         return "Producto [idProducto=" + idProducto + ", producNom=" + producNom + ", producPrecio=" + producPrecio
                 + ", tipoPrenda=" + tipoPrenda + "]";
     }
+
+
 
 }

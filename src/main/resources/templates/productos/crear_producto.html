@@ -144,23 +144,22 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
                 <div class="card-body">
-                    <form th:action="@{/productos}" th:object="${productoTallaDTO}" method="post">
+                    <form th:action="@{/productos/}" th:object="${producto}" method="post">
                         <h1 class="text-center" id="registro-de-productos">Registro de productos</h1>
 
                         <div class="form-group mb-3">
                             <label>Nombre:</label>
-                            <input type="text" class="form-control" th:field="*{producto.producNom}" required>
+                            <input type="text" class="form-control" th:field="*{producNom}" required>
                         </div>
 
                         <div class="form-group mb-3">
                             <label>Precio:</label>
-                            <input type="number" step="0.01" class="form-control" th:field="*{producto.producPrecio}"
-                                required>
+                            <input type="number" step="0.01" class="form-control" th:field="*{producPrecio}" required>
                         </div>
 
                         <div class="form-group mb-3">
                             <label>Tipo de Prenda:</label>
-                            <select class="form-control" th:field="*{producto.tipoPrenda}" required>
+                            <select class="form-control" th:field="*{tipoPrenda}" required>
                                 <option value="">Seleccionar</option>
                                 <optgroup label="Prenda Superior">
                                     <option value="Camisetas">Camisetas</option>
@@ -188,27 +187,10 @@
                             </select>
                         </div>
 
-                        <h3 class="mt-2" id="tallas">Tallas</h3>
-
-                        <div id="tallas-container">
-                            <div th:each="talla, stat : *{tallas}" class="tallas-row mb-3">
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label>Talla:</label>
-                                        <input type="text" class="form-control"
-                                            th:field="*{tallas[__${stat.index}__].talla}" required>
-                                    </div>
-                                    <div class="col-md-6 form-group">
-                                        <label>Cantidad:</label>
-                                        <input type="number" class="form-control"
-                                            th:field="*{tallas[__${stat.index}__].cantidad}" required>
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
+                        <div class="form-group mb-3">
+                            <label>Cantidad:</label>
+                            <input type="number" step="0.01" class="form-control" th:field="*{cantidad}" required>
                         </div>
-
-                        <button type="button" id="agregar-talla" class="btn btn-secondary mb-3">Agregar Talla</button>
 
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Guardar</button>
@@ -218,50 +200,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Fragmento para nueva talla -->
-    <div id="talla-template" class="tallas-row mb-3" style="display: none;">
-        <div class="row">
-            <div class="col-md-6 form-group">
-                <label>Talla:</label>
-                <input type="text" class="form-control" name="tallas[0].talla" placeholder="Ingrese talla" required>
-            </div>
-            <div class="col-md-6 form-group">
-                <label>Cantidad:</label>
-                <input type="number" class="form-control" name="tallas[0].cantidad" placeholder="Ingrese cantidad"
-                    required>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <script th:inline="javascript">
-        $(document).ready(function () {
-            $('#agregar-talla').click(function () {
-                // Clonar el elemento plantilla oculto
-                var nuevoElemento = $('#talla-template').clone();
-                nuevoElemento.removeAttr('id'); // Elimina el ID para evitar duplicados
-                nuevoElemento.show(); // Muestra el nuevo elemento
-
-                // Obtener el índice actual basado en la cantidad de filas ya agregadas
-                var currentIndex = $('#tallas-container .tallas-row').length;
-
-                // Actualizar los atributos 'name' de los campos para reflejar el nuevo índice
-                nuevoElemento.find('input').each(function () {
-                    var nombreOriginal = $(this).attr('name');
-                    var nombreActualizado = nombreOriginal.replace(/tallas\[0\]/, 'tallas[' + currentIndex + ']');
-                    $(this).attr('name', nombreActualizado);
-                });
-
-                // Limpiar los valores de los campos antes de agregar el nuevo elemento
-                nuevoElemento.find('input').val('');
-
-                // Agregar el nuevo elemento al contenedor
-                $('#tallas-container').append(nuevoElemento);
-            });
-        });
-
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

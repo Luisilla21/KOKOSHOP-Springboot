@@ -25,9 +25,6 @@ public class ProductoVenta {
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
 
-    @ManyToOne
-    @JoinColumn(name = "idCentidadTalla", nullable = false)
-    private CantidadTalla cantidadTalla;
 
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
@@ -35,18 +32,16 @@ public class ProductoVenta {
     public ProductoVenta() {
     }
 
-    public ProductoVenta(Long id, Venta venta, Producto producto, CantidadTalla cantidadTalla, Integer cantidad) {
+    public ProductoVenta(Long id, Venta venta, Producto producto,  Integer cantidad) {
         this.id = id;
         this.venta = venta;
         this.producto = producto;
-        this.cantidadTalla = cantidadTalla;
         this.cantidad = cantidad;
     }
 
-    public ProductoVenta(Venta venta, Producto producto, CantidadTalla cantidadTalla, Integer cantidad) {
+    public ProductoVenta(Venta venta, Producto producto,  Integer cantidad) {
         this.venta = venta;
         this.producto = producto;
-        this.cantidadTalla = cantidadTalla;
         this.cantidad = cantidad;
     }
 
@@ -72,14 +67,6 @@ public class ProductoVenta {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
-    }
-
-    public CantidadTalla getCantidadTalla() {
-        return cantidadTalla;
-    }
-
-    public void setCantidadTalla(CantidadTalla cantidadTalla) {
-        this.cantidadTalla = cantidadTalla;
     }
 
     public Integer getCantidad() {

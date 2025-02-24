@@ -139,7 +139,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/productos}">Control de Productos</a>
+                    <a class="nav-link" th:href="@{/productos/}">Control de Productos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/empleados/}">Control de empleados</a>
@@ -150,14 +150,14 @@
             </ul>
         </div>
     </nav>
-    
+
     <div class="container">
         <div class="row">
             <h1 class="">Lista de Productos</h1>
         </div>
         <div class="row">
             <div class="col-lg-3">
-                <a th:href="@{productos/nuevo}" class="btn btn-primary btn-sm mb3"> Agregar Producto</a>
+                <a th:href="@{/productos/nuevo}" class="btn btn-primary btn-sm mb3"> Agregar Producto</a>
             </div>
         </div>
         <br>
@@ -167,24 +167,23 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Precio</th>
-                    <th>Cantidad total</th>
+                    <th>Cantidad</th>
                     <th>Tipo de Prenda</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="productoTallas : ${productosTallas}">
-                    <td th:text="${productoTallas.producto.producNom}">Nombre</td>
+                <tr th:each="producto : ${productos}">
+                    <td th:text="${producto.producNom}">Nombre</td>
 
-                    <td th:text="${productoTallas.producto.producPrecio}">Precio</td>
-                    <td th:text="${productoTallas.cantidadTotal}"></td>
-                    <td th:text="${productoTallas.producto.tipoPrenda}">Tipo de Prenda</td>
+                    <td th:text="${producto.producPrecio}">Precio</td>
+                    <td th:text="${producto.cantidad}"></td>
+                    <td th:text="${producto.tipoPrenda}">Tipo de Prenda</td>
                     <td>
 
-                        <a th:href="@{/productos/editar/{id}(id=${productoTallas.producto.idProducto})}"
+                        <a th:href="@{/productos/editar/{id}(id=${producto.idProducto})}"
                             class="btn btn-info">Editar</a>
-                        <a th:href="@{/productos/{id}(id=${productoTallas.producto.idProducto})}"
-                            class="btn btn-danger">Eliminar</a>
+                        <a th:href="@{/productos/{id}(id=${producto.idProducto})}" class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             </tbody>

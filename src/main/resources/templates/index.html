@@ -617,9 +617,9 @@
                 <div class="col-5 menu-bar">
 
                     <!-- Verifica que el usuario haya iniciado sesión -->
-                    <div th:if="${isAuthenticated}" >
+                    <div th:if="${isAuthenticated}">
                         <a th:href="@{/empleados/}" class="button-wrapper btn-crud">Empleados</a>
-                        <a th:href="@{/productos}" class="button-wrapper btn-crud">Productos</a>
+                        <a th:href="@{/productos/}" class="button-wrapper btn-crud">Productos</a>
                         <a th:href="@{/usuarios/}" class="button-wrapper btn-crud">Usuarios</a>
                     </div>
 

@@ -6,17 +6,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sena.kokoshop.service.ProductoTallaService;
+import com.sena.kokoshop.interfaz.ProductoInterfaz;
+
 
 @Controller
 public class CatalogoController {
 
     @Autowired
-    private ProductoTallaService productoService;
+    private ProductoInterfaz interfaz;
 
     @GetMapping("/catalogo")
     public String listarProductosCatalogo(Model modelo){
-        modelo.addAttribute("productosTallas", productoService.listarTodosLosProductos());
+        modelo.addAttribute("productos", interfaz.listarTodosLosProductos());
         return "catalogo"; // retorna al archivo productos
         
     }

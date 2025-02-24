@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.sena.kokoshop.entidades.Venta;
 
 @Repository
-public interface VentaRepositorio extends JpaRepository<Venta, Long>{
-
+public interface VentaRepositorio extends JpaRepository<Venta, Long> {
 }

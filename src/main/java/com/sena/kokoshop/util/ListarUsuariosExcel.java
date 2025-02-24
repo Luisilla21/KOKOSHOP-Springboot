@@ -41,6 +41,7 @@ public class ListarUsuariosExcel extends AbstractXlsxView {
 
         }
 
+        @SuppressWarnings("unchecked")
         List<Usuario> listadoUsuarios = (List<Usuario>) model.get("usuarios");
 
         int numFila = 3;

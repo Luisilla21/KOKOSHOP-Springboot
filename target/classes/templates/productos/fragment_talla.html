@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
+     <!-- Incluir el fragmento de la barra de navegación -->
+     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <div th:fragment="nueva-talla" class="tallas-row">
         <h3>Nuevo Producto</h3>
         <br>

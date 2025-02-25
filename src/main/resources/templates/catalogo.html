@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Estilo general */
         body {
@@ -19,6 +20,27 @@
             font-family: "Poppins", sans-serif;
             background-color: #000000;
             color: #f5ccd4;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            font-size: 1rem;
+            color: #fff;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: #ffc107;
         }
 
         .nav-bar {
@@ -160,6 +182,8 @@
 </head>
 
 <body>
+     <!-- Incluir el fragmento de la barra de navegación -->
+     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <br>
     <div class="nav-bar">
         <nav class="main-menu">
@@ -386,5 +410,7 @@
             productos.forEach(producto => producto.classList.remove('hidden'));
         });
     </script>
+    <!-- Bootstrap JS (opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

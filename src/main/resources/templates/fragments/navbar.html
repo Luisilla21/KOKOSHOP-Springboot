@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- Define el fragmento con un nombre (por ejemplo, "navbar") -->
+    <nav th:fragment="navbar" class="navbar navbar-expand-md bg-dark navbar-dark">
+        <div class="container-fluid">
+            <!-- Logo que redirige al index -->
+            <a class="navbar-brand" th:href="@{/index}">
+                <img th:src="@{/images/LOGOKoko-transformed.png}" alt="KOKOSHOP" height="40">
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Menú de navegación -->
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/index}">Principal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/catalogo}">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/nosotros}">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/asesoria}">Asesoría</a>
+                    </li>
+                </ul>
+                
+                <!-- Usuario y menú desplegable a la derecha -->
+                <div class="navbar-nav">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <span th:text="${username}">Usuario</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" th:href="@{/usuarios}">Usuarios</a></li>
+                            <li><a class="dropdown-item" th:href="@{/empleados/}">Empleados</a></li>
+                            <li><a class="dropdown-item" th:href="@{/productos/}">Productos</a></li>
+                            <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

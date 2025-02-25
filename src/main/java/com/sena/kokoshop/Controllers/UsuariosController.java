@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sena.kokoshop.entidades.Usuarios;
 import com.sena.kokoshop.service.UsuariosService;
 
-
-
 @Controller
 public class UsuariosController {
 
@@ -25,14 +23,15 @@ public class UsuariosController {
     // Página de inicio de sesión
     @GetMapping("/login")
     public String mostrarFormularioDeLogin(@RequestParam(value = "error", required = false) String error,
-                                           @RequestParam(value = "logout", required = false) String logout,
-                                           @RequestParam(value = "registroExitoso", required = false) String registroExitoso,
-                                           Model model) {
+            @RequestParam(value = "logout", required = false) String logout,
+            @RequestParam(value = "registroExitoso", required = false) String registroExitoso,
+            Model model) {
         if (error != null) {
             model.addAttribute("error", "Credenciales inválidas. Intenta de nuevo.");
         }
         if (logout != null) {
             model.addAttribute("logout", "Has cerrado sesión exitosamente.");
+            return "index";
         }
         if (registroExitoso != null) {
             model.addAttribute("registroExitoso", "¡Registro exitoso! Ahora puedes iniciar sesión.");
@@ -65,4 +64,3 @@ public class UsuariosController {
         return "index"; // Asegúrate de que la vista "index.html" exista
     }
 }
-    

@@ -1,769 +1,227 @@
-<!DOCTYPE html>
-<html lang="es">
+<style>
+    body {
+        background-color: #F8F0F6;
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+    }
 
-<html>
+    .section-title {
+        font-size: 3.5rem;
+        font-weight: bold;
+        margin-bottom: 3rem;
+        text-align: center;
+        color: #6C3E91;
+        text-transform: uppercase;
+        position: relative;
+    }
 
+    .section-title::after {
+        content: '';
+        width: 100px;
+        height: 5px;
+        background-color: #C59FC0;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -15px;
+        border-radius: 5px;
+    }
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Explora Kokoshop: la tienda online para encontrar las mejores prendas de moda. ¡Novedades, personalización y beneficios exclusivos!">
-    <meta name="keywords" content="moda femenina, tienda online, ropa personalizada, estilo único, Kokoshop">
-    <meta name="cache-control" content="no-cache">
-    <title>KOKOSHOP | Tu Estilo Único</title>
-    <link rel="icon" href="images/KSLogo-transformed.jpeg" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            text-decoration: none !important;
-            transition: 0.5s;
+    .card {
+        border: none;
+        margin-bottom: 2.5rem;
+        background-color: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        padding: 3rem;
+        position: relative;
+        z-index: 1;
+        background: linear-gradient(45deg, #F8F0F6, #ffffff);
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #6C3E91, #C59FC0);
+        clip-path: circle(15% at 10% 10%);
+        z-index: 0;
+        transition: clip-path 0.5s ease;
+    }
+
+    .card:hover::before {
+        clip-path: circle(75% at 50% 50%);
+    }
+
+    .card-title {
+        color: #6C3E91;
+        font-weight: bold;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        font-size: 2rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .card-text {
+        color: #333;
+        font-size: 1.2rem;
+        line-height: 2;
+        position: relative;
+        z-index: 2;
+    }
+
+    .location-map {
+        border: none;
+        height: 350px;
+        width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 6px 12px rgba(108, 62, 145, 0.3);
+        transition: transform 0.3s;
+    }
+
+    .location-map:hover {
+        transform: scale(1.05);
+    }
+
+    .location {
+        background-color: #FFF5FB;
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 6px 12px rgba(108, 62, 145, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .location::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #6C3E91, #C59FC0);
+        clip-path: circle(25% at 90% 10%);
+        z-index: 0;
+        transition: clip-path 0.5s ease;
+    }
+
+    .location:hover::before {
+        clip-path: circle(75% at 50% 50%);
+    }
+
+    .location h5 {
+        color: #6C3E91;
+        position: relative;
+        z-index: 2;
+    }
+
+    .location p {
+        color: #4E2436;
+        font-size: 1.2rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 2rem;
         }
 
-        .col-3 {
-            flex: 0 0 25%;
-            max-width: 25%;
-        }
-
-        h5 {
-            font-family: "lilita one", serif;
-            font-size: 20px;
-            color: rgb(0, 0, 0);
-            font-weight: 500;
-
-        }
-
-        ul {
-            list-style: none !important;
-            /* Elimina los puntos de la lista */
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(120deg, #391f53, #000000);
-            color: #f5ccd4;
-            scroll-behavior: smooth;
-        }
-
-        img {
-            overflow: initial;
-            overflow-clip-margin: initial;
-        }
-
-        #logo_koko {
-            width: 280px;
-            height: 70px;
-        }
-
-        .align-items-center {
-            align-items: center;
-        }
-
-        .logo {
-            vertical-align: middle;
-
-            height: auto;
-        }
-
-        img {
-            vertical-align: middle;
-        }
-
-
-        #main-header {
-            color: rgb(0, 0, 0);
-            height: 100px;
-
-            width: 100%;
-            left: 0;
-            top: 0;
-            position: fixed;
-            z-index: 2;
-        }
-
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            background: linear-gradient(to right, #c9a4a4, #391f53);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        }
-
-        .row {
-            display: flex;
-            height: 100px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .logo_section {
-            max-width: 25%;
-            vertical-align: auto;
-
-            height: auto;
-        }
-
-        .menu-bar {
-            flex: 0 0 50%;
-            max-width: 50%;
-        }
-
-        .wrapper {
-            display: grid;
-            gap: 10px;
-        }
-
-        .box-search {
-            grid-column: 1/4;
-            grid-row: 1/3;
-            margin: 0 auto;
-            width: max-content;
-        }
-
-        .search-bar {
-            width: 300px;
-            height: 30px;
-            border: none;
-            border-radius: 15px;
-            padding: 15px;
-        }
-
-        .login {
-            max-width: max-content;
-            margin: 0 auto;
-            flex: 0 0 25%;
-            max-width: 25%;
-            padding: 0;
-        }
-
-
-
-        .login-registrarse {
-            margin: 0 auto;
-            max-width: max-content;
-        }
-
-        .btn-lr {
-            background: linear-gradient(to right, #391f53, #b8a4c9);
-            border-radius: 20px;
-            padding: 10px 20px;
-            color: #f5ccd4;
-            text-transform: uppercase;
-            font-weight: bold;
-            border: 2px solid #f5ccd4;
-            transition: all 0.3s ease;
-        }
-
-        .btn-lr:hover {
-            background: linear-gradient(to right, #b8a4c9, #391f53);
-            color: #ff86c4;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
-
-
-        .main-menu {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px 0;
-        }
-
-        .nav-bar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-
-        .main-menu a {
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #f5ccd4;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .main-menu a:hover {
-            color: #ff86c4;
-        }
-
-        ul {
-            display: block;
-            list-style-type: disc;
-            margin-block-start: 0;
-            margin-block-end: 0;
-            margin-inline-start: 0px;
-            margin-inline-end: 0px;
-            padding-inline-start: 0;
-            float: none;
-            width: auto;
-        }
-
-        .text-img-principal {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            /* Asegúrate de que el texto esté por encima de la capa oscura */
-            color: #f5ccd4;
-            font-size: 3rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        .imagen-principal .text-img-principal {
-            position: absolute;
-            top: 50%;
-            left: 10%;
-            transform: translateY(-50%);
-            color: #f5ccd4;
-            font-size: 3rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        .imagen-principal {
-            margin-top: 100px;
-            height: 80vh;
-            background: url('images/imagen_principal.webp') no-repeat center center/cover;
-            position: relative;
-        }
-
-        #img_principal {
-            width: 100%;
-            height: auto;
-            clip-path: inset(0);
-        }
-
-        .capa-oscura {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* Asegúrate de cubrir toda la altura de la sección */
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Ajusta la opacidad según sea necesario */
-            z-index: 1;
-        }
-
-
-        /* ----------------productos---------------- */
-
-        .button:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .tipos-productos {
-            background-color: #b8a4c9;
-        }
-
-        .tipo-ropa ul a {
-            color: #000000;
-            border-left: 2px solid black;
-        }
-
-        .tipo-ropa ul a:hover {
-            background-color: #000000;
-            color: #f5ccd4;
-        }
-
-        .catalogo {
-            padding: 40px 0 40px;
-            background-color: #000000;
-            text-align: center;
-        }
-
-
-        .catalogo h1 {
-            font-family: "Lilita One", sans-serif;
+        .section-title {
             font-size: 2.5rem;
-            font-weight: bold;
-            color: #f5ccd4;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            position: relative;
         }
 
-        /* Añadir animación de entrada */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .card-title {
+            font-size: 1.75rem;
         }
 
-        .catalogo h1::after {
-            content: "";
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: #f5ccd4;
-            margin: 10px auto 0;
-            border-radius: 2px;
+        .card-text {
+            font-size: 1.1rem;
         }
 
-        .novedades {
-            font-family: "lilita one", serif;
-            font-size: 40px;
-            font-weight: 400;
-            font-style: normal;
-            color: #f5ccd4;
+        .location {
+            padding: 2rem;
         }
 
-        .producto {
-            max-width: 22%;
-            /* Ajusta el ancho de cada tarjeta */
-            flex: 1 1 calc(22% - 20px);
-            /* Asegura que se ajusten automáticamente */
-            background: #1a1a1a;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            position: relative;
+        .location p {
+            font-size: 1.1rem;
         }
+    }
+</style>
 
-        .productos {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            /* Centra los elementos horizontalmente */
-            gap: 20px;
-            /* Espacio entre los productos */
-            padding: 0 20px;
-        }
-
-        .producto:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-        }
-
-
-        .img-producto {
-            width: 100%;
-            /* La imagen ocupa todo el ancho de la tarjeta */
-            height: auto;
-            /* Mantiene proporciones */
-            object-fit: cover;
-            /* Escala las imágenes si es necesario */
-        }
-
-        .uni-producto {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .capa-oscura-producto {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 10px;
-        }
-
-        .uni-producto:hover .capa-oscura-producto {
-            opacity: 0.5;
-        }
-
-        .text-product {
-            padding: 15px;
-            text-align: left;
-            color: #f5ccd4;
-            font-family: "Poppins", sans-serif;
-        }
-
-        .text-product a {
-            flex-grow: 1;
-            color: #f5ccd4;
-            text-decoration: none;
-        }
-
-        .text-product a:hover {
-            color: #b8a4c9;
-        }
-
-        .precio {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #ff86c4;
-            text-align: right;
-            margin-top: 10px;
-        }
-
-        .nom-producto {
-            font-size: 1rem;
-            font-weight: bold;
-            text-decoration: none;
-            color: #f5ccd4;
-            transition: color 0.3s ease;
-        }
-
-        .nom-producto:hover {
-            color: #b8a4c9;
-        }
-
-        /* Responsividad */
-        @media (max-width: 768px) {
-            .producto {
-                max-width: 45%;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .producto {
-                max-width: 100%;
-            }
-
-            .catalogo h1 {
-                font-size: 2rem;
-            }
-        }
-
-
-
-
-        /*--------------------------- pie de pagina ---------------------------*/
-
-        footer {
-            background: linear-gradient(to right, #c9a4a4, #391f53);
-            padding: 50px 20px;
-            color: #f5ccd4;
-            text-align: center;
-        }
-
-        .pie-pagina {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 30px;
-        }
-
-        .redes,
-        .ubicacion,
-        .acerca-de {
-            flex: 1;
-            min-width: 280px;
-            padding: 0 15px;
-            text-align: center;
-        }
-
-        h5 {
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 1px;
-            position: relative;
-        }
-
-        h5::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: #ff86c4;
-        }
-
-        ul {
-            padding: 0;
-            list-style: none;
-        }
-
-        ul li {
-            display: inline-block;
-            margin: 0 10px;
-        }
-
-        .logo-social img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo-social:hover img {
-            transform: scale(1.2);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        .map iframe {
-            width: 100%;
-            height: 250px;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .map iframe:hover {
-            transform: scale(1.02);
-            transition: all 0.3s ease;
-        }
-
-        .acerca-de p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #e6d4e3;
-            text-align: justify;
-        }
-
-        .copyright {
-            margin-top: 20px;
-            font-size: 0.8rem;
-            color: #d0b8d5;
-            text-align: center;
-        }
-
-        .copyright small {
-            color: #fff;
-            font-weight: bold;
-        }
-
-        /* Responsividad */
-        @media (max-width: 768px) {
-            .pie-pagina {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .redes,
-            .ubicacion,
-            .acerca-de {
-                margin-bottom: 20px;
-            }
-
-            .logo-social img {
-                margin: 0 auto;
-            }
-        }
-
-        .user-section {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            /* Alinea los elementos a la derecha */
-            gap: 10px;
-            /* Espaciado entre el nombre y el botón */
-        }
-
-        .user-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #f5ccd4;
-        }
-
-        .logout-button {
-            background: linear-gradient(to right, #391f53, #b8a4c9);
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            color: #f5ccd4;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .logout-button:hover {
-            background: linear-gradient(to right, #b8a4c9, #391f53);
-            color: #ff86c4;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        }
-
-        .btn-crud {
-            color: #000000;
-        }
-    </style>
-</head>
-
-<body>
-    <header id="main-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-3 logo_section">
-                    <div class="logo">
-                        <img th:src="@{/images/LOGOKoko-transformed.png}" alt="Logo Imagen" id="logo_koko">
-                    </div>
-                </div>
-                <div class="col-5 menu-bar">
-
-                    <!-- Verifica que el usuario haya iniciado sesión -->
-                    <div th:if="${isAuthenticated}" >
-                        <a th:href="@{/empleados/}" class="button-wrapper btn-crud">Empleados</a>
-                        <a th:href="@{/productos}" class="button-wrapper btn-crud">Productos</a>
-                        <a th:href="@{/usuarios/}" class="button-wrapper btn-crud">Usuarios</a>
-                    </div>
-
-                </div>
-
-                <div class="col-4 login" style="display: inline;">
-                    <div class="login-registrarse" th:unless="${isAuthenticated}">
-                        <a class="btn-lr" href="/login">Iniciar sesión</a>
-                        <a class="btn-lr" href="/registro">Registrarse</a>
-                    </div>
-                    <div th:if="${isAuthenticated}" class="user-section">
-                        <span class="user-name" th:text="${username}"></span>
-                        <a href="/logout" class="logout-button">Cerrar sesión</a>
-                    </div>
+<div class="container my-5">
+    <h2 class="section-title">Nosotros</h2>
+    <div class="row">
+        <!-- Misión -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Misión</h5>
+                    <p class="card-text">En Kokoshop, nuestra misión es ofrecer una experiencia de compra en línea personalizada y amigable,
+                         proporcionando una selección cuidadosamente curada de ropa femenina de alta calidad. Nos comprometemos a inspirar a nuestras clientas con las últimas tendencias y a promover la diversidad y la inclusión,
+                          creando un espacio donde cada mujer pueda encontrar su estilo único.</p>
                 </div>
             </div>
         </div>
-        <center>
-            <div class="nav-bar">
-                <nav class="main-menu">
-
-
-                    <a href="#principal">Principal</a>
-
-                    <a th:href="@{catalogo}">Productos</a>
-
-                    <a href="nosotros.html">Nosotros</a>
-
-                    <a href="asesoria.html">Asesoria</a>
-                </nav>
-            </div>
-        </center>
-
-    </header>
-    <main>
-        <section class="imagen-principal">
-            <div class="capa-oscura"></div>
-            <div class="text-img-principal">
-                ¡Encuentra lo que necesitas!
-            </div>
-        </section>
-
-
-
-        <section class="catalogo">
-            <h1>NOVEDADES</h1>
-            <div class="productos">
-                <div class="producto">
-                    <div class="uni-producto">
-                        <a href="producto_falda.html">
-                            <img th:src="@{images/faldacuero.jpg}" alt="Falda de Cuero" class="img-producto">
-                            <div class="capa-oscura-producto"></div>
-                        </a>
-                    </div>
-                    <div class="text-product">
-                        <a class="nom-producto" href="producto_falda.html">Falda de Cuero</a>
-
-                        <span class="precio">$ 50000</span>
-                    </div>
-                </div>
-
-                <div class="producto">
-                    <div class="uni-producto">
-                        <a href="producto_chaqueta_cuero.html">
-                            <img th:src="@{images/chaquetaCuero.png}" alt="Chaqueta de Cuero" class="img-producto">
-                            <div class="capa-oscura-producto"></div>
-                        </a>
-                    </div>
-                    <div class="text-product">
-                        <a class="nom-producto" href="producto_chaqueta_cuero.html">Chaqueta de Cuero</a>
-                        <span class="precio">$ 63000</span>
-                    </div>
-                </div>
-
-                <div class="producto">
-                    <div class="uni-producto">
-                        <a href="producto_jean.html">
-                            <img th:src="@{images/pantalon_mezclilla.png}" alt="Pantalon de Mezclilla"
-                                class="img-producto">
-                            <div class="capa-oscura-producto"></div>
-                        </a>
-                    </div>
-                    <div class="text-product">
-                        <a class="nom-producto" href="producto_jean.html">Pantalon de Mezclilla</a>
-                        <span class="precio">$ 55000</span>
-                    </div>
-                </div>
-
-                <div class="producto">
-                    <div class="uni-producto">
-                        <a href="producto_airforce.html">
-                            <img th:src="@{images/af1.webp}" alt="Air Force One" class="img-producto">
-                            <div class="capa-oscura-producto"></div>
-                        </a>
-                    </div>
-                    <div class="text-product">
-                        <a class="nom-producto" href="producto_airforce.html">Air Force One</a>
-                        <span class="precio">$ 100000</span>
-                    </div>
+        <!-- Visión -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Visión</h5>
+                    <p class="card-text">Kokosho aspira a convertirse en la tienda de ropa femenina líder en el mercado, 
+                        destacándose por ofrecer piezas únicas que combinan estilo, comodidad y accesibilidad. Nuestro objetivo es empoderar a las mujeres de todas las edades y tallas,
+                         proporcionándoles ropa que no solo las haga lucir bien, sino que también las haga sentir seguras y auténticas. Nos visualizamos como un referente global en moda.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
 
+    <div class="row">
+        <!-- Nosotros -->
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Nosotros</h5>
+                    <p class="card-text">¡Descubre la nueva era de la moda femenina en nuestra tienda online! Desde prendas personalizadas hasta experiencias de compra en 3D y recomendaciones de estilo, estamos redefiniendo la forma en que te relacionas con la moda.
 
-
-    </main>
-
-
-    <footer>
-        <div class="pie-pagina">
-            <div class="redes">
-                <h5>Síguenos en</h5>
-                <ul>
-                    <li><a class="logo-social" href="#"><img th:src="@{images/facebook-logo-3-1.png}"
-                                alt="Facebook"></a>
-                    </li>
-                    <li><a class="logo-social" href="#"><img th:src="@{images/imagen ig.png}" alt="Instagram"></a></li>
-                    <li><a class="logo-social" href="#"><img th:src="@{images/X-Logo.png}" alt="Twitter"></a></li>
-                </ul>
+                        Únete a nosotros para explorar colecciones exclusivas, colaboraciones con diseñadores emergentes y beneficios VIP que te harán sentir especial en cada compra. Sumérgete en la innovación y descubre tu estilo único con nosotros.</p>
+                </div>
             </div>
-            <div class="ubicacion">
-                <h5>Encuéntranos en</h5>
-                <div class="map">
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Ubicación -->
+        <div class="col-md-12">
+            <div class="card location">
+                <div class="card-body">
+                    <h5 class="card-title">Ubicación</h5>
+                    <p class="card-text">Encuéntranos en nuestra tienda principal o visita nuestra tienda en línea para descubrir nuestras últimas colecciones:</p>
+                    <p class="card-text"><strong>Dirección:</strong> Quiroga calle 40, Bogotá, Colombia.</p>
+                    <!-- Mapa integrado -->
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11209.072868276553!2d-74.14402175539946!3d4.59829808980877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1710714810135!5m2!1ses-419!2sco"
-                        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        class="location-map"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8335764518687!2d144.96315791541824!3d-37.814107979751716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d43db0fd7b3%3A0x5045675218ce6e0!2sVictoria%20State%20Library%2C%20Melbourne%2C%20Australia!5e0!3m2!1sen!2sus!4v1601032492758!5m2!1sen!2sus"
+                        allowfullscreen=""
+                        loading="lazy">
+                    </iframe>
                 </div>
             </div>
-            <div class="acerca-de">
-                <h5>Acerca de Kokoshop</h5>
-                <p>
-                    ¡Descubre la nueva era de la moda femenina en nuestra tienda online! Desde prendas
-                    personalizadas hasta
-                    experiencias de compra en 3D y recomendaciones de estilo, estamos redefiniendo la forma en que
-                    te
-                    relacionas con la moda. Únete a nosotros para explorar colecciones exclusivas y descubrir tu
-                    estilo único.
-                </p>
-                <div class="container">
-                </div>
-                <div class="copyright">
-                    <p>&copy; 2024 Kokoshop. Todos los derechos reservados.</p>
-                </div>
-    </footer>
-</body>
-
-</html>
+        </div>
+    </div>
+</div>

@@ -1,44 +1,52 @@
 package com.sena.kokoshop.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sena.kokoshop.dto.VentaProductoDTO;
+import com.sena.kokoshop.entidades.ProductoVenta;
 import com.sena.kokoshop.entidades.Venta;
-import com.sena.kokoshop.interfaz.VentaInterfaz;
+import com.sena.kokoshop.repositorio.ProductoVentaRepositorio;
+import com.sena.kokoshop.repositorio.VentaRepositorio;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class VentaProductoService {
 
     @Autowired
-    private VentaInterfaz ventaInterfaz;
+    private VentaRepositorio ventaRepositorio;
 
-    public List<Venta> listarTodasLasVentas() {
-        return ventaInterfaz.listarTodasLasVentas();
-    }
+    @Autowired
+    private ProductoVentaRepositorio productoVentaRepositorio;
 
+    @Transactional
     public void guardarVentaConProductos(VentaProductoDTO ventaProductoDTO) {
         Venta venta = ventaProductoDTO.getVenta();
-        ventaInterfaz.guardarVenta(venta);
+
+        Venta ventaGuardada = ventaRepositorio.save(venta);
+
+        for (ProductoVenta producto : ventaProductoDTO.getProductos()) {
+            producto.setVenta(ventaGuardada);
+            productoVentaRepositorio.save(producto);
+        }
+    }
+
+    public List<VentaProductoDTO> listarTodasLasVentas() {
+        List<VentaProductoDTO> listaDTO = new ArrayList<>();
+        return listaDTO;
     }
 
     public VentaProductoDTO buscarVentaProductoDTO(Long id) {
-        Venta venta = ventaInterfaz.obtenerVentaPorId(id);
-        if (venta == null) {
-            return null;
-        }
-        VentaProductoDTO ventaProductoDTO = new VentaProductoDTO();
-        ventaProductoDTO.setVenta(venta);
-        return ventaProductoDTO;
+        retunr new VentaProductoDTO();
     }
 
     public void actualizarVenta(Venta venta) {
-        ventaInterfaz.actualizarVenta(venta);
     }
 
     public void eliminarVentaProductos(Long id) {
-        ventaInterfaz.eliminarVenta(id);
     }
 }

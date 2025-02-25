@@ -9,8 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -36,11 +34,6 @@ public class Producto {
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<ProductoVenta> productosVenta = new ArrayList<>();
-   
-    @ManyToOne
-@JoinColumn(name = "venta_id")
-private Venta venta;
-
 
     // Constructor vacío
     public Producto() {
@@ -122,7 +115,5 @@ private Venta venta;
         return "Producto [idProducto=" + idProducto + ", producNom=" + producNom + ", producPrecio=" + producPrecio
                 + ", tipoPrenda=" + tipoPrenda + "]";
     }
-
-
 
 }

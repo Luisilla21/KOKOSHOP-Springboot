@@ -6,9 +6,13 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -39,8 +43,11 @@ public class Usuario {
     @Column(name = "ciudad", nullable = true, length = 100)
     private String ciudad;
 
-    @Column(name = "correoElectronico", nullable = false, unique = true, length = 150)
-    private String correoElectronico;
+    @Column(name = "email", nullable = false, unique = true, length = 150)
+    private String email;
+
+    @Column(name = "password", nullable = false, length = 150)
+    private String password;
 
     @Column(name = "telefono", nullable = true, length = 10)
     private String telefono;
@@ -51,6 +58,10 @@ public class Usuario {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Venta> compras = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private List<Rol> roles;
+
     // Constructor sin parámetros
     public Usuario() {
     }
@@ -58,7 +69,7 @@ public class Usuario {
     // Constructor con todos los parámetros
     public Usuario(Long id, String nombre, String apellido, String numeroDocumento, String tipoDocumento,
             String direccion, String ciudad,
-            String correoElectronico, String telefono, String historialCompras,
+            String email, String password, String telefono, String historialCompras,
             Empleado empleado, List<Venta> compras) {
         this.id = id;
         this.nombre = nombre;
@@ -67,7 +78,8 @@ public class Usuario {
         this.tipoDocumento = tipoDocumento;
         this.direccion = direccion;
         this.ciudad = ciudad;
-        this.correoElectronico = correoElectronico;
+        this.email = email;
+        this.password = password;
         this.telefono = telefono;
         this.empleado = empleado;
         this.compras = compras;
@@ -76,7 +88,7 @@ public class Usuario {
     // Constructor sin el ID
     public Usuario(String nombre, String apellido, String numeroDocumento, String tipoDocumento, String direccion,
             String ciudad,
-            String correoElectronico, String telefono, String historialCompras,
+            String email, String password, String telefono, String historialCompras,
             Empleado empleado, List<Venta> compras) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -84,7 +96,8 @@ public class Usuario {
         this.tipoDocumento = tipoDocumento;
         this.direccion = direccion;
         this.ciudad = ciudad;
-        this.correoElectronico = correoElectronico;
+        this.email = email;
+        this.password = password;
         this.telefono = telefono;
         this.empleado = empleado;
         this.compras = compras;
@@ -147,12 +160,28 @@ public class Usuario {
         this.ciudad = ciudad;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
     }
 
     public String getTelefono() {
@@ -188,13 +217,11 @@ public class Usuario {
         sb.append(", apellido=").append(apellido);
         sb.append(", direccion=").append(direccion);
         sb.append(", ciudad=").append(ciudad);
-        sb.append(", correoElectronico=").append(correoElectronico);
+        sb.append(", correoElectronico=").append(email);
         sb.append(", telefono=").append(telefono);
         sb.append(", empleado=").append(empleado.getSalario());
         sb.append('}');
         return sb.toString();
     }
-
-
 
 }

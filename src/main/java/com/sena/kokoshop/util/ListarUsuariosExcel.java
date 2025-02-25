@@ -54,7 +54,7 @@ public class ListarUsuariosExcel extends AbstractXlsxView {
             filaData.createCell(4).setCellValue(usuario.getNumeroDocumento());
             filaData.createCell(5).setCellValue(usuario.getDireccion());
             filaData.createCell(6).setCellValue(usuario.getCiudad());
-            filaData.createCell(7).setCellValue(usuario.getCorreoElectronico());
+            filaData.createCell(7).setCellValue(usuario.getEmail());
             filaData.createCell(8).setCellValue(usuario.getTelefono());
 
             numFila ++;

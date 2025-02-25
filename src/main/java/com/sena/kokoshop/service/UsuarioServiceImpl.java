@@ -10,44 +10,44 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sena.kokoshop.entidades.Rol;
-import com.sena.kokoshop.entidades.Usuarios;
+import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.repositorio.RolRepositorio;
-import com.sena.kokoshop.repositorio.UsuariosRepositorio;
+import com.sena.kokoshop.repositorio.UsuarioRepositorio;
 
 @Service
-public class UsuariosServiceImpl implements UsuariosService, UserDetailsService {
+public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
-    private final UsuariosRepositorio usuariosRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
     private final RolRepositorio rolRepositorio;
     private final PasswordEncoder passwordEncoder;
 
-    public UsuariosServiceImpl(UsuariosRepositorio usuariosRepositorio, RolRepositorio rolRepositorio, PasswordEncoder passwordEncoder) {
-        this.usuariosRepositorio = usuariosRepositorio;
+    public UsuarioServiceImpl(UsuarioRepositorio usuarioRepositorio, RolRepositorio rolRepositorio, PasswordEncoder passwordEncoder) {
+        this.usuarioRepositorio = usuarioRepositorio;
         this.rolRepositorio = rolRepositorio;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public Usuarios guardar(Usuarios usuarios) {
-        usuarios.setPassword(passwordEncoder.encode(usuarios.getPassword()));
+    public Usuario guardar(Usuario usuario) {
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         Rol rol = rolRepositorio.findByNombre("ROLE_USER");
-        usuarios.setRoles(Collections.singletonList(rol));
-        return usuariosRepositorio.save(usuarios);
+        usuario.setRoles(Collections.singletonList(rol));
+        return usuarioRepositorio.save(usuario);
     }
 
     @Override
 public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     System.out.println("Buscando usuario con email: " + username);
-    Usuarios usuarios = usuariosRepositorio.findByEmail(username);
-    if (usuarios == null) {
+    Usuario usuario = usuarioRepositorio.findByEmail(username);
+    if (usuario == null) {
         System.out.println("Usuario no encontrado.");
         throw new UsernameNotFoundException("Usuario no encontrado con el correo: " + username);
     }
-    System.out.println("Usuario encontrado: " + usuarios.getEmail());
+    System.out.println("Usuario encontrado: " + usuario.getEmail());
     return User.builder()
-            .username(usuarios.getEmail())
-            .password(usuarios.getPassword())
-            .roles(usuarios.getRoles().stream().map(Rol::getNombre).toArray(String[]::new))
+            .username(usuario.getEmail())
+            .password(usuario.getPassword())
+            .roles(usuario.getRoles().stream().map(Rol::getNombre).toArray(String[]::new))
             .build();
 }
 

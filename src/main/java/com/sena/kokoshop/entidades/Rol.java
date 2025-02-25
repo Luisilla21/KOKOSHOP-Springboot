@@ -16,7 +16,7 @@ public class Rol {
     private String nombre;
 
     @ManyToMany(mappedBy = "roles")
-    private List<Usuarios> usuarios;
+    private List<Usuario> usuario;
 
     // Getters y Setters
     public Long getId() {

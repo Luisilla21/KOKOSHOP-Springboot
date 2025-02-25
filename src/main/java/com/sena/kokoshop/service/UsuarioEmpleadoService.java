@@ -77,7 +77,7 @@ public class UsuarioEmpleadoService {
         usuarioExistente.setNumeroDocumento(usuario.getNumeroDocumento());
         usuarioExistente.setDireccion(usuario.getDireccion());
         usuarioExistente.setCiudad(usuario.getCiudad());
-        usuarioExistente.setCorreoElectronico(usuario.getCorreoElectronico());
+        usuarioExistente.setEmail(usuario.getEmail());
         usuarioExistente.setTelefono(usuario.getTelefono());
         usuarioExistente.setCompras(usuario.getCompras());
         usuarioRepositorio.save(usuarioExistente);

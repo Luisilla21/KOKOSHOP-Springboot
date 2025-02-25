@@ -26,12 +26,21 @@ public class VentaProductoService {
     @Transactional
     public void guardarVentaConProductos(VentaProductoDTO ventaProductoDTO) {
         Venta venta = ventaProductoDTO.getVenta();
+        Float precioTotal = 0.0f;
 
+        // Calcular el precio total de la venta
+        for (ProductoVenta productoVenta : ventaProductoDTO.getProductosVenta()) {
+            precioTotal += productoVenta.getProducto().getProducPrecio() * productoVenta.getCantidad();
+        }
+        venta.setPrecioTotal(precioTotal);
+
+        // Guardar la venta
         Venta ventaGuardada = ventaRepositorio.save(venta);
 
-        for (ProductoVenta producto : ventaProductoDTO.getProductosVenta()) {
-            producto.setVenta(ventaGuardada);
-            productoVentaRepositorio.save(producto);
+        // Guardar los productos asociados a la venta
+        for (ProductoVenta productoVenta : ventaProductoDTO.getProductosVenta()) {
+            productoVenta.setVenta(ventaGuardada);
+            productoVentaRepositorio.save(productoVenta);
         }
     }
 
@@ -53,7 +62,8 @@ public class VentaProductoService {
     }
 
     public void actualizarVenta(VentaProductoDTO dto) {
-        Venta ventaExistente = ventaRepositorio.findById(dto.getVentaId()).orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+        Venta ventaExistente = ventaRepositorio.findById(dto.getVentaId())
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
         Venta venta = dto.getVenta();
 
         List<ProductoVenta> productosExistentes = productoVentaRepositorio.obtenerProductosPorIdVenta(dto.getVentaId());
@@ -66,11 +76,11 @@ public class VentaProductoService {
 
         ventaRepositorio.save(ventaExistente);
 
-        for(ProductoVenta productoExistente : productosExistentes){
+        for (ProductoVenta productoExistente : productosExistentes) {
             productoVentaRepositorio.deleteById(productoExistente.getId());
         }
 
-        for(ProductoVenta productoNuevo : productos){
+        for (ProductoVenta productoNuevo : productos) {
             productoNuevo.setVenta(ventaExistente);
             productoVentaRepositorio.save(productoNuevo);
         }

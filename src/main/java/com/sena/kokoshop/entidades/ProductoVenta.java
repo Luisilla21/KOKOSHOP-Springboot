@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,7 +16,7 @@ public class ProductoVenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idVenta", nullable = false)
     private Venta venta;
 
@@ -25,21 +24,20 @@ public class ProductoVenta {
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
 
-
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
     public ProductoVenta() {
     }
 
-    public ProductoVenta(Long id, Venta venta, Producto producto,  Integer cantidad) {
+    public ProductoVenta(Long id, Venta venta, Producto producto, Integer cantidad) {
         this.id = id;
         this.venta = venta;
         this.producto = producto;
         this.cantidad = cantidad;
     }
 
-    public ProductoVenta(Venta venta, Producto producto,  Integer cantidad) {
+    public ProductoVenta(Venta venta, Producto producto, Integer cantidad) {
         this.venta = venta;
         this.producto = producto;
         this.cantidad = cantidad;

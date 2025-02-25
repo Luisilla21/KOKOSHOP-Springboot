@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -22,11 +25,11 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVenta;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idCli", nullable = false)
     private Usuario cliente;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idEmp", nullable = false)
     private Empleado empleado;
 
@@ -34,6 +37,7 @@ public class Venta {
     private Float precioTotal;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaVenta;
 
     @Column(nullable = false, length = 20)
@@ -45,10 +49,11 @@ public class Venta {
     @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
     private List<ProductoVenta> productos = new ArrayList<>();
 
-    public Venta(){
+    public Venta() {
     }
 
-    public Venta(Long idVenta, Usuario cliente, Empleado empleado, Float precioTotal, Date fechaVenta, String tipoVenta, String estadoVenta, List<ProductoVenta> productos) {
+    public Venta(Long idVenta, Usuario cliente, Empleado empleado, Float precioTotal, Date fechaVenta, String tipoVenta,
+            String estadoVenta, List<ProductoVenta> productos) {
         this.idVenta = idVenta;
         this.cliente = cliente;
         this.empleado = empleado;
@@ -60,7 +65,8 @@ public class Venta {
 
     }
 
-    public Venta(Usuario cliente, Empleado empleado, Float precioTotal, Date fechaVenta, String tipoVenta, String estadoVenta, List<ProductoVenta> productos) {
+    public Venta(Usuario cliente, Empleado empleado, Float precioTotal, Date fechaVenta, String tipoVenta,
+            String estadoVenta, List<ProductoVenta> productos) {
         this.cliente = cliente;
         this.empleado = empleado;
         this.precioTotal = precioTotal;
@@ -133,8 +139,5 @@ public class Venta {
     public void setProductos(List<ProductoVenta> productos) {
         this.productos = productos;
     }
-
-
-
 
 }

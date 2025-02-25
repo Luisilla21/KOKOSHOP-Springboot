@@ -102,6 +102,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <a class="navbar-brand" href="#">Listado de Ventas</a>
@@ -137,29 +138,28 @@
                     <th>ID</th>
                     <th>Cliente</th>
                     <th>Empleado</th>
-                    <th>Cantidad</th>
                     <th>Precio Total</th>
                     <th>Fecha de Venta</th>
-                    <th>Producto Vendido</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="ventaProducto : ${ventasProductos}">
-                    <td th:text="${ventaProducto.idVenta}">ID</td>
-                    <td th:text="${ventaProducto.cliente}">Cliente</td>
-                    <td th:text="${ventaProducto.empleado}">Empleado</td>
-                    <td th:text="${ventaProducto.cantidad}">Cantidad</td>
-                    <td th:text="${ventaProducto.precioTotal}">Precio Total</td>
-                    <td th:text="${ventaProducto.fechaVenta}">Fecha de Venta</td>
-                    <td th:text="${ventaProducto.productoVendido}">Producto Vendido</td>
+                    <td th:text="${ventaProducto.venta.idVenta}">ID</td>
+                    <td th:text="${ventaProducto.venta.cliente.nombre}">Cliente</td>
+                    <td th:text="${ventaProducto.venta.empleado.usuario.nombre}">Empleado</td>
+                    <td th:text="${ventaProducto.venta.precioTotal}">Precio Total</td>
+                    <td th:text="${ventaProducto.venta.fechaVenta}">Fecha de Venta</td>
                     <td>
-                        <a th:href="@{/ventas/editar/{id}(id=${ventaProducto.idVenta})}" class="btn btn-info">Editar</a>
-                        <a th:href="@{/ventas/{id}(id=${ventaProducto.idVenta})}" class="btn btn-danger">Eliminar</a>
+                        <a th:href="@{/ventas/editar/{id}(id=${ventaProducto.venta.idVenta})}"
+                            class="btn btn-info">Editar</a>
+                        <a th:href="@{/ventas/{id}(id=${ventaProducto.venta.idVenta})}"
+                            class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </body>
+
 </html>

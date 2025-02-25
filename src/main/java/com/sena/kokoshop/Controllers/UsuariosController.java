@@ -63,4 +63,14 @@ public class UsuariosController {
         }
         return "index"; // Asegúrate de que la vista "index.html" exista
     }
+
+     @GetMapping("/nosotros")
+    public String nosotros() {
+        return "nosotros";
+    }
+
+    @GetMapping("/asesoria")
+    public String asesoria() {
+        return "asesoria";
+    }
 }

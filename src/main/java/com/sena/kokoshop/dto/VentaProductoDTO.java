@@ -8,15 +8,15 @@ import com.sena.kokoshop.entidades.ProductoVenta;
 
 public class VentaProductoDTO {
     private Venta venta;
-    private List<ProductoVenta> productos = new ArrayList<>();
+    private List<ProductoVenta> productosVenta = new ArrayList<>();
 
     public VentaProductoDTO(){
 
     }
 
-    public VentaProductoDTO(Venta venta, List<ProductoVenta> productos) {
+    public VentaProductoDTO(Venta venta, List<ProductoVenta> productosVenta) {
         this.venta = venta;
-        this.productos = productos;
+        this.productosVenta = productosVenta;
     }
 
     public Venta getVenta() {
@@ -27,12 +27,16 @@ public class VentaProductoDTO {
         this.venta = venta;
     }
 
-    public List<ProductoVenta> getProductos() {
-        return productos;
+    public List<ProductoVenta> getProductosVenta() {
+        return productosVenta;
     }
 
-    public void setProductos(List<ProductoVenta> productos) {
-        this.productos = productos;
+    public void setProductos(List<ProductoVenta> productosVenta) {
+        this.productosVenta = productosVenta;
+    }
+
+    public Long getVentaId(){
+        return venta.getIdVenta();
     }
 
     

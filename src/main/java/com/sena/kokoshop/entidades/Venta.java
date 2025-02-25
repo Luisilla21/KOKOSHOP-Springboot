@@ -31,7 +31,7 @@ public class Venta {
     private Empleado empleado;
 
     @Column(nullable = false)
-    private Float precioTatal;
+    private Float precioTotal;
 
     @Column(nullable = false)
     private Date fechaVenta;
@@ -48,11 +48,11 @@ public class Venta {
     public Venta(){
     }
 
-    public Venta(Long idVenta, Usuario cliente, Empleado empleado, Float precioTatal, Date fechaVenta, String tipoVenta, String estadoVenta, List<ProductoVenta> productos) {
+    public Venta(Long idVenta, Usuario cliente, Empleado empleado, Float precioTotal, Date fechaVenta, String tipoVenta, String estadoVenta, List<ProductoVenta> productos) {
         this.idVenta = idVenta;
         this.cliente = cliente;
         this.empleado = empleado;
-        this.precioTatal = precioTatal;
+        this.precioTotal = precioTotal;
         this.fechaVenta = fechaVenta;
         this.tipoVenta = tipoVenta;
         this.estadoVenta = estadoVenta;
@@ -60,10 +60,10 @@ public class Venta {
 
     }
 
-    public Venta(Usuario cliente, Empleado empleado, Float precioTatal, Date fechaVenta, String tipoVenta, String estadoVenta, List<ProductoVenta> productos) {
+    public Venta(Usuario cliente, Empleado empleado, Float precioTotal, Date fechaVenta, String tipoVenta, String estadoVenta, List<ProductoVenta> productos) {
         this.cliente = cliente;
         this.empleado = empleado;
-        this.precioTatal = precioTatal;
+        this.precioTotal = precioTotal;
         this.fechaVenta = fechaVenta;
         this.tipoVenta = tipoVenta;
         this.estadoVenta = estadoVenta;
@@ -94,12 +94,12 @@ public class Venta {
         this.empleado = empleado;
     }
 
-    public Float getPrecioTatal() {
-        return precioTatal;
+    public Float getPrecioTotal() {
+        return precioTotal;
     }
 
-    public void setPrecioTatal(Float precioTatal) {
-        this.precioTatal = precioTatal;
+    public void setPrecioTotal(Float precioTotal) {
+        this.precioTotal = precioTotal;
     }
 
     public Date getFechaVenta() {

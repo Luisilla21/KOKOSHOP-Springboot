@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sena.kokoshop.dto.VentaProductoDTO;
+import com.sena.kokoshop.entidades.ProductoVenta;
 import com.sena.kokoshop.entidades.Venta;
+import com.sena.kokoshop.interfaz.EmpleadoInterfaz;
+import com.sena.kokoshop.interfaz.ProductoInterfaz;
+import com.sena.kokoshop.interfaz.UsuarioInterfaz;
+import com.sena.kokoshop.service.UsuarioEmpleadoService;
 import com.sena.kokoshop.service.VentaProductoService;
 
 @Controller
@@ -17,6 +22,15 @@ public class VentaController {
 
     @Autowired
     private VentaProductoService ventaService;
+
+    @Autowired
+    private UsuarioInterfaz usuarioInterfaz;
+
+    @Autowired
+    private EmpleadoInterfaz empleadoInterfaz;
+
+    @Autowired
+    private ProductoInterfaz productoInterfaz;
 
     @GetMapping("/ventas")
     public String listarVentas(Model modelo) {
@@ -27,7 +41,12 @@ public class VentaController {
     @GetMapping("/ventas/nueva")
     public String crearVentaFormulario(Model modelo) {
         VentaProductoDTO ventaProductoDTO = new VentaProductoDTO();
+        ventaProductoDTO.getProductosVenta().add(new ProductoVenta());
+
         modelo.addAttribute("ventaProductoDTO", ventaProductoDTO);
+        modelo.addAttribute("clientes", usuarioInterfaz.listarTodosLosUsuarios());
+        modelo.addAttribute("empleados", empleadoInterfaz.listarTodosLosEmpleados());
+        modelo.addAttribute("productos", productoInterfaz.listarTodosLosProductos());
         return "ventas/crear_venta";
     }
 
@@ -45,13 +64,13 @@ public class VentaController {
             return "redirect:/ventas";
         }
         modelo.addAttribute("ventaProductoDTO", vDto);
-        modelo.addAttribute("venta", vDto.getVenta()); // Asegúrate de pasar el objeto venta al modelo
         return "ventas/editar_venta";
     }
 
     @PostMapping("/ventas/actualizar/{idVenta}")
-    public String actualizarVenta(@PathVariable Long idVenta, @ModelAttribute("venta") Venta venta) {
-        ventaService.actualizarVenta(venta);
+    public String actualizarVenta(@PathVariable Long idVenta,
+            @ModelAttribute("ventaProductoDTO") VentaProductoDTO vDTO) {
+        ventaService.actualizarVenta(vDTO);
         return "redirect:/ventas";
     }
 
@@ -59,5 +78,11 @@ public class VentaController {
     public String eliminarVenta(@PathVariable Long id) {
         ventaService.eliminarVentaProductos(id);
         return "redirect:/ventas";
+    }
+
+    @GetMapping("ventas/nuevo-producto")
+    public String nuevoProductoFragment(Model model) {
+        model.addAttribute("productoVenta", new ProductoVenta());
+        return "fragments :: nuevo-producto";
     }
 }

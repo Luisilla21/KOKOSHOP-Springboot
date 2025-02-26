@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explora Kokoshop: la tienda online para encontrar las mejores prendas de moda. ¡Novedades, personalización y beneficios exclusivos!">
+    <meta name="description"
+        content="Explora Kokoshop: la tienda online para encontrar las mejores prendas de moda. ¡Novedades, personalización y beneficios exclusivos!">
     <meta name="keywords" content="moda femenina, tienda online, ropa personalizada, estilo único, Kokoshop">
     <meta name="cache-control" content="no-cache">
     <title>KOKOSHOP | Tu Estilo Único</title>
@@ -182,8 +184,8 @@
 </head>
 
 <body>
-     <!-- Incluir el fragmento de la barra de navegación -->
-     <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Incluir el fragmento de la barra de navegación -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
     <br>
     <div class="nav-bar">
         <nav class="main-menu">
@@ -196,200 +198,37 @@
 
     <section class="catalogo">
         <h1>Catálogo</h1>
-        
+
         <!-- Buscador -->
         <div class="search-container">
-            <input type="text" 
-                   class="search-box" 
-                   id="searchBox" 
-                   placeholder="Buscar productos por nombre, tipo o precio..."
-                   autocomplete="off">
+            <input type="text" class="search-box" id="searchBox"
+                placeholder="Buscar productos por nombre, tipo o precio..." autocomplete="off">
         </div>
+
+
         <div class="productos">
-           <!-- Producto 1 -->
-<div class="producto">
-    <a href="producto_falda.html">
-        <img th:src="@{images/faldacuero.jpg}" alt="Falda de Cuero" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_falda.html">Falda de Cuero</a>
-        <span class="precio">$ 50,000</span>
-    </div>
-</div>
 
-<!-- Producto 2 -->
-<div class="producto">
-    <a href="vistaProductos.html">
-        <img th:src="@{images/chaquetaCuero.png}" alt="Chaqueta de Cuero" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_chaqueta_cuero.html">Chaqueta de Cuero</a>
-        <span class="precio">$ 70,000</span>
-    </div>
-</div>
+            <div th:each="producto : ${productos}" class="producto">
+                <a href="producto_falda.html">
+                    <img alt="img" class="img-producto">
+                </a>
+                <div class="text-product">
+                    <span th:text="${producto.producNom}" th:value="${producto.producNom}" class="nom-producto"
+                        href="">nombrre</span>
+                    <span th:text="${producto.producPrecio}" th:value="${producto.producNom}"
+                        class="precio">precio</span>
+                </div>
+            </div>
 
-<!-- Producto 3 -->
-<div class="producto">
-    <a href="producto_jean.html">
-        <img th:src="@{images/pantalon_mezclilla.png}" alt="Pantalón de Mezclilla" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_jean.html">Pantalón de Mezclilla</a>
-        <span class="precio">$ 55,000</span>
-    </div>
-</div>
-
-<!-- Producto 4 -->
-<div class="producto">
-    <a href="producto_airforce.html">
-        <img th:src="@{images/af1.webp}" alt="Air Force One" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_airforce.html">Air Force One</a>
-        <span class="precio">$ 100,000</span>
-    </div>
-</div>
-
-<!-- Producto 5 -->
-<div class="producto">
-    <a href="producto_faldaCargoPana.html">
-        <img th:src="@{images/faldaCargoPana.png}" alt="falda Cargo Pana" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_faldaCargoPana.html">falda Cargo Pana</a>
-        <span class="precio">$ 75,000</span>
-    </div>
-</div>
-
-<!-- Producto 6 -->
-<div class="producto">
-    <a href="producto_faldaGloboCorazon.html">
-        <img th:src="@{images/faldaGloboCorazon.png}" alt="falda globo con detalle de corazon" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_faldaGloboCorazon.html">falda globo y blusa con detalle de corazon</a>
-        <span class="precio">$ 70,000</span>
-    </div>
-</div>
-
-<!-- Producto 7 -->
-<div class="producto">
-    <a href="producto_vestidoBengalina.html">
-        <img th:src="@{images/vestidoBengalina.png}" alt="Vestido Bengalina" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_vestidoBengalina.html">vestido Bengalina</a>
-        <span class="precio">$ 40,000</span>
-    </div>
-</div>
-
-<!-- Producto 8 -->
-<div class="producto">
-    <a href="producto_leguinsTipoCuero.html">
-        <img th:src="@{images/leguinsTipoCuero.png}" alt="leguins Tipo Cuero" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_leguinsTipoCuero.html">leguins Tipo Cuero</a>
-        <span class="precio">$ 80,000</span>
-    </div>
-</div>
-
-<!-- Producto 9 -->
-<div class="producto">
-    <a href="producto_faldaCueroPitillo.html">
-        <img th:src="@{images/faldaCueroPitillo.png}" alt="falda Cuerpo tipo Pitillo" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_faldaCueroPitillo.html">falda de cuero tipo pitillo</a>
-        <span class="precio">$ 68,000</span>
-    </div>
-</div>
-
-<!-- Producto 10 -->
-<div class="producto">
-    <a href="producto_chalecoDeViena.html">
-        <img th:src="@{images/chalecoDeViena.png}" alt="chaleco De Viena" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_chalecoDeViena.html">Chaleco de Viena</a>
-        <span class="precio">$ 65,000</span>
-    </div>
-</div>
-
-<!-- Producto 11 -->
-<div class="producto">
-    <a href="producto_blusaCorazon.html">
-        <img th:src="@{images/BlusaCorazon.png}" alt="Blusa Corazon" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_blusaCorazon.html">Blusa con detalle de corazon</a>
-        <span class="precio">$ 40,000</span>
-    </div>
-</div>
-
-<!-- Producto 12 -->
-<div class="producto">
-    <a href="producto_shortCuero.html">
-        <img th:src="@{images/shortCuero.png}" alt="short Cuero" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_shortCuero.html">Short tipo cuero</a>
-        <span class="precio">$ 50,000</span>
-    </div>
-</div>
-
-<!-- Producto 13 -->
-<div class="producto">
-    <a href="producto_AdidasSamba.html">
-        <img th:src="@{images/adidaSamba.png}" alt="Adidas Samba" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_AdidasSamba.html">Adidas Samba</a>
-        <span class="precio">$ 100,000</span>
-    </div>
-</div>
-
-<!-- Producto 14 -->
-<div class="producto">
-    <a href="producto_pantalonCampana.html">
-        <img th:src="@{images/pantalonCampana.png}" alt="Pantalon Campana" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_pantalonCampana.html">Pantalon tipo Campana</a>
-        <span class="precio">$ 80,000</span>
-    </div>
-</div>
-
-<!-- Producto 15 -->
-<div class="producto">
-    <a href="producto_nikeJordan.html">
-        <img th:src="@{images/nikeJordan.png}" alt="Nike Jordan" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_nikeJordan.html">Nike Jordan</a>
-        <span class="precio">$ 120,000</span>
-    </div>
-</div>
-
-<!-- Producto 16 -->
-<div class="producto">
-    <a href="producto_vestidoPlizado.html">
-        <img th:src="@{images/vestidoPlizado.png}" alt="vestido Plizado" class="img-producto">
-    </a>
-    <div class="text-product">
-        <a class="nom-producto" href="producto_vestidoPlizado.html">Vestido de plizado</a>
-        <span class="precio">$ 55,000</span>
-    </div>
-</div>
         </div>
 
     </section>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const searchBox = document.getElementById('searchBox');
             const productos = document.querySelectorAll('.producto');
 
-            searchBox.addEventListener('input', function(e) {
+            searchBox.addEventListener('input', function (e) {
                 const searchTerm = e.target.value.toLowerCase();
 
                 productos.forEach(producto => {
@@ -413,4 +252,5 @@
     <!-- Bootstrap JS (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

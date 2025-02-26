@@ -129,8 +129,8 @@
 </head>
 
 <body>
- <!-- Incluir el fragmento de la barra de navegación -->
- <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Incluir el fragmento de la barra de navegación -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <a class="navbar-brand" href="#">Registro de empleados</a>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
@@ -193,8 +193,8 @@
                         <br>
                         <div class="form-group">
                             <label>Correo Electrónico:</label>
-                            <input type="text" name="correoElectronico" th:field="*{usuario.correoElectronico}"
-                                class="form-control" placeholder="Digite el precio del producto:" required>
+                            <input type="text" name="email" th:field="*{usuario.email}" class="form-control"
+                                placeholder="Digite el precio del producto:" required>
                         </div>
                         <br>
                         <div class="form-group">

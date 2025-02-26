@@ -212,12 +212,14 @@
                 <a href="producto_falda.html">
                     <img alt="img" class="img-producto">
                 </a>
-                <div class="text-product">
-                    <span th:text="${producto.producNom}" th:value="${producto.producNom}" class="nom-producto"
-                        href="">nombrre</span>
-                    <span th:text="${producto.producPrecio}" th:value="${producto.producNom}"
-                        class="precio">precio</span>
-                </div>
+                <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
+                    <div class="text-product">
+                        <span th:text="${producto.producNom}" th:value="${producto.producNom}" class="nom-producto"
+                            href="">nombrre</span>
+                        <span th:text="${producto.producPrecio}" th:value="${producto.producNom}"
+                            class="precio">precio</span>
+                    </div>
+                </a>
             </div>
 
         </div>

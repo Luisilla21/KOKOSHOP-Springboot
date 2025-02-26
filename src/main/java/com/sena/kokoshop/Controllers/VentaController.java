@@ -85,4 +85,6 @@ public class VentaController {
         model.addAttribute("productoVenta", new ProductoVenta());
         return "fragments :: nuevo-producto";
     }
+
+    
 }

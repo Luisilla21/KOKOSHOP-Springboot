@@ -1,208 +1,372 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KokoShop</title>
-    
+
     <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #1e1e1e; /* Fondo oscuro */
-    color: #f5f5f5; /* Texto claro */
-}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #1e1e1e;
+            /* Fondo oscuro */
+            color: #f5f5f5;
+            /* Texto claro */
+        }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #8a72a3; /* Color morado inspirado */
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #8a72a3;
+            /* Color morado inspirado */
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-}
+        /* Navbar */
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Sombra sutil debajo del navbar */
+        }
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    margin: 0;
-    padding: 0;
-}
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-}
+        .nav-link {
+            font-size: 1rem;
+            text-transform: capitalize;
+        }
 
-.nav-links a:hover {
-    color: #ffc0cb; /* Rosa suave para el hover */
-}
-
-.auth-links a {
-    text-decoration: none;
-    color: white;
-    margin-left: 15px;
-    font-size: 16px;
-}
-
-.auth-links a:hover {
-    color: #ffc0cb; /* Rosa suave para el hover */
-}
-
-.main-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #8a72a3, #ffc0cb);
-    min-height: calc(100vh - 70px);
-}
-
-.product-container {
-    display: flex;
-    gap: 20px;
-    max-width: 800px;
-    background-color: #2a2a2a; /* Fondo oscuro para los productos */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 1.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.product-image img {
-    width: 300px;
-    border-radius: 8px;
-    border: 2px solid #8a72a3; /* Borde morado */
-}
-
-.product-details {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.product-title {
-    font-size: 24px;
-    margin: 0;
-    color: #ffc0cb; /* Título rosa suave */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.product-price {
-    font-size: 20px;
-    color: #fff;
-    font-weight: bold;
-}
-
-label {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.product-size {
-    padding: 5px;
-    font-size: 16px;
-    background-color: #1e1e1e;
-    color: white;
-    border: 1px solid #8a72a3; /* Borde morado */
-    border-radius: 5px;
-}
-
-.quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.quantity-btn {
-    background-color: #8a72a3; /* Morado */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.quantity-btn:hover {
-    background-color: #6b5986; /* Morado más oscuro para hover */
-}
-
-#quantity {
-    width: 50px;
-    text-align: center;
-    font-size: 16px;
-    padding: 5px;
-    background-color: #1e1e1e;
-    color: white;
-    border: 1px solid #8a72a3; /* Borde morado */
-}
-
-.buy-now {
-    background-color: #4CAF50; /* Verde */
-    color: white;
-    border: none;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s;
-}
-
-.buy-now:hover {
-    background-color: #45a049; /* Verde más oscuro para hover */
-    transform: scale(1.05);
-}
-
-.footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #8a72a3; /* Fondo morado */
-    color: white;
-    margin-top: 20px;
-    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
-    position: relative;
-}
-
-.footer::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 0;
-    width: 100%;
-    height: 10px;
-    background: linear-gradient(90deg, #ffc0cb, #8a72a3);
-}
+        /* Header */
+        h1 {
+            font-weight: bold;
+            margin-top: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 3px solid #000000;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
 
 
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+
+        .nav-links a:hover {
+            color: #ffc0cb;
+            /* Rosa suave para el hover */
+        }
+
+        .auth-links a {
+            text-decoration: none;
+            color: white;
+            margin-left: 15px;
+            font-size: 16px;
+        }
+
+        .auth-links a:hover {
+            color: #ffc0cb;
+            /* Rosa suave para el hover */
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #8a72a3, #ffc0cb);
+            min-height: calc(100vh - 70px);
+        }
+
+        .product-container {
+            display: flex;
+            gap: 20px;
+            max-width: 800px;
+            background-color: #2a2a2a;
+            /* Fondo oscuro para los productos */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .product-image img {
+            width: 300px;
+            border-radius: 8px;
+            border: 2px solid #8a72a3;
+            /* Borde morado */
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            margin: 0;
+            color: #ffc0cb;
+            /* Título rosa suave */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .product-size {
+            padding: 5px;
+            font-size: 16px;
+            background-color: #1e1e1e;
+            color: white;
+            border: 1px solid #8a72a3;
+            /* Borde morado */
+            border-radius: 5px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background-color: #8a72a3;
+            /* Morado */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background-color: #6b5986;
+            /* Morado más oscuro para hover */
+        }
+
+        #quantity {
+            width: 50px;
+            text-align: center;
+            font-size: 16px;
+            padding: 5px;
+            background-color: #1e1e1e;
+            color: white;
+            border: 1px solid #8a72a3;
+            /* Borde morado */
+        }
+
+        .buy-now {
+            background-color: #4CAF50;
+            /* Verde */
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .buy-now:hover {
+            background-color: #45a049;
+            /* Verde más oscuro para hover */
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #8a72a3;
+            /* Fondo morado */
+            color: white;
+            margin-top: 20px;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #ffc0cb, #8a72a3);
+        }
+
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #c9a4a4, #391f53);
+            /* Color de fondo claro */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Sombra sutil debajo del navbar */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            font-size: 1rem;
+            text-transform: capitalize;
+        }
+
+        /* Header */
+        h1 {
+            font-weight: bold;
+            margin-top: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 3px solid #000000;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 50px;
+            /* Bordes redondeados */
+            padding: 8px 20px;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            /* Efecto hover */
+            opacity: 0.9;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        /* Table */
+        .table {
+            margin-top: 20px;
+        }
+
+        .table th {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+            /* Sutil cambio de color al pasar el ratón */
+        }
+
+        .table td,
+        .table th {
+            text-align: center;
+            /* Centrar contenido */
+            vertical-align: middle;
+            /* Alinear verticalmente */
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 0;
+            margin-top: 30px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .btn {
+                padding: 6px 16px;
+            }
+
+            .table {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 
 
 <body>
-     <!-- Incluir el fragmento de la barra de navegación -->
-     <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Incluir el fragmento de la barra de navegación -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
     <header class="header">
 
     </header>
@@ -210,24 +374,16 @@ label {
     <main class="main-content">
         <div class="product-container">
             <div class="product-image">
-                <img src="imagenes/chaquetaCuero.png" alt="Chaqueta de cuero">
+                <img src="imagenes/chaquetaCuero.png" th:alt="${producto.producNom}">
             </div>
             <div class="product-details">
-                <h1 class="product-title">Chaqueta de cuero</h1>
-                <p class="product-price">$ 63,000 COP</p>
-
-                <label for="size">Tamaño</label>
-                <select id="size" class="product-size">
-                    <option value="XS">XS</option>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                </select>
+                <h1 class="product-title" th:text="${producto.producNom}">Chaqueta de cuero</h1>
+                <p class="product-price" th:text="${producto.producPrecio}">$ 63,000 COP</p>
 
                 <label for="quantity">Cantidad</label>
                 <div class="quantity-controls">
                     <button class="quantity-btn">-</button>
-                    <input id="quantity" type="number" value="1" min="1">
+                    <input id="quantity" type="number" value="1" min="1" th:max="${producto.cantidad}">
                     <button class="quantity-btn">+</button>
                 </div>
 
@@ -236,4 +392,5 @@ label {
         </div>
     </main>
 </body>
+
 </html>

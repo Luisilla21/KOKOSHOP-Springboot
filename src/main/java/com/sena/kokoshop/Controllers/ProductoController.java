@@ -77,13 +77,22 @@ public class ProductoController {
 
     @PostMapping("/productos/actualizar/{idProducto}")
     public String actualizarProducto(@PathVariable Long idProducto,
-            @ModelAttribute("producto") Producto producto) {
+            @ModelAttribute("producto") Producto producto,
+            @RequestParam("imagenForm") MultipartFile imagenForm) {
         Producto productoExistente = interfaz.obtenerProductoPorId(idProducto);
         if (productoExistente != null) {
             productoExistente.setProducNom(producto.getProducNom());
             productoExistente.setProducPrecio(producto.getProducPrecio());
             productoExistente.setTipoPrenda(producto.getTipoPrenda());
             productoExistente.setCantidad(producto.getCantidad());
+            if (!imagenForm.isEmpty()) {
+                try {
+                    productoExistente.setImagen(imagenForm.getBytes());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "error";
+                }
+            }
             interfaz.actualizarProducto(productoExistente);
         }
         return "redirect:/productos/";

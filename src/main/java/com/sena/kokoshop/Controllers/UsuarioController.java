@@ -67,6 +67,7 @@ public class UsuarioController {
             usuarioExistente.setDireccion(usuario.getDireccion());
             usuarioExistente.setCiudad(usuario.getCiudad());
             usuarioExistente.setEmail(usuario.getEmail());
+            usuarioExistente.setPassword(usuario.getPassword());
             usuarioExistente.setTelefono(usuario.getTelefono());
             usuarioExistente.setCompras(usuario.getCompras());
             interfaz.actualizarUsuario(usuarioExistente);

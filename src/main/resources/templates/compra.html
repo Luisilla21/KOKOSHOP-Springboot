@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Pago</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #c9a4a4, #391f53);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: #ffffff;
+            padding: 30px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #6a11cb;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #6a11cb;
+            border-color: #6a11cb;
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #c9a4a4;
+            border-color: #c9a4a4;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        .mensaje {
+            display: none;
+            margin-top: 15px;
+            color: #28a745;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card">
+            <h3 class="card-title">Formulario de pago</h3>
+            <form id="pagoForm">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre Completo" required>
+
+                <label class="form-label">Número de Contacto</label>
+                <input type="tel" class="form-control" placeholder="Número de Contacto" required>
+
+                <label class="form-label">Dirección</label>
+                <input type="text" class="form-control" placeholder="Dirección" required>
+
+                <label class="form-label">Ciudad</label>
+                <input type="text" class="form-control" placeholder="Ciudad" required>
+
+                <label class="form-label">Monto a Pagar</label>
+                <input type="number" class="form-control" placeholder="Monto a Pagar" required>
+
+                <button type="submit" class="btn btn-primary">Pagar con Nequi</button>
+            </form>
+            <p class="mensaje" id="mensaje">El envío se confirmará una vez recibido el pago.</p>
+        </div>
+    </div>
+    <script>
+        document.getElementById("pagoForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            document.getElementById("mensaje").style.display = "block";
+        });
+    </script>
+</body>
+
+</html>

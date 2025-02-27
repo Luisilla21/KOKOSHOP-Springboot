@@ -18,6 +18,19 @@ public class Rol {
     @ManyToMany(mappedBy = "roles")
     private List<Usuario> usuario;
 
+    public Rol() {}
+
+    public Rol(String nombre, List<Usuario> usuario) {
+        this.nombre = nombre;
+        this.usuario = usuario;
+    }
+
+    public Rol(Long id, String nombre, List<Usuario> usuario) {
+        this.id = id;
+        this.nombre = nombre;
+        this.usuario = usuario;
+    }
+
     // Getters y Setters
     public Long getId() {
         return id;
@@ -34,4 +47,15 @@ public class Rol {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public List<Usuario> getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(List<Usuario> usuario) {
+        this.usuario = usuario;
+    }
+
+    
+
 }

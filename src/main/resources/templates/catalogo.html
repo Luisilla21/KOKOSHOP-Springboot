@@ -210,7 +210,7 @@
 
             <div th:each="producto : ${productos}" class="producto">
                 <a href="producto_falda.html">
-                    <img alt="img" class="img-producto">
+                    <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}"  class="img-producto">
                 </a>
                 <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
                     <div class="text-product">

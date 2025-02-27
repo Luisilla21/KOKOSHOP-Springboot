@@ -130,8 +130,8 @@
 </head>
 
 <body>
- <!-- Incluir el fragmento de la barra de navegación -->
- <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Incluir el fragmento de la barra de navegación -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <a class="navbar-brand" href="#">Control de Productos</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -169,6 +169,7 @@
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
+                    <th>Imagen</th>
                     <th>Tipo de Prenda</th>
                     <th>Acciones</th>
                 </tr>
@@ -177,8 +178,12 @@
                 <tr th:each="producto : ${productos}">
                     <td th:text="${producto.producNom}">Nombre</td>
 
-                    <td v>Precio</td>
+                    <td th:text="${producto.producPrecio}">Precio</td>
+
                     <td th:text="${producto.cantidad}"></td>
+                    <td><img th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-fluid"
+                            style="max-height: 100px;" alt="">
+                    </td>
                     <td th:text="${producto.tipoPrenda}">Tipo de Prenda</td>
                     <td>
 

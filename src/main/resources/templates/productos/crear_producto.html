@@ -128,7 +128,7 @@
 
 <body>
     <!-- Incluir el fragmento de la barra de navegación -->
-    <div th:replace="~{fragments/navbar :: navbar}"></div> 
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Registro de productos</a>
@@ -146,22 +146,23 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
                 <div class="card-body">
-                    <form th:action="@{/productos/}" th:object="${producto}" method="post">
+                    <form th:action="@{/productos/}" enctype="multipart/form-data" method="post">
                         <h1 class="text-center" id="registro-de-productos">Registro de productos</h1>
 
                         <div class="form-group mb-3">
                             <label>Nombre:</label>
-                            <input type="text" class="form-control" th:field="*{producNom}" required>
+                            <input type="text" class="form-control" th:field="*{producto.producNom}" required>
                         </div>
 
                         <div class="form-group mb-3">
                             <label>Precio:</label>
-                            <input type="number" step="0.01" class="form-control" th:field="*{producPrecio}" required>
+                            <input type="number" step="0.01" class="form-control" th:field="*{producto.producPrecio}"
+                                required>
                         </div>
 
                         <div class="form-group mb-3">
                             <label>Tipo de Prenda:</label>
-                            <select class="form-control" th:field="*{tipoPrenda}" required>
+                            <select class="form-control" th:field="*{producto.tipoPrenda}" required>
                                 <option value="">Seleccionar</option>
                                 <optgroup label="Prenda Superior">
                                     <option value="Camisetas">Camisetas</option>
@@ -191,8 +192,14 @@
 
                         <div class="form-group mb-3">
                             <label>Cantidad:</label>
-                            <input type="number" step="0.01" class="form-control" th:field="*{cantidad}" required>
+                            <input type="number" step="0.01" class="form-control" th:field="*{producto.cantidad}"
+                                required>
                         </div>
+                        <div class="form-group mb-3">
+                            <label>Imagen:</label>
+                            <input type="file" name="imagenForm" class="form-control" required>
+                        </div>
+
 
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Guardar</button>

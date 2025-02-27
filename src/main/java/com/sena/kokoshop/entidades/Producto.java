@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -32,6 +33,10 @@ public class Producto {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
+    @Lob
+    @Column(columnDefinition = "LONGBLOB") // Para imágenes grandes
+    private byte[] imagen;
+
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<ProductoVenta> productosVenta = new ArrayList<>();
 
@@ -41,22 +46,24 @@ public class Producto {
 
     // Constructor con todos los atributos, incluyendo idProducto
     public Producto(Long idProducto, String producNom, Float producPrecio, String tipoPrenda,
-            Integer cantidad, List<ProductoVenta> productosVenta) {
+            Integer cantidad, byte[] imagen, List<ProductoVenta> productosVenta) {
         this.idProducto = idProducto;
         this.producNom = producNom;
         this.producPrecio = producPrecio;
         this.tipoPrenda = tipoPrenda;
         this.cantidad = cantidad;
+        this.imagen = imagen;
         this.productosVenta = productosVenta;
     }
 
     // Constructor sin idProducto, ideal para nuevos productos
     public Producto(String producNom, Float producPrecio, String tipoPrenda,
-            Integer cantidad, List<ProductoVenta> productosVenta) {
+            Integer cantidad, byte[] imagen, List<ProductoVenta> productosVenta) {
         this.producNom = producNom;
         this.producPrecio = producPrecio;
         this.tipoPrenda = tipoPrenda;
         this.cantidad = cantidad;
+        this.imagen = imagen;
         this.productosVenta = productosVenta;
     }
 
@@ -114,6 +121,14 @@ public class Producto {
     public String toString() {
         return "Producto [idProducto=" + idProducto + ", producNom=" + producNom + ", producPrecio=" + producPrecio
                 + ", tipoPrenda=" + tipoPrenda + "]";
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 
 }

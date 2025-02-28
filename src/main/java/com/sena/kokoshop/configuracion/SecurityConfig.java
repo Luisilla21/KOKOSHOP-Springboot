@@ -37,7 +37,8 @@ public class SecurityConfig {
                 .requestMatchers("/", "/index", "/registro", "/login", 
                                "/catalogo", "/vistaProductos","/nosotros","/asesoria",
                                "/css/**", "/js/**", "/images/**",
-                               "/webjars/**", "/assets/**").permitAll()  // Agregados más recursos estáticos
+                               "/webjars/**", "/assets/**",
+                               "/productos/imagen/**", "/catalogo/producto/**").permitAll()  // Agregados más recursos estáticos
                 .anyRequest().authenticated())
             .formLogin(form -> form
                 .loginPage("/login")

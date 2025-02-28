@@ -1,5 +1,7 @@
 package com.sena.kokoshop.Controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.entidades.Usuario;
+import com.sena.kokoshop.interfaz.ProductoInterfaz;
 import com.sena.kokoshop.interfaz.UsuarioInterfaz;
 import com.sena.kokoshop.service.UsuarioService;
 
@@ -23,6 +27,10 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private ProductoInterfaz productoInterfaz;
+
 
     @GetMapping("/usuarios/")
     public String listarUsuarios(Model modelo) {
@@ -116,6 +124,11 @@ public class UsuarioController {
 
     @GetMapping("/index")
     public String mostrarPaginaDeInicio(@AuthenticationPrincipal User user, Model model) {
+                List<Producto> productos = productoInterfaz.listarTodosLosProductos();
+
+        List<Producto> productosLimitados = productos.stream().limit(4).toList();
+
+        model.addAttribute("productos", productosLimitados);
         if (user != null) {
             model.addAttribute("username", user.getUsername());
             model.addAttribute("isAuthenticated", true);

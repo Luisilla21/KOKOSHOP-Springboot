@@ -126,7 +126,7 @@
                                         th:field="*{productosVenta[__${stat.index}__].producto}">
                                         <option value="" selected>Seleccionar</option>
                                         <option th:each="producto : ${productos}" th:value="${producto.idProducto}"
-                                            th:text="${producto.producNom}"></option>
+                                        th:text="${producto.producNom + ' - ' + producto.producPrecio}"></option>                                    
                                     </select>
                                     <input type="number" class="form-control"
                                         th:field="*{productosVenta[__${stat.index}__].cantidad}" placeholder="Cantidad">

@@ -374,7 +374,7 @@
     <main class="main-content">
         <div class="product-container">
             <div class="product-image">
-                <img src="@{'/productos/imagen/' + ${producto.idProducto}}" th:alt="${producto.Imagen}">
+                <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
             </div>
             <div class="product-details">
                 <h1 class="product-title" th:text="${producto.producNom}">Chaqueta de cuero</h1>
@@ -393,5 +393,118 @@
         </div>
     </main>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const quantityInput = document.getElementById('quantity');
+        const decreaseBtn = document.getElementById('decrease-btn');
+        const increaseBtn = document.getElementById('increase-btn');
+        const maxQuantity = parseInt(quantityInput.getAttribute('max'));
 
+        // Función para actualizar la cantidad
+        function updateQuantity(newValue) {
+            // Asegurarse de que el valor esté dentro de los límites
+            if (newValue < 1) newValue = 1;
+            if (newValue > maxQuantity) newValue = maxQuantity;
+            
+            // Actualizar el valor
+            quantityInput.value = newValue;
+        }
+
+        // Evento para el botón de disminuir
+        decreaseBtn.addEventListener('click', function() {
+            const currentValue = parseInt(quantityInput.value);
+            updateQuantity(currentValue - 1);
+        });
+
+        // Evento para el botón de aumentar
+        increaseBtn.addEventListener('click', function() {
+            const currentValue = parseInt(quantityInput.value);
+            updateQuantity(currentValue + 1);
+        });
+
+        // Evento para validar entradas manuales
+        quantityInput.addEventListener('change', function() {
+            let value = parseInt(this.value);
+            if (isNaN(value)) value = 1;
+            updateQuantity(value);
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const quantityInput = document.getElementById('quantity');
+        const decreaseBtn = document.querySelector('.quantity-btn:first-child');
+        const increaseBtn = document.querySelector('.quantity-btn:last-child');
+        const maxQuantity = parseInt(quantityInput.getAttribute('max') || 10);
+        const buyNowBtn = document.querySelector('.buy-now');
+        const productoNombre = document.querySelector('.product-title').textContent;
+        
+        // Obtener el texto del precio
+        let productoPrecioText = document.querySelector('.product-price').textContent;
+        
+        // Extraer solo los números y puntos/comas para números decimales
+        // Primero reemplazamos comas por puntos para estandarizar
+        let precioLimpio = productoPrecioText.replace(/,/g, '.');
+        
+        // Luego extraemos el primer número válido que encontremos (incluidos decimales)
+        let match = precioLimpio.match(/\d+(\.\d+)?/);
+        let productoPrecio = match ? parseFloat(match[0]) : 0.0;
+
+        // Función para actualizar la cantidad
+        function updateQuantity(newValue) {
+            // Asegurarse de que el valor esté dentro de los límites
+            if (newValue < 1) newValue = 1;
+            if (newValue > maxQuantity) newValue = maxQuantity;
+            
+            // Actualizar el valor
+            quantityInput.value = newValue;
+        }
+
+        // Evento para el botón de disminuir
+        decreaseBtn.addEventListener('click', function() {
+            const currentValue = parseInt(quantityInput.value);
+            updateQuantity(currentValue - 1);
+        });
+
+        // Evento para el botón de aumentar
+        increaseBtn.addEventListener('click', function() {
+            const currentValue = parseInt(quantityInput.value);
+            updateQuantity(currentValue + 1);
+        });
+
+        // Evento para validar entradas manuales
+        quantityInput.addEventListener('change', function() {
+            let value = parseInt(this.value);
+            if (isNaN(value)) value = 1;
+            updateQuantity(value);
+        });
+
+        // Modificar el botón de compra para incluir todos los parámetros
+        if (buyNowBtn) {
+            buyNowBtn.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevenir navegación para poder modificar la URL
+                
+                // Obtener el href original
+                const originalHref = buyNowBtn.getAttribute('href');
+                
+                // Si el href ya tiene parámetros (usando Thymeleaf), preservamos el ID del producto
+                let baseUrl = originalHref;
+                if (baseUrl.includes('?')) {
+                    baseUrl = baseUrl.split('?')[0]; // Parte base de la URL
+                }
+                
+                // Construir la nueva URL con parámetros
+                const cantidad = quantityInput.value;
+                const newUrl = `${baseUrl}?cantidad=${cantidad}&precio=${productoPrecio}&nombre=${encodeURIComponent(productoNombre)}`;
+                
+                console.log("Precio original:", productoPrecioText);
+                console.log("Precio extraído como float:", productoPrecio);
+                console.log("URL de compra:", newUrl);
+                
+                // Navegar a la nueva URL
+                window.location.href = newUrl;
+            });
+        }
+    });
+</script>
 </html>

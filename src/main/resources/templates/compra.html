@@ -9,6 +9,7 @@
         body {
             background: linear-gradient(to right, #c9a4a4, #391f53);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
         }
 
         .card {
@@ -17,85 +18,382 @@
             overflow: hidden;
             background-color: #ffffff;
             padding: 30px;
-            width: 400px;
-            margin: auto;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            margin: 40px auto;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
         }
 
         .card-title {
             font-weight: bold;
             color: #6a11cb;
             text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
         }
 
         .btn-primary {
             background-color: #6a11cb;
             border-color: #6a11cb;
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
             color: white;
             font-size: 16px;
             cursor: pointer;
             border: none;
+            margin-top: 15px;
+            transition: all 0.3s ease;
         }
 
         .btn-primary:hover {
             background-color: #c9a4a4;
             border-color: #c9a4a4;
+            transform: scale(1.02);
         }
 
         .form-control {
             border-radius: 10px;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             border: 1px solid #ccc;
+            font-size: 15px;
         }
 
         .form-label {
             font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
         }
 
         .mensaje {
             display: none;
-            margin-top: 15px;
+            margin-top: 20px;
             color: #28a745;
             font-weight: bold;
             text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f1fff1;
+        }
+
+        /* Estilos para la factura */
+        .factura {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #eaeaea;
+        }
+
+        .factura-titulo {
+            text-align: center;
+            color: #391f53;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #c9a4a4;
+            padding-bottom: 10px;
+        }
+
+        .factura-detalle {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .factura-subtotal {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .factura-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #ddd;
+            font-weight: bold;
+            font-size: 16px;
+            color: #6a11cb;
+        }
+
+        /* Campo deshabilitado */
+        .form-control[readonly] {
+            background-color: #f2f2f2;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        /* Estilos para campos en una misma línea */
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Estilos para selectores */
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 15px;
+        }
+
+        /* Estilos para secciones del formulario */
+        .form-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .form-section-title {
+            font-weight: 600;
+            color: #391f53;
+            margin-bottom: 15px;
+            font-size: 16px;
         }
     </style>
 </head>
 
 <body>
-    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container">
         <div class="card">
             <h3 class="card-title">Formulario de pago</h3>
+            
+            <!-- Sección de factura -->
+            <div class="factura">
+                <div class="factura-titulo">Detalle de compra</div>
+                <div class="factura-detalle">
+                    <span>Producto:</span>
+                    <span id="nombre-producto">-</span>
+                </div>
+                <div class="factura-detalle">
+                    <span>Precio unitario:</span>
+                    <span id="precio-unitario">-</span>
+                </div>
+                <div class="factura-detalle">
+                    <span>Cantidad:</span>
+                    <span id="cantidad-productos">-</span>
+                </div>
+                <div class="factura-subtotal">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">-</span>
+                </div>
+                <div class="factura-detalle">
+                    <span>Costo de envío:</span>
+                    <span id="costo-envio">$ 10.000,00</span>
+                </div>
+                <div class="factura-total">
+                    <span>TOTAL:</span>
+                    <span id="precio-total">-</span>
+                </div>
+            </div>
+            
             <form id="pagoForm">
-                <label class="form-label">Nombre</label>
-                <input type="text" class="form-control" placeholder="Nombre Completo" required>
-
-                <label class="form-label">Número de Contacto</label>
-                <input type="tel" class="form-control" placeholder="Número de Contacto" required>
-
-                <label class="form-label">Dirección</label>
-                <input type="text" class="form-control" placeholder="Dirección" required>
-
-                <label class="form-label">Ciudad</label>
-                <input type="text" class="form-control" placeholder="Ciudad" required>
-
-                <label class="form-label">Monto a Pagar</label>
-                <input type="number" class="form-control" placeholder="Monto a Pagar" required>
-
-                <button type="submit" class="btn btn-primary">Pagar con Nequi</button>
+                <!-- Sección de Información Personal -->
+                <div class="form-section">
+                    <div class="form-section-title">Información Personal</div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Tipo de Documento</label>
+                            <select class="form-control" id="tipo-documento" required>
+                                <option value="">Seleccione</option>
+                                <option value="CC">Cédula de Ciudadanía</option>
+                                <option value="CE">Cédula de Extranjería</option>
+                                <option value="TI">Tarjeta de Identidad</option>
+                                <option value="PP">Pasaporte</option>
+                                <option value="NIT">NIT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Número de Documento</label>
+                            <input type="text" class="form-control" id="numero-documento" placeholder="Número de Documento" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="nombres" placeholder="Nombres" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" required>
+                        </div>
+                    </div>
+                    
+                    <label class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" placeholder="Correo Electrónico" required>
+                    
+                    <label class="form-label">Número de Contacto</label>
+                    <input type="tel" class="form-control" id="telefono" placeholder="Número de Contacto" required>
+                </div>
+                
+                <!-- Sección de Dirección de Entrega -->
+                <div class="form-section">
+                    <div class="form-section-title">Dirección de Entrega</div>
+                    
+                    <label class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" placeholder="Dirección" required>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="ciudad" placeholder="Ciudad" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Departamento</label>
+                            <select class="form-control" id="departamento" required>
+                                <option value="">Seleccione</option>
+                                <option value="Amazonas">Amazonas</option>
+                                <option value="Antioquia">Antioquia</option>
+                                <option value="Arauca">Arauca</option>
+                                <option value="Atlántico">Atlántico</option>
+                                <option value="Bogotá D.C.">Bogotá D.C.</option>
+                                <option value="Bolívar">Bolívar</option>
+                                <option value="Boyacá">Boyacá</option>
+                                <option value="Caldas">Caldas</option>
+                                <option value="Caquetá">Caquetá</option>
+                                <option value="Casanare">Casanare</option>
+                                <option value="Cauca">Cauca</option>
+                                <option value="Cesar">Cesar</option>
+                                <option value="Chocó">Chocó</option>
+                                <option value="Córdoba">Córdoba</option>
+                                <option value="Cundinamarca">Cundinamarca</option>
+                                <option value="Guainía">Guainía</option>
+                                <option value="Guaviare">Guaviare</option>
+                                <option value="Huila">Huila</option>
+                                <option value="La Guajira">La Guajira</option>
+                                <option value="Magdalena">Magdalena</option>
+                                <option value="Meta">Meta</option>
+                                <option value="Nariño">Nariño</option>
+                                <option value="Norte de Santander">Norte de Santander</option>
+                                <option value="Putumayo">Putumayo</option>
+                                <option value="Quindío">Quindío</option>
+                                <option value="Risaralda">Risaralda</option>
+                                <option value="San Andrés y Providencia">San Andrés y Providencia</option>
+                                <option value="Santander">Santander</option>
+                                <option value="Sucre">Sucre</option>
+                                <option value="Tolima">Tolima</option>
+                                <option value="Valle del Cauca">Valle del Cauca</option>
+                                <option value="Vaupés">Vaupés</option>
+                                <option value="Vichada">Vichada</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <label class="form-label">Código Postal</label>
+                    <input type="text" class="form-control" id="codigo-postal" placeholder="Código Postal">
+                    
+                    <label class="form-label">Indicaciones Adicionales</label>
+                    <textarea class="form-control" id="indicaciones" placeholder="Apartamento, oficina, punto de referencia, etc." rows="2"></textarea>
+                </div>
+                
+                <!-- Sección de Datos de Facturación -->
+                <div class="form-section">
+                    <div class="form-section-title">Datos de Facturación</div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">¿Requiere factura electrónica?</label>
+                            <select class="form-control" id="requiere-factura">
+                                <option value="no">No</option>
+                                <option value="si">Sí</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Régimen tributario</label>
+                            <select class="form-control" id="regimen-tributario">
+                                <option value="persona-natural">Persona Natural</option>
+                                <option value="responsable-iva">Responsable de IVA</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección de Pago -->
+                <div class="form-section">
+                    <div class="form-section-title">Datos de Pago</div>
+                    
+                    <label class="form-label">Monto a Pagar</label>
+                    <input type="text" class="form-control" id="monto-pagar" placeholder="Monto a Pagar" readonly>
+                    
+                    <button type="submit" class="btn btn-primary">Pagar con Nequi</button>
+                </div>
             </form>
             <p class="mensaje" id="mensaje">El envío se confirmará una vez recibido el pago.</p>
         </div>
     </div>
+    
     <script>
-        document.getElementById("pagoForm").addEventListener("submit", function (event) {
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtener parámetros de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const cantidad = parseInt(urlParams.get("cantidad")) || 1;
+            const precioParam = urlParams.get("precio") || "0";
+            const nombreProducto = urlParams.get("nombre") || "Producto";
+            
+            // Parsear el precio como float
+            let precio = parseFloat(precioParam);
+            
+            // Si no es un número válido, usar 0
+            if (isNaN(precio)) {
+                precio = 0.0;
+            }
+            
+            // Costo fijo de envío
+            const costoEnvio = 10000;
+            
+            // Formatear precio para mostrar correctamente en COP
+            function formatearPrecio(valor) {
+                return '$ ' + valor.toLocaleString('es-CO', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            }
+            
+            // Calcular subtotal (precio * cantidad)
+            const subtotal = cantidad * precio;
+            
+            // Calcular total (subtotal + envío)
+            const total = subtotal + costoEnvio;
+            
+            // Actualizar la factura
+            document.getElementById("nombre-producto").textContent = nombreProducto;
+            document.getElementById("precio-unitario").textContent = formatearPrecio(precio);
+            document.getElementById("cantidad-productos").textContent = cantidad;
+            document.getElementById("subtotal").textContent = formatearPrecio(subtotal);
+            document.getElementById("costo-envio").textContent = formatearPrecio(costoEnvio);
+            document.getElementById("precio-total").textContent = formatearPrecio(total);
+            
+            // Insertar el total en el campo de monto a pagar
+            document.getElementById("monto-pagar").value = formatearPrecio(total);
+            
+            // Mostrar/ocultar campos adicionales según selección
+            document.getElementById("requiere-factura").addEventListener("change", function() {
+                // Aquí se podría añadir lógica para mostrar campos adicionales si requiere factura
+            });
+        });
+        
+        // Mostrar mensaje de confirmación al enviar el formulario
+        document.getElementById("pagoForm").addEventListener("submit", function(event) {
             event.preventDefault();
             document.getElementById("mensaje").style.display = "block";
+            // Aquí iría la lógica para procesar el pago
         });
     </script>
 </body>

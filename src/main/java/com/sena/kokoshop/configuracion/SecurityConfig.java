@@ -32,22 +32,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/index", "/registro", "/login", 
-                               "/catalogo", "/vistaProductos","/nosotros","/asesoria",
-                               "/css/**", "/js/**", "/images/**",
-                               "/webjars/**", "/assets/**").permitAll()  // Agregados más recursos estáticos
-                .anyRequest().authenticated())
-            .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/index", true)
-                .permitAll())
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .permitAll())
-            .build();
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/index", "/registro", "/login",
+                                "/catalogo", "/vistaProductos", "/nosotros", "/asesoria",
+                                "/css/**", "/js/**", "/images/**",
+                                "/webjars/**", "/assets/**")
+                        .permitAll() // Agregados más recursos estáticos
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/index", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
+                .build();
     }
 
     @Bean

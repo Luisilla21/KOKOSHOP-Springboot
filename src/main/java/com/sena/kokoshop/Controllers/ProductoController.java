@@ -29,14 +29,12 @@ public class ProductoController {
     @GetMapping("/productos/")
     public String listarProductos(Model modelo) {
         List<Producto> productos = interfaz.listarTodosLosProductos();
-
         for (Producto producto : productos) {
             byte[] imagenBytes = producto.getImagen();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
 
         }
-
         modelo.addAttribute("productos", productos);
         return "productos/index"; // retorna al archivo productos
     }

@@ -27,6 +27,10 @@ public class Producto {
     @Column(name = "producPrecio", nullable = false)
     private Float producPrecio;
 
+    @Column(name = "producDescripcion", nullable = false, length = 255)
+    private String producDescripcion;
+
+
     @Column(name = "tipoPrenda", nullable = false, length = 15)
     private String tipoPrenda;
 
@@ -93,6 +97,14 @@ public class Producto {
         this.producPrecio = producPrecio;
     }
 
+    public String getProducDescripcion() {
+        return producDescripcion;
+    }
+
+    public void setProducDescripcion(String producDescripcion) {
+        this.producDescripcion = producDescripcion;
+    }
+
     public String getTipoPrenda() {
         return tipoPrenda;
     }
@@ -119,7 +131,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto [idProducto=" + idProducto + ", producNom=" + producNom + ", producPrecio=" + producPrecio
+        return "Producto [idProducto=" + idProducto + ", producNom=" + producNom + ",productDescripcion" + producDescripcion + ", producPrecio=" + producPrecio
                 + ", tipoPrenda=" + tipoPrenda + "]";
     }
 

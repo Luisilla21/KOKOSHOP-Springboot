@@ -200,6 +200,7 @@
                 <thead class="table-dark text-center">
                     <tr>
                         <th>Nombre</th>
+                        <th>Descripción</th>
                         <th>Precio</th>
                         <th>Cantidad</th>
                         <th>Imagen</th>
@@ -210,6 +211,8 @@
                 <tbody>
                     <tr th:each="producto : ${productos}">
                         <td th:text="${producto.producNom}">Nombre</td>
+
+                        <td th:text="${producto.producDescripcion}">Descripción</td>
 
                         <td th:text="${producto.producPrecio}">Precio</td>
 

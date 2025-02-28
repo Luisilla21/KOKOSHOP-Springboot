@@ -82,6 +82,7 @@ public class ProductoController {
         Producto productoExistente = interfaz.obtenerProductoPorId(idProducto);
         if (productoExistente != null) {
             productoExistente.setProducNom(producto.getProducNom());
+            productoExistente.setProducDescripcion(producto.getProducDescripcion());
             productoExistente.setProducPrecio(producto.getProducPrecio());
             productoExistente.setTipoPrenda(producto.getTipoPrenda());
             productoExistente.setCantidad(producto.getCantidad());

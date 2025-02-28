@@ -149,6 +149,11 @@
                         </div>
                         <br>
                         <div class="form-group">
+                            <label>Descripción:</label>
+                            <input type="text" name="producDesc" th:field="*{producDescripcion}" class="form-control"
+                                placeholder="Escriba la descripción del producto:" required>
+                            </div>
+                        <div class="form-group">
                             <label>Precio:</label>
                             <input type="text" name="producPrecio" th:field="*{producPrecio}" class="form-control"
                                 placeholder="Digite el precio del producto:" required>

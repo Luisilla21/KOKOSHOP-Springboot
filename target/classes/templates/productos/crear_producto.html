@@ -155,6 +155,12 @@
                         </div>
 
                         <div class="form-group mb-3">
+                            <label>Descripción:</label>
+                            <input type="text" class="form-control" th:field="*{producto.producDescripcion}" required>
+
+                            <br>
+
+                        <div class="form-group mb-3">
                             <label>Precio:</label>
                             <input type="number" step="0.01" class="form-control" th:field="*{producto.producPrecio}"
                                 required>

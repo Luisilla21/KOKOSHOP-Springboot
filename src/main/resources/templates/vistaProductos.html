@@ -374,10 +374,11 @@
     <main class="main-content">
         <div class="product-container">
             <div class="product-image">
-                <img src="imagenes/chaquetaCuero.png" th:alt="${producto.producNom}">
+                <img src="@{'/productos/imagen/' + ${producto.idProducto}}" th:alt="${producto.Imagen}">
             </div>
             <div class="product-details">
                 <h1 class="product-title" th:text="${producto.producNom}">Chaqueta de cuero</h1>
+                <p class="product-description" th:text="${producto.producDescripcion}">Descripción del producto</p>
                 <p class="product-price" th:text="${producto.producPrecio}">$ 63,000 COP</p>
 
                 <label for="quantity">Cantidad</label>

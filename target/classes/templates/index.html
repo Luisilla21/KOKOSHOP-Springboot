@@ -410,6 +410,7 @@
             text-align: right;
             margin-top: 10px;
         }
+
         .producto {
             max-width: 22%;
             background: #1a1a1a;
@@ -418,6 +419,7 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
         .nom-producto {
             font-size: 1rem;
             font-weight: bold;
@@ -610,8 +612,8 @@
 </head>
 
 <body>
-     <!-- Incluir el fragmento de la barra de navegación -->
-     <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Incluir el fragmento de la barra de navegación -->
+    <div th:replace="~{fragments/navbar :: navbar}" id="asdasd"></div>
     <header id="main-header">
         <div class="container">
             <div class="row align-items-center">
@@ -673,7 +675,7 @@
         <section class="catalogo">
             <h1>NOVEDADES</h1>
             <div class="productos">
-                <div th:each="producto : ${productos}" class="producto" >
+                <div th:each="producto : ${productos}" class="producto">
                     <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
                         <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
                     </a>
@@ -696,12 +698,15 @@
             <div class="redes">
                 <h5>Síguenos en</h5>
                 <ul>
-                    <li><a class="logo-social" href="https://wa.me/c/573219313578" target="_blank"><img th:src="@{images/wpp.png}" alt="WhatsApp"></a></li>
-                    <li><a class="logo-social" href="https://www.facebook.com/people/KokoShop-Colombia/61564941809696/" target="_blank"><img th:src="@{images/facebook-logo-3-1.png}"
-                                alt="Facebook"></a>
+                    <li><a class="logo-social" href="https://wa.me/c/573219313578" target="_blank"><img
+                                th:src="@{images/wpp.png}" alt="WhatsApp"></a></li>
+                    <li><a class="logo-social" href="https://www.facebook.com/people/KokoShop-Colombia/61564941809696/"
+                            target="_blank"><img th:src="@{images/facebook-logo-3-1.png}" alt="Facebook"></a>
                     </li>
-                    <li><a class="logo-social" href="https://instagram.com/kokoshop_10?igshid=MzRlODBiNWFlZA==" target="_blank"><img th:src="@{images/imagen ig.png}" alt="Instagram"></a></li>
-                    <li><a class="logo-social" href="https://x.com/KokoShopCOL" target="_blank"><img th:src="@{images/X.png}" alt="Twitter" ></a></li>
+                    <li><a class="logo-social" href="https://instagram.com/kokoshop_10?igshid=MzRlODBiNWFlZA=="
+                            target="_blank"><img th:src="@{images/imagen ig.png}" alt="Instagram"></a></li>
+                    <li><a class="logo-social" href="https://x.com/KokoShopCOL" target="_blank"><img
+                                th:src="@{images/X.png}" alt="Twitter"></a></li>
                 </ul>
             </div>
             <div class="ubicacion">

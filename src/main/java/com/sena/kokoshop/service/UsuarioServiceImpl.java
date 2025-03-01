@@ -36,20 +36,23 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    System.out.println("Buscando usuario con email: " + username);
-    Usuario usuario = usuarioRepositorio.findByEmail(username);
-    if (usuario == null) {
-        System.out.println("Usuario no encontrado.");
-        throw new UsernameNotFoundException("Usuario no encontrado con el correo: " + username);
+    public boolean existeEmail(String email) {
+        return usuarioRepositorio.findByEmail(email) != null;
     }
-    System.out.println("Usuario encontrado: " + usuario.getEmail());
-    return User.builder()
-            .username(usuario.getEmail())
-            .password(usuario.getPassword())
-            .roles(usuario.getRoles().stream().map(Rol::getNombre).toArray(String[]::new))
-            .build();
-}
 
-
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("Buscando usuario con email: " + username);
+        Usuario usuario = usuarioRepositorio.findByEmail(username);
+        if (usuario == null) {
+            System.out.println("Usuario no encontrado.");
+            throw new UsernameNotFoundException("Usuario no encontrado con el correo: " + username);
+        }
+        System.out.println("Usuario encontrado: " + usuario.getEmail());
+        return User.builder()
+                .username(usuario.getEmail())
+                .password(usuario.getPassword())
+                .roles(usuario.getRoles().stream().map(Rol::getNombre).toArray(String[]::new))
+                .build();
+    }
 }

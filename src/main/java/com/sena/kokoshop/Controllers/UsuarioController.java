@@ -1,7 +1,5 @@
 package com.sena.kokoshop.Controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.entidades.Usuario;
-import com.sena.kokoshop.interfaz.ProductoInterfaz;
 import com.sena.kokoshop.interfaz.UsuarioInterfaz;
 import com.sena.kokoshop.service.UsuarioService;
 
@@ -27,10 +23,6 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-
-    @Autowired
-    private ProductoInterfaz productoInterfaz;
-
 
     @GetMapping("/usuarios/")
     public String listarUsuarios(Model modelo) {
@@ -49,7 +41,6 @@ public class UsuarioController {
     public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario) {
         interfaz.guardarUsuario(usuario);
         return "redirect:/usuarios/";
-
     }
 
     @GetMapping("/usuarios/editar/{usuarioID}")
@@ -81,7 +72,6 @@ public class UsuarioController {
             interfaz.actualizarUsuario(usuarioExistente);
         }
         return "redirect:/usuarios/";
-
     }
 
     @GetMapping("/usuarios/{usuarioID}")
@@ -100,7 +90,6 @@ public class UsuarioController {
         }
         if (logout != null) {
             model.addAttribute("logout", "Has cerrado sesión exitosamente.");
-            return "index";
         }
         if (registroExitoso != null) {
             model.addAttribute("registroExitoso", "¡Registro exitoso! Ahora puedes iniciar sesión.");
@@ -117,18 +106,24 @@ public class UsuarioController {
 
     // Procesar registro
     @PostMapping("/registro")
-    public String registrarUsuario(Usuario usuario) {
-        usuarioService.guardar(usuario);
-        return "redirect:/login?registroExitoso"; // Redirige al login con un mensaje
+    public String registrarUsuario(Usuario usuario, Model model) {
+        try {
+            // Verificar si el email ya existe
+            if (usuarioService.existeEmail(usuario.getEmail())) {
+                model.addAttribute("error", "El email ya está registrado");
+                return "registro";
+            }
+            
+            usuarioService.guardar(usuario);
+            return "redirect:/login?registroExitoso"; // Redirige al login con un mensaje
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al registrar usuario: " + e.getMessage());
+            return "registro";
+        }
     }
 
-    @GetMapping({"/index", "/"})
+    @GetMapping({"/index","/"})
     public String mostrarPaginaDeInicio(@AuthenticationPrincipal User user, Model model) {
-                List<Producto> productos = productoInterfaz.listarTodosLosProductos();
-
-        List<Producto> productosLimitados = productos.stream().limit(4).toList();
-
-        model.addAttribute("productos", productosLimitados);
         if (user != null) {
             model.addAttribute("username", user.getUsername());
             model.addAttribute("isAuthenticated", true);

@@ -361,11 +361,8 @@
 
         .img-producto {
             width: 100%;
-            /* La imagen ocupa todo el ancho de la tarjeta */
-            height: auto;
-            /* Mantiene proporciones */
+            aspect-ratio: 3/4;
             object-fit: cover;
-            /* Escala las imágenes si es necesario */
         }
 
         .uni-producto {
@@ -412,6 +409,15 @@
             color: #ff86c4;
             text-align: right;
             margin-top: 10px;
+        }
+
+        .producto {
+            max-width: 22%;
+            background: #1a1a1a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .nom-producto {
@@ -606,8 +612,8 @@
 </head>
 
 <body>
-     <!-- Incluir el fragmento de la barra de navegación -->
-     <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!-- Incluir el fragmento de la barra de navegación -->
+    <div th:replace="~{fragments/navbar :: navbar}" id="asdasd"></div>
     <header id="main-header">
         <div class="container">
             <div class="row align-items-center">
@@ -647,7 +653,7 @@
 
                     <a href="#principal">Principal</a>
 
-                    <a th:href="@{catalogo}">Productos</a>
+                    <a th:href="@{catalogo}">Catálogo</a>
 
                     <a th:href="@{nosotros}">Nosotros</a>
 
@@ -665,69 +671,25 @@
             </div>
         </section>
 
-
-
+        <!-- Sección de productos -->
         <section class="catalogo">
             <h1>NOVEDADES</h1>
             <div class="productos">
-                <div class="producto">
-                    <div class="uni-producto">
-                        <a href="producto_falda.html">
-                            <img th:src="@{images/faldacuero.jpg}" alt="Falda de Cuero" class="img-producto">
-                            <div class="capa-oscura-producto"></div>
-                        </a>
-                    </div>
-                    <div class="text-product">
-                        <a class="nom-producto" href="producto_falda.html">Falda de Cuero</a>
-
-                        <span class="precio">$ 50000</span>
-                    </div>
-                </div>
-
-                <div class="producto">
-                    <div class="uni-producto">
-                        <a href="producto_chaqueta_cuero.html">
-                            <img th:src="@{images/chaquetaCuero.png}" alt="Chaqueta de Cuero" class="img-producto">
-                            <div class="capa-oscura-producto"></div>
-                        </a>
-                    </div>
-                    <div class="text-product">
-                        <a class="nom-producto" href="producto_chaqueta_cuero.html">Chaqueta de Cuero</a>
-                        <span class="precio">$ 63000</span>
-                    </div>
-                </div>
-
-                <div class="producto">
-                    <div class="uni-producto">
-                        <a href="producto_jean.html">
-                            <img th:src="@{images/pantalon_mezclilla.png}" alt="Pantalon de Mezclilla"
-                                class="img-producto">
-                            <div class="capa-oscura-producto"></div>
-                        </a>
-                    </div>
-                    <div class="text-product">
-                        <a class="nom-producto" href="producto_jean.html">Pantalon de Mezclilla</a>
-                        <span class="precio">$ 55000</span>
-                    </div>
-                </div>
-
-                <div class="producto">
-                    <div class="uni-producto">
-                        <a href="producto_airforce.html">
-                            <img th:src="@{images/af1.webp}" alt="Air Force One" class="img-producto">
-                            <div class="capa-oscura-producto"></div>
-                        </a>
-                    </div>
-                    <div class="text-product">
-                        <a class="nom-producto" href="producto_airforce.html">Air Force One</a>
-                        <span class="precio">$ 100000</span>
-                    </div>
+                <div th:each="producto : ${productos}" class="producto">
+                    <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
+                        <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
+                    </a>
+                    <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
+                        <div class="text-product">
+                            <span th:text="${producto.producNom}" th:value="${producto.producNom}" class="nom-producto"
+                                href="">nombrre</span>
+                            <span th:text="${producto.producPrecio}" th:value="${producto.producNom}"
+                                class="precio">precio</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
-
-
-
     </main>
 
 
@@ -736,12 +698,15 @@
             <div class="redes">
                 <h5>Síguenos en</h5>
                 <ul>
-                    <li><a class="logo-social" href="https://wa.me/c/573219313578"><img th:src="@{images/wpp.png}" alt="WhatsApp"></a></li>
-                    <li><a class="logo-social" href="https://www.facebook.com/people/KokoShop-Colombia/61564941809696/"><img th:src="@{images/facebook-logo-3-1.png}"
-                                alt="Facebook"></a>
+                    <li><a class="logo-social" href="https://wa.me/c/573219313578" target="_blank"><img
+                                th:src="@{images/wpp.png}" alt="WhatsApp"></a></li>
+                    <li><a class="logo-social" href="https://www.facebook.com/people/KokoShop-Colombia/61564941809696/"
+                            target="_blank"><img th:src="@{images/facebook-logo-3-1.png}" alt="Facebook"></a>
                     </li>
-                    <li><a class="logo-social" href="https://instagram.com/kokoshop_10?igshid=MzRlODBiNWFlZA=="><img th:src="@{images/imagen ig.png}" alt="Instagram"></a></li>
-                    <li><a class="logo-social" href="https://x.com/KokoShopCOL"><img th:src="@{images/X.png}" alt="Twitter"></a></li>
+                    <li><a class="logo-social" href="https://instagram.com/kokoshop_10?igshid=MzRlODBiNWFlZA=="
+                            target="_blank"><img th:src="@{images/imagen ig.png}" alt="Instagram"></a></li>
+                    <li><a class="logo-social" href="https://x.com/KokoShopCOL" target="_blank"><img
+                                th:src="@{images/X.png}" alt="Twitter"></a></li>
                 </ul>
             </div>
             <div class="ubicacion">

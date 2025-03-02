@@ -180,6 +180,31 @@
                 font-size: 2rem;
             }
         }
+        .main-menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .main-menu a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #f5ccd4;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .main-menu a:hover {
+            color: #ff86c4;
+        }
     </style>
 </head>
 
@@ -187,14 +212,7 @@
     <!-- Incluir el fragmento de la barra de navegación -->
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <br>
-    <div class="nav-bar">
-        <nav class="main-menu">
-            <a th:href="@{/index}">Principal</a>
-            <a th:href="@{/catalogo}">Productos</a>
-            <a th:href="@{/nosotros}">Nosotros</a>
-            <a th:href="@{/asesoria}">Asesoria</a>
-        </nav>
-    </div>
+   
 
     <section class="catalogo">
         <h1>Catálogo</h1>
@@ -206,9 +224,9 @@
         </div>
 
 
-        <div class="productos">
+        <div class="productos row">
 
-            <div th:each="producto : ${productos}" class="producto">
+            <div th:each="producto : ${productos}" class="producto col-4">
                 <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
                     <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
                 </a>

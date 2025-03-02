@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sena.kokoshop.dto.VentaProductoDTO;
+import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.entidades.ProductoVenta;
 import com.sena.kokoshop.entidades.Venta;
+import com.sena.kokoshop.repositorio.ProductoRepositorio;
 import com.sena.kokoshop.repositorio.ProductoVentaRepositorio;
 import com.sena.kokoshop.repositorio.VentaRepositorio;
 
@@ -22,6 +24,9 @@ public class VentaProductoService {
 
     @Autowired
     private ProductoVentaRepositorio productoVentaRepositorio;
+
+    @Autowired
+    private ProductoRepositorio productoRepositorio;
 
     @Transactional
     public void guardarVentaConProductos(VentaProductoDTO ventaProductoDTO) {
@@ -41,6 +46,14 @@ public class VentaProductoService {
         for (ProductoVenta productoVenta : ventaProductoDTO.getProductosVenta()) {
             productoVenta.setVenta(ventaGuardada);
             productoVentaRepositorio.save(productoVenta);
+        }
+
+        for (ProductoVenta productoVenta : ventaProductoDTO.getProductosVenta()) {
+            Producto producto = productoVenta.getProducto();
+            Integer cantidad = productoVenta.getCantidad();
+            Integer cantidadActual = producto.getCantidad();
+            producto.setCantidad(cantidadActual - cantidad);
+            productoRepositorio.save(producto);
         }
     }
 

@@ -1,10 +1,17 @@
 package com.sena.kokoshop.Controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.sena.kokoshop.entidades.Rol;
+import com.sena.kokoshop.entidades.Usuario;
+import com.sena.kokoshop.interfaz.RolInterfaz;
+import com.sena.kokoshop.interfaz.UsuarioInterfaz;
 
 @Controller
 public class EmailController {
@@ -12,19 +19,21 @@ public class EmailController {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private UsuarioInterfaz interfaz;
+
+    @Autowired
+    private RolInterfaz rolInterfaz;
+
     @PostMapping("/enviar-correos")
     public String enviarCorreos() {
-        String[] destinatarios = {
-                "luisacamacho21100@gmail.com",
-                "Killiam1119@gmail.com",
-                "stivenbohorquezmolano@gmail.com",
-                "lunakevin200627@gmail.com"
-        };
+        List<Usuario> clientes = interfaz.obtenerUsuariosPorRolCliente();
+        System.out.println("------------------Clientes: " + clientes.size());
 
-        for (String destinatario : destinatarios) {
+        for (Usuario cliente : clientes) {
             SimpleMailMessage mensaje = new SimpleMailMessage();
             mensaje.setFrom("kokoshop1201@gmail.com");
-            mensaje.setTo(destinatario);
+            mensaje.setTo(cliente.getEmail());
             mensaje.setSubject("¡Enterate de las nuevas promociones!");
             mensaje.setText("¡Queridos clientes! 🌸👗\n" + //
                     "Estamos emocionados de anunciar nuevas promociones en todas nuestras prendas. 🛍️✨ Es el momento perfecto para renovar tu guardarropa y lucir espectacular sin gastar de más.\n"

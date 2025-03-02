@@ -41,7 +41,7 @@ public class UsuarioController {
     @GetMapping("/usuarios/")
     public String listarUsuarios(Model modelo) {
         modelo.addAttribute("usuarios", interfaz.listarTodosLosUsuarios());
-        return "/usuarios/index"; // retorna al archivo usuarios
+        return "usuarios/index"; // retorna al archivo usuarios
     }
 
     @GetMapping("/usuarios/nuevo")
@@ -65,6 +65,7 @@ public class UsuarioController {
             // Redirige o muestra un mensaje de error si el cliente no existe
             return "redirect:/usuarios";
         }
+        System.out.println("--------------Usuario: " + usuario.getRol().getNombre());
         modelo.addAttribute("usuario", usuario);
         return "usuarios/editar_usuario";
     }
@@ -84,6 +85,7 @@ public class UsuarioController {
             usuarioExistente.setPassword(usuario.getPassword());
             usuarioExistente.setTelefono(usuario.getTelefono());
             usuarioExistente.setCompras(usuario.getCompras());
+            usuarioExistente.setRol(usuario.getRol());
             interfaz.actualizarUsuario(usuarioExistente);
         }
         return "redirect:/usuarios/";

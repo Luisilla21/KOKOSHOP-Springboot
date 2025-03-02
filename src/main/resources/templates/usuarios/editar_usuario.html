@@ -200,6 +200,20 @@
                                 placeholder="Digite el teléfono:" required>
                         </div>
                         <br>
+                        <div>
+                            <label>Rol:</label>
+                            <select name="rol" th:field="*{rol}" class="form-control" required>
+                                <option th:if="rol==1" th:value="*{rol}" th:field="*{rol}" selected>Adminisyrador
+                                </option>
+                                <option th:if="rol==2" th:value="*{rol}" th:field="*{rol}" selected>Empleado</option>
+                                <option th:if="rol==3" th:value="*{rol}" th:field="*{rol}" selected>Cliente</option>
+                                </option>
+                                <option value="1">Administrador</option>
+                                <option value="2">Empleado</option>
+                                <option value="3">Cliente</option>
+                            </select>
+                        </div>
+                        <br>
                         <div class="box-footer">
                             <button class="btn btn-success">Guardar</button>
                         </div>

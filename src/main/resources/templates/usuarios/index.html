@@ -205,9 +205,10 @@
                 <thead class="table-dark text-center">
                     <tr>
                         <th>ID</th>
+                        <th>Rol</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>Tipo de Documento</th>
+                        <th>Tipo Doc</th>
                         <th>Número de Documento</th>
                         <th>Dirección</th>
                         <th>Ciudad</th>
@@ -219,6 +220,7 @@
                 <tbody>
                     <tr th:each="usuario : ${usuarios}">
                         <td th:text="${usuario.usuarioID}">ID</td>
+                        <td th:text="${usuario.rol.nombre}">ID</td>
                         <td th:text="${usuario.nombre}">Nombre</td>
                         <td th:text="${usuario.apellido}">Apellido</td>
                         <td th:text="${usuario.tipoDocumento}">Tipo de Documento</td>
@@ -228,7 +230,8 @@
                         <td th:text="${usuario.email}">Correo Electrónico</td>
                         <td th:text="${usuario.telefono}">Teléfono</td>
                         <td>
-                            <a th:href="@{/usuarios/editar/{id}(id=${usuario.usuarioID})}" class="btn btn-info">Editar</a>
+                            <a th:href="@{/usuarios/editar/{id}(id=${usuario.usuarioID})}"
+                                class="btn btn-info">Editar</a>
                             <a th:href="@{/usuarios/{id}(id=${usuario.usuarioID})}" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>

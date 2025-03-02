@@ -3,8 +3,10 @@ package com.sena.kokoshop.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +21,6 @@ import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.interfaz.ProductoInterfaz;
 import com.sena.kokoshop.interfaz.RolInterfaz;
 import com.sena.kokoshop.interfaz.UsuarioInterfaz;
-import com.sena.kokoshop.service.UsuarioService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
 public class UsuarioController {
@@ -37,6 +37,7 @@ public class UsuarioController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios/")
     public String listarUsuarios(Model modelo) {
         modelo.addAttribute("usuarios", interfaz.listarTodosLosUsuarios());
@@ -136,7 +137,7 @@ public class UsuarioController {
         return "redirect:/login?registroExitoso";// Redirige al login con un mensaje
     }
 
-    @GetMapping({"/","/index"})
+    @GetMapping({ "/", "/index" })
     public String mostrarPaginaDeInicio(@AuthenticationPrincipal User user, Model model) {
         List<Producto> productos = productoInterfaz.listarTodosLosProductos();
 

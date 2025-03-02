@@ -138,7 +138,7 @@ public class UsuarioController {
 
     @GetMapping("/index")
     public String mostrarPaginaDeInicio(@AuthenticationPrincipal User user, Model model) {
-                List<Producto> productos = productoInterfaz.listarTodosLosProductos();
+        List<Producto> productos = productoInterfaz.listarTodosLosProductos();
 
         List<Producto> productosLimitados = productos.stream().limit(4).toList();
 

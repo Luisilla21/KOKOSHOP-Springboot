@@ -197,7 +197,7 @@
     <center>
         <div class="nav-bar">
             <nav class="main-menu">
-                <a th:href="@{/}">Principal</a>
+                <a class="nav-link" th:href="@{/index}">Principal</a>
                 <a th:href="@{/catalogo}">Productos</a>
                 <a th:href="@{/nosotros}">Nosotros</a>
                 <a th:href="@{/asesoria}">Asesoría</a>
@@ -367,8 +367,13 @@
                     <label class="form-label">Monto a Pagar</label>
                     <input type="text" class="form-control" id="monto-pagar" placeholder="Monto a Pagar" readonly>
                     
-                    <button type="submit" class="btn btn-primary">Pagar con Nequi</button>
+                    <button type="submit" class="btn btn-primary">Pagar con Nequi a este número: 321 9313578</button>
                 </div>
+                <!-- Añadir la imagen del QR -->
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="/images/QR_Nequi.jpeg" alt="QR para pago" style="width: 510px; height: 1000px;">
+        <p style="font-size: 14px; color: #666; margin-top: 10px;">Escanee este QR desde la app de cualquier entidad habilitada</p>
+    </div>
             </form>
             <p class="mensaje" id="mensaje">El envío se confirmará una vez recibido el pago.</p>
         </div>

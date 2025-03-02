@@ -136,7 +136,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-                <h1 class="text-center">Edicion de empleados</h1>
+                <h1 class="text-center">Edición de empleados</h1>
                 <div class="card-body">
                     <form th:action="@{/empleados/actualizar/{id}(id=${usuarioEmpleado.empleado.id})}"
                         th:object="${usuarioEmpleado}" method="POST">
@@ -144,13 +144,13 @@
                         <div class="form-group">
                             <label>Nombre:</label>
                             <input type="text" name="nombre" th:field="*{usuario.nombre}" class="form-control"
-                                placeholder="Escriba el nombre del cliente:" required>
+                                placeholder="Escriba el nombre del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Apellido:</label>
                             <input type="text" name="apellido" th:field="*{usuario.apellido}" class="form-control"
-                                placeholder="Escriba el apellido del cliente:" required>
+                                placeholder="Escriba el apellido del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
@@ -161,69 +161,68 @@
                                 <option value="C.C">Cédula de ciudadanía</option>
                                 <option value="C.E">Cédula de extranjería</option>
                                 <option value="P.E.P">Permiso Especial de Permanencia</option>
-                                <option value="D.I.E">Documento de identificación
-                                    extranjero</option>
+                                <option value="D.I.E">Documento de identificación extranjero</option>
                             </select>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Número de Documento:</label>
                             <input type="text" name="numeroDocumento" th:field="*{usuario.numeroDocumento}"
-                                class="form-control" placeholder="Escriba el número de documento del usuario" required>
+                                class="form-control" placeholder="Escriba el número de documento del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Dirección:</label>
                             <input type="text" name="direccion" th:field="*{usuario.direccion}" class="form-control"
-                                placeholder="Digite el precio del producto:" required>
+                                placeholder="Escriba la dirección del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Ciudad:</label>
                             <input type="text" name="Ciudad" th:field="*{usuario.Ciudad}" class="form-control"
-                                placeholder="Digite el precio del producto:" required>
+                                placeholder="Escriba la ciudad del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Correo Electrónico:</label>
                             <input type="text" name="email" th:field="*{usuario.email}" class="form-control"
-                                placeholder="Digite el precio del producto:" required>
+                                placeholder="Escriba el correo electrónico del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Contraseña:</label>
                             <input type="text" name="email" th:field="*{usuario.password}" class="form-control"
-                                placeholder="Digite el precio del producto:" required>
+                                placeholder="Escriba la contraseña del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Teléfono:</label>
                             <input type="text" name="telefono" th:field="*{usuario.telefono}" class="form-control"
-                                placeholder="Digite la cantidad del producto:" required>
+                                placeholder="Escriba el teléfono del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Salario:</label>
                             <input type="text" name="salario" th:field="*{empleado.salario}" class="form-control"
-                                placeholder="Digite su salario:" required>
+                                placeholder="Escriba el salario del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Hora de entrada:</label>
                             <input type="text" name="horaEntrada" th:field="*{empleado.horaEntrada}"
-                                class="form-control" placeholder="Digite su hora de entrada:" required>
+                                class="form-control" placeholder="Escriba la hora de entrada del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Hora de salida:</label>
                             <input type="text" name="horaSalida" th:field="*{empleado.horaSalida}" class="form-control"
-                                placeholder="Digite su hora de salida:" required>
+                                placeholder="Escriba la hora de salida del empleado" required>
                         </div>
                         <br>
                         <div class="form-group">
                             <label>Horas trabajadas:</label>
                             <input type="text" name="horasTrabajadas" th:field="*{empleado.horasTrabajadas}"
-                                class="form-control" placeholder="Digite las horas trabajadas:" required>
+                                class="form-control" placeholder="Escriba las horas trabajadas del empleado" required>
                         </div>
                         <br>
                         <div class="box-footer">
@@ -231,7 +230,6 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>

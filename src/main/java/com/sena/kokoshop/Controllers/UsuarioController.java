@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,18 +19,11 @@ import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.interfaz.ProductoInterfaz;
 import com.sena.kokoshop.interfaz.RolInterfaz;
 import com.sena.kokoshop.interfaz.UsuarioInterfaz;
-import com.sena.kokoshop.service.UsuarioSecurityService;
-
+import com.sena.kokoshop.service.UsuarioService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
 public class UsuarioController {
-
-    @Autowired
-    private UsuarioSecurityService usuarioDetails;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UsuarioInterfaz interfaz;
@@ -41,6 +33,9 @@ public class UsuarioController {
 
     @Autowired
     private ProductoInterfaz productoInterfaz;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/usuarios/")
     public String listarUsuarios(Model modelo) {
@@ -141,24 +136,20 @@ public class UsuarioController {
         return "redirect:/login?registroExitoso";// Redirige al login con un mensaje
     }
 
-    @GetMapping({ "/index", "/" })
-    public String mostrarPaginaDeInicio(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        List<Producto> productos = productoInterfaz.listarTodosLosProductos();
+    @GetMapping("/index")
+    public String mostrarPaginaDeInicio(@AuthenticationPrincipal User user, Model model) {
+                List<Producto> productos = productoInterfaz.listarTodosLosProductos();
+
         List<Producto> productosLimitados = productos.stream().limit(4).toList();
+
         model.addAttribute("productos", productosLimitados);
-
-        if (userDetails != null) {
-            // Pass the username to the view
-            model.addAttribute("username", userDetails.getUsername());
+        if (user != null) {
+            model.addAttribute("username", user.getUsername());
             model.addAttribute("isAuthenticated", true);
-
-            // For debugging
-            System.out.println("Authorities: " + userDetails.getAuthorities());
         } else {
             model.addAttribute("isAuthenticated", false);
         }
-
-        return "index";
+        return "index"; // Asegúrate de que la vista "index.html" exista
     }
 
     @GetMapping("/nosotros")

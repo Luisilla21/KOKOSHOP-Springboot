@@ -165,10 +165,45 @@
             margin-bottom: 15px;
             font-size: 16px;
         }
+        .main-menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .main-menu a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #f5ccd4;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .main-menu a:hover {
+            color: #ff86c4;
+        }
     </style>
 </head>
 
 <body>
+    <center>
+        <div class="nav-bar">
+            <nav class="main-menu">
+                <a th:href="@{/}">Principal</a>
+                <a th:href="@{/catalogo}">Productos</a>
+                <a th:href="@{/nosotros}">Nosotros</a>
+                <a th:href="@{/asesoria}">Asesoría</a>
+            </nav>
+        </div>
+    </center>
     <div class="container">
         <div class="card">
             <h3 class="card-title">Formulario de pago</h3>

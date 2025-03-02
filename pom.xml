@@ -84,6 +84,11 @@
             <artifactId>poi</artifactId>
             <version>5.3.0</version>
         </dependency>
+        <!-- In pom.xml -->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+        </dependency>
 
 
     </dependencies>

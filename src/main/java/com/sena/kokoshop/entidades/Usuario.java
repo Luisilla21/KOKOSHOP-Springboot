@@ -1,25 +1,29 @@
 package com.sena.kokoshop.entidades;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Usuarios")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,9 +62,9 @@ public class Usuario {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Venta> compras = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
-    private List<Rol> roles;
+    @ManyToOne
+    @JoinColumn(name = "idRol", nullable = false)
+    private Rol rol;
 
     // Constructor sin parámetros
     public Usuario() {
@@ -69,8 +73,8 @@ public class Usuario {
     // Constructor con todos los parámetros
     public Usuario(Long id, String nombre, String apellido, String numeroDocumento, String tipoDocumento,
             String direccion, String ciudad,
-            String email, String password, String telefono, String historialCompras,
-            Empleado empleado, List<Venta> compras) {
+            String email, String password, String telefono,
+            Empleado empleado, List<Venta> compras, Rol rol) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -83,13 +87,14 @@ public class Usuario {
         this.telefono = telefono;
         this.empleado = empleado;
         this.compras = compras;
+        this.rol = rol;
     }
 
     // Constructor sin el ID
     public Usuario(String nombre, String apellido, String numeroDocumento, String tipoDocumento, String direccion,
             String ciudad,
-            String email, String password, String telefono, String historialCompras,
-            Empleado empleado, List<Venta> compras) {
+            String email, String password, String telefono,
+            Empleado empleado, List<Venta> compras, Rol rol) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.numeroDocumento = numeroDocumento;
@@ -101,6 +106,7 @@ public class Usuario {
         this.telefono = telefono;
         this.empleado = empleado;
         this.compras = compras;
+        this.rol = rol;
     }
 
     // Getters y Setters
@@ -168,20 +174,21 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public List<Rol> getRoles() {
-        return roles;
+    @Override
+    public String getPassword() {
+        return password;
     }
 
-    public void setRoles(List<Rol> roles) {
-        this.roles = roles;
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public String getTelefono() {
@@ -209,6 +216,37 @@ public class Usuario {
     }
 
     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Devuelve los roles/autoridades del usuario
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + rol.getNombre()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email; // El email es el nombre de usuario
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // La cuenta no expira
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // La cuenta no está bloqueada
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // Las credenciales no expiran
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true; // La cuenta está habilitada
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Usuario{");
@@ -223,5 +261,4 @@ public class Usuario {
         sb.append('}');
         return sb.toString();
     }
-
 }

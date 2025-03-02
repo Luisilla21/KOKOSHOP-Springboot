@@ -1,12 +1,14 @@
 package com.sena.kokoshop.entidades;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Rol {
@@ -15,10 +17,11 @@ public class Rol {
     private Long id;
     private String nombre;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<Usuario> usuario;
+    @OneToMany(mappedBy = "rol", cascade = CascadeType.ALL)
+    private List<Usuario> usuario = new ArrayList<>();
 
-    public Rol() {}
+    public Rol() {
+    }
 
     public Rol(String nombre, List<Usuario> usuario) {
         this.nombre = nombre;
@@ -55,7 +58,5 @@ public class Rol {
     public void setUsuario(List<Usuario> usuario) {
         this.usuario = usuario;
     }
-
-    
 
 }

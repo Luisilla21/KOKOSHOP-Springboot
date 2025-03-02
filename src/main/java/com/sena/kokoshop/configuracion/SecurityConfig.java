@@ -39,7 +39,12 @@ public class SecurityConfig {
                                 "/css/**", "/js/**", "/images/**",
                                 "/webjars/**", "/assets/**",
                                 "/productos/imagen/**", "/catalogo/producto/**")
-                        .permitAll() // Agregados más recursos estáticos
+                        .permitAll()
+                        // Change these to match the exact format of your roles
+                        .requestMatchers("/ventas/**", "/productos/**", "/usuarios/**", "/empleados/**")
+                        .hasRole("ADMIN")
+                        .requestMatchers("/empleado/**").hasRole("EMPLEADO")
+                        .requestMatchers("/compra/**", "/cliente/**").hasRole("CLIENTE")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

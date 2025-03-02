@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sena.kokoshop.dto.UsuarioEmpleadoDTO;
 import com.sena.kokoshop.entidades.Empleado;
+import com.sena.kokoshop.entidades.Rol;
 import com.sena.kokoshop.entidades.Usuario;
+import com.sena.kokoshop.interfaz.RolInterfaz;
 import com.sena.kokoshop.service.UsuarioEmpleadoService;
 
 @Controller
@@ -18,6 +20,9 @@ public class EmpleadoController {
 
     @Autowired
     private UsuarioEmpleadoService usuarioEmpleadoService;
+
+    @Autowired
+    private RolInterfaz rolInterfaz;
 
     @GetMapping("/empleados/")
     public String listarEmpleados(Model modelo) {
@@ -35,7 +40,9 @@ public class EmpleadoController {
 
     @PostMapping("/crearEmpleado")
     public String guardarEmpleado(@ModelAttribute("usuarioEmpleado") UsuarioEmpleadoDTO dto) {
+        Rol empleadoRol = rolInterfaz.findByNombre("EMPLEADO");
         Usuario usuario = dto.getUsuario();
+        usuario.setRol(empleadoRol);
         Empleado empleado = dto.getEmpleado();
 
         usuarioEmpleadoService.crearUsuarioYEmpleado(usuario, empleado); // Lógica de servicio

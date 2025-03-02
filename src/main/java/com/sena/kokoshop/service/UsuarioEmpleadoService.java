@@ -81,6 +81,7 @@ public class UsuarioEmpleadoService {
         usuarioExistente.setPassword(usuario.getPassword());
         usuarioExistente.setTelefono(usuario.getTelefono());
         usuarioExistente.setCompras(usuario.getCompras());
+        usuarioExistente.setRol(usuario.getRol());
         usuarioRepositorio.save(usuarioExistente);
 
         // Actualizar Empleado

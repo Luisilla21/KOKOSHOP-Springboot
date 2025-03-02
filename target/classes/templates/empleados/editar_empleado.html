@@ -218,6 +218,8 @@
                             <input type="text" name="horaSalida" th:field="*{empleado.horaSalida}" class="form-control"
                                 placeholder="Escriba la hora de salida del empleado" required>
                         </div>
+                        <input type="hidden" nam-="rol" th:field="*{usuario.rol}" value="2">
+
                         <br>
                         <div class="form-group">
                             <label>Horas trabajadas:</label>

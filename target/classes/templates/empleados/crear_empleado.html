@@ -207,7 +207,10 @@
                             <input type="text" name="telefono" th:field="*{usuario.telefono}" class="form-control"
                                 placeholder="Escriba el teléfono del empleado" required>
                         </div>
+
+                        <input type="hidden" name="rol" th:field="*{usuario.rol}" value="2">
                         <br>
+                        
                         <div class="form-group">
                             <label>Salario:</label>
                             <input type="text" name="salario" th:field="*{empleado.salario}" class="form-control"

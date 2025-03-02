@@ -136,7 +136,7 @@ public class UsuarioController {
         return "redirect:/login?registroExitoso";// Redirige al login con un mensaje
     }
 
-    @GetMapping("/index")
+    @GetMapping({"/","/index"})
     public String mostrarPaginaDeInicio(@AuthenticationPrincipal User user, Model model) {
         List<Producto> productos = productoInterfaz.listarTodosLosProductos();
 

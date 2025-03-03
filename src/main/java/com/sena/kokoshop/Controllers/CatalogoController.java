@@ -1,6 +1,10 @@
 package com.sena.kokoshop.Controllers;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Date;
 
 import com.sena.kokoshop.dto.VentaProductoDTO;
 import com.sena.kokoshop.entidades.Empleado;
@@ -42,7 +44,14 @@ public class CatalogoController {
     private VentaProductoService ventaService;
 
     @GetMapping("/catalogo")
-    public String listarProductosCatalogo(Model modelo) {
+    public String listarProductosCatalogo(@AuthenticationPrincipal User user, Model modelo) {
+        
+        if (user != null) {
+            modelo.addAttribute("username", user.getUsername());
+            modelo.addAttribute("isAuthenticated", true);
+        } else {
+            modelo.addAttribute("isAuthenticated", false);
+        }
         modelo.addAttribute("productos", productoInterfaz.listarTodosLosProductos());
         return "catalogo"; // retorna al archivo productos
     }

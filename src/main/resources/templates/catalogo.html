@@ -21,40 +21,113 @@
 
 <body>
     <!-- Incluir el fragmento de la barra de navegación -->
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <br>
-
-
-    <section class="catalogo">
-        <h1>Catálogo</h1>
-
-        <!-- Buscador -->
-        <div class="search-container">
-            <input type="text" class="search-box" id="searchBox"
-                placeholder="Buscar productos por nombre, tipo o precio..." autocomplete="off">
-        </div>
-
-
-        <div class="productos row">
-
-            <div th:each="producto : ${productos}" class="producto col-4">
-                <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
-                    <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
-                </a>
-                <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
-                    <div class="text-product">
-                        <span th:text="${producto.producNom}" th:value="${producto.producNom}" class="nom-producto"
-                            href="">nombrre</span>
-                        <span th:text="${producto.producPrecio}" th:value="${producto.producNom}"
-                            class="precio">precio</span>
-
+    <header id="main-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-3 logo_section">
+                    <div class="logo">
+                        <img th:src="@{/images/LOGOKoko-transformed.png}" alt="Logo Imagen" id="logo_koko">
                     </div>
-                </a>
+                </div>
+                <div class="col-5 menu-bar">
+
+                </div>
+
+                <div class="col-4 login">
+                    <div class="login-registrarse" th:unless="${isAuthenticated}">
+                        <a class="btn-lr" href="/login">Iniciar sesión</a>
+                        <a class="btn-lr" href="/registro">Registrarse</a>
+                    </div>
+
+                    <div class="navbar-nav">
+                        <div class="dropdown " th:if="${isAuthenticated}">
+                            <a class="nav-link text-white dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" id="dropdownMenuLink" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" th:text="${username}"
+                                style="display: inline-flex;">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+
+                                <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                    <li><a class="dropdown-item" th:href="@{/usuarios/}">Usuarios</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/empleados/}">Empleados</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/productos/}">Productos</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                                </div>
+
+                                <div sec:authorize="hasAuthority('ROLE_EMPLEADO')">
+                                    <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                                </div>
+
+                                <div sec:authorize="hasAuthority('ROLE_CLIENTE')">
+                                    <li><a class="dropdown-item"
+                                            th:href="@{/cliente/mis-compras/{email}(email=${username})}">Mis Compras</a>
+                                    </li>
+                                </div>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <div sec:authorize="isAuthenticated()">
+                                    <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <center>
+            <div class="nav-bar">
+                <nav class="main-menu">
+
+
+                    <a th:href="@{/}">Principal</a>
+
+                    <a th:href="@{catalogo}">Catálogo</a>
+
+                    <a th:href="@{nosotros}">Nosotros</a>
+
+                    <a th:href="@{/asesoria}">Asesoria</a>
+                </nav>
+            </div>
+        </center>
+
+    </header> <br><br><br><br><br>
+
+    <main>
+        <section class="catalogo">
+            <h1>Catálogo</h1>
+
+            <!-- Buscador -->
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchBox"
+                    placeholder="Buscar productos por nombre, tipo o precio..." autocomplete="off">
             </div>
 
-        </div>
 
-    </section>
+            <div class="productos row">
+
+                <div th:each="producto : ${productos}" class="producto col-4">
+                    <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
+                        <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
+                    </a>
+                    <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
+                        <div class="text-product">
+                            <span th:text="${producto.producNom}" th:value="${producto.producNom}" class="nom-producto"
+                                href="">nombrre</span>
+                            <span th:text="${producto.producPrecio}" th:value="${producto.producNom}"
+                                class="precio">precio</span>
+
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const searchBox = document.getElementById('searchBox');

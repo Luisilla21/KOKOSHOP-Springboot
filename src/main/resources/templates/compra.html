@@ -165,6 +165,7 @@
             margin-bottom: 15px;
             font-size: 16px;
         }
+
         .main-menu {
             display: flex;
             justify-content: center;
@@ -199,7 +200,7 @@
             <nav class="main-menu">
                 <a class="nav-link" th:href="@{/index}">Principal</a>
                 <a th:href="@{/catalogo}">Productos</a>
-                <a th:href="@{/nosotros}">Nosotros</a>
+                <a th:href="@{/nosotros}">Nosotro+</a>
                 <a th:href="@{/asesoria}">Asesoría</a>
             </nav>
         </div>
@@ -207,178 +208,124 @@
     <div class="container">
         <div class="card">
             <h3 class="card-title">Formulario de pago</h3>
-            
-            <!-- Sección de factura -->
-            <div class="factura">
-                <div class="factura-titulo">Detalle de compra</div>
-                <div class="factura-detalle">
-                    <span>Producto:</span>
-                    <span id="nombre-producto">-</span>
+
+            <form th:action="@{/catalogo/compra/}" method="post">
+                <!-- Sección de factura -->
+                <div class="factura">
+                    <div class="factura-titulo">Detalle de compra</div>
+                    <div class="factura-detalle">
+                        <span>Producto:</span>
+                        <span th:text="${producto.producNom}"></span>
+                    </div>
+                    <div class="factura-detalle">
+                        <span>Precio unitario:</span>
+                        <span>$ <span id="precio-unitario" th:text="${producto.producPrecio}">-</span></span>
+                    </div>
+                    <div class="factura-detalle">
+                        <span>Cantidad:</span>
+                        <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
+                        <input type="hidden" name="cantidad" th:value="${productoVenta.cantidad}">
+
+                        <span id="cantidad-productos" th:text="${productoVenta.cantidad}">-</span>
+
+                    </div>
+                    <div class="factura-subtotal">
+                        <span>Subtotal:</span>
+                        <span>$ <span th:text="${productoVenta.cantidad * producto.producPrecio}">-</span></span>
+                    </div>
+                    <div class="factura-detalle">
+                        <span>Costo de envío:</span>
+                        <span id="costo-envio">$ 10.000,00</span>
+                    </div>
+                    <div class="factura-total">
+                        <span>TOTAL:</span>
+                        <span>$ <span
+                                th:text="${productoVenta.cantidad * producto.producPrecio + 10000}">-</span></span>
+                    </div>
                 </div>
-                <div class="factura-detalle">
-                    <span>Precio unitario:</span>
-                    <span id="precio-unitario">-</span>
-                </div>
-                <div class="factura-detalle">
-                    <span>Cantidad:</span>
-                    <span id="cantidad-productos">-</span>
-                </div>
-                <div class="factura-subtotal">
-                    <span>Subtotal:</span>
-                    <span id="subtotal">-</span>
-                </div>
-                <div class="factura-detalle">
-                    <span>Costo de envío:</span>
-                    <span id="costo-envio">$ 10.000,00</span>
-                </div>
-                <div class="factura-total">
-                    <span>TOTAL:</span>
-                    <span id="precio-total">-</span>
-                </div>
-            </div>
-            
-            <form id="pagoForm">
                 <!-- Sección de Información Personal -->
                 <div class="form-section">
                     <div class="form-section-title">Información Personal</div>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Tipo de Documento</label>
-                            <select class="form-control" id="tipo-documento" required>
-                                <option value="">Seleccione</option>
-                                <option value="CC">Cédula de Ciudadanía</option>
-                                <option value="CE">Cédula de Extranjería</option>
-                                <option value="TI">Tarjeta de Identidad</option>
-                                <option value="PP">Pasaporte</option>
-                                <option value="NIT">NIT</option>
+                            <select name="tipoDocumento" th:field="*{usuario.tipoDocumento}" class="form-control"
+                                required>
+                                <option value="" disabled selected>Seleccione un tipo de documento</option>
+                                <option value="C.C">Cédula de ciudadanía</option>
+                                <option value="C.E">Cédula de extranjería</option>
+                                <option value="P.E.P">Permiso Especial de Permanencia</option>
+                                <option value="D.I.E">Documento de identificación extranjero</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Número de Documento</label>
-                            <input type="text" class="form-control" id="numero-documento" placeholder="Número de Documento" required>
+                            <input type="text" name="numeroDocumento" th:field="*{usuario.numeroDocumento}"
+                                class="form-control" required>
                         </div>
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Nombres</label>
-                            <input type="text" class="form-control" id="nombres" placeholder="Nombres" required>
+                            <input type="text" class="form-control" id="nombres" placeholder="Nombres"
+                                th:field="*{usuario.nombre}" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" required>
+                            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos"
+                                th:field="*{usuario.apellido}" required>
                         </div>
                     </div>
-                    
+
                     <label class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="email" placeholder="Correo Electrónico" required>
-                    
+                    <input type="email" class="form-control" id="email" placeholder="Correo Electrónico"
+                        th:field="*{usuario.email}" required>
+
                     <label class="form-label">Número de Contacto</label>
-                    <input type="tel" class="form-control" id="telefono" placeholder="Número de Contacto" required>
+                    <input type="tel" class="form-control" id="telefono" th:field="*{usuario.telefono}"
+                        placeholder="Número de Contacto" required>
                 </div>
-                
+
                 <!-- Sección de Dirección de Entrega -->
                 <div class="form-section">
                     <div class="form-section-title">Dirección de Entrega</div>
-                    
+
                     <label class="form-label">Dirección</label>
-                    <input type="text" class="form-control" id="direccion" placeholder="Dirección" required>
-                    
+                    <input type="text" class="form-control" id="direccion" th:field="*{usuario.direccion}"
+                        placeholder="Dirección" required>
+
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Ciudad</label>
-                            <input type="text" class="form-control" id="ciudad" placeholder="Ciudad" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Departamento</label>
-                            <select class="form-control" id="departamento" required>
-                                <option value="">Seleccione</option>
-                                <option value="Amazonas">Amazonas</option>
-                                <option value="Antioquia">Antioquia</option>
-                                <option value="Arauca">Arauca</option>
-                                <option value="Atlántico">Atlántico</option>
-                                <option value="Bogotá D.C.">Bogotá D.C.</option>
-                                <option value="Bolívar">Bolívar</option>
-                                <option value="Boyacá">Boyacá</option>
-                                <option value="Caldas">Caldas</option>
-                                <option value="Caquetá">Caquetá</option>
-                                <option value="Casanare">Casanare</option>
-                                <option value="Cauca">Cauca</option>
-                                <option value="Cesar">Cesar</option>
-                                <option value="Chocó">Chocó</option>
-                                <option value="Córdoba">Córdoba</option>
-                                <option value="Cundinamarca">Cundinamarca</option>
-                                <option value="Guainía">Guainía</option>
-                                <option value="Guaviare">Guaviare</option>
-                                <option value="Huila">Huila</option>
-                                <option value="La Guajira">La Guajira</option>
-                                <option value="Magdalena">Magdalena</option>
-                                <option value="Meta">Meta</option>
-                                <option value="Nariño">Nariño</option>
-                                <option value="Norte de Santander">Norte de Santander</option>
-                                <option value="Putumayo">Putumayo</option>
-                                <option value="Quindío">Quindío</option>
-                                <option value="Risaralda">Risaralda</option>
-                                <option value="San Andrés y Providencia">San Andrés y Providencia</option>
-                                <option value="Santander">Santander</option>
-                                <option value="Sucre">Sucre</option>
-                                <option value="Tolima">Tolima</option>
-                                <option value="Valle del Cauca">Valle del Cauca</option>
-                                <option value="Vaupés">Vaupés</option>
-                                <option value="Vichada">Vichada</option>
-                            </select>
+                            <input type="text" class="form-control" id="ciudad" th:field="*{usuario.ciudad}"
+                                placeholder="Ciudad" required>
                         </div>
                     </div>
-                    
-                    <label class="form-label">Código Postal</label>
-                    <input type="text" class="form-control" id="codigo-postal" placeholder="Código Postal">
-                    
-                    <label class="form-label">Indicaciones Adicionales</label>
-                    <textarea class="form-control" id="indicaciones" placeholder="Apartamento, oficina, punto de referencia, etc." rows="2"></textarea>
+
                 </div>
-                
-                <!-- Sección de Datos de Facturación -->
-                <div class="form-section">
-                    <div class="form-section-title">Datos de Facturación</div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">¿Requiere factura electrónica?</label>
-                            <select class="form-control" id="requiere-factura">
-                                <option value="no">No</option>
-                                <option value="si">Sí</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Régimen tributario</label>
-                            <select class="form-control" id="regimen-tributario">
-                                <option value="persona-natural">Persona Natural</option>
-                                <option value="responsable-iva">Responsable de IVA</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
+
                 <!-- Sección de Pago -->
                 <div class="form-section">
                     <div class="form-section-title">Datos de Pago</div>
-                    
+
                     <label class="form-label">Monto a Pagar</label>
                     <input type="text" class="form-control" id="monto-pagar" placeholder="Monto a Pagar" readonly>
-                    
+
                     <button type="submit" class="btn btn-primary">Pagar con Nequi a este número: 321 9313578</button>
                 </div>
-                <!-- Añadir la imagen del QR -->
-    <div style="text-align: center; margin-top: 20px;">
-        <img src="/images/QR_Nequi.jpeg" alt="QR para pago" style="width: 510px; height: 1000px;">
-        <p style="font-size: 14px; color: #666; margin-top: 10px;">Escanee este QR desde la app de cualquier entidad habilitada</p>
-    </div>
             </form>
+            <!-- Añadir la imagen del QR -->
+            <div style="text-align: center; margin-top: 20px;">
+                <img src="/images/QR_Nequi.jpeg" alt="QR para pago" style="width: 510px; height: 1000px;">
+                <p style="font-size: 14px; color: #666; margin-top: 10px;">Escanee este QR desde la app de cualquier
+                    entidad habilitada</p>
+            </div>
             <p class="mensaje" id="mensaje">El envío se confirmará una vez recibido el pago.</p>
         </div>
     </div>
-    
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Obtener parámetros de la URL
@@ -386,18 +333,18 @@
             const cantidad = parseInt(urlParams.get("cantidad")) || 1;
             const precioParam = urlParams.get("precio") || "0";
             const nombreProducto = urlParams.get("nombre") || "Producto";
-            
+
             // Parsear el precio como float
             let precio = parseFloat(precioParam);
-            
+
             // Si no es un número válido, usar 0
             if (isNaN(precio)) {
                 precio = 0.0;
             }
-            
+
             // Costo fijo de envío
             const costoEnvio = 10000;
-            
+
             // Formatear precio para mostrar correctamente en COP
             function formatearPrecio(valor) {
                 return '$ ' + valor.toLocaleString('es-CO', {
@@ -405,32 +352,30 @@
                     maximumFractionDigits: 2
                 });
             }
-            
+
             // Calcular subtotal (precio * cantidad)
             const subtotal = cantidad * precio;
-            
+
             // Calcular total (subtotal + envío)
             const total = subtotal + costoEnvio;
-            
+
             // Actualizar la factura
-            document.getElementById("nombre-producto").textContent = nombreProducto;
-            document.getElementById("precio-unitario").textContent = formatearPrecio(precio);
-            document.getElementById("cantidad-productos").textContent = cantidad;
+
             document.getElementById("subtotal").textContent = formatearPrecio(subtotal);
             document.getElementById("costo-envio").textContent = formatearPrecio(costoEnvio);
             document.getElementById("precio-total").textContent = formatearPrecio(total);
-            
+
             // Insertar el total en el campo de monto a pagar
             document.getElementById("monto-pagar").value = formatearPrecio(total);
-            
+
             // Mostrar/ocultar campos adicionales según selección
-            document.getElementById("requiere-factura").addEventListener("change", function() {
+            document.getElementById("requiere-factura").addEventListener("change", function () {
                 // Aquí se podría añadir lógica para mostrar campos adicionales si requiere factura
             });
         });
-        
+
         // Mostrar mensaje de confirmación al enviar el formulario
-        document.getElementById("pagoForm").addEventListener("submit", function(event) {
+        document.getElementById("pagoForm").addEventListener("submit", function (event) {
             event.preventDefault();
             document.getElementById("mensaje").style.display = "block";
             // Aquí iría la lógica para procesar el pago

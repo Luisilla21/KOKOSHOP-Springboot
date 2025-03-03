@@ -34,10 +34,13 @@ public class VentaProductoService {
         Float precioTotal = 0.0f;
 
         // Calcular el precio total de la venta
-        for (ProductoVenta productoVenta : ventaProductoDTO.getProductosVenta()) {
-            precioTotal += productoVenta.getProducto().getProducPrecio() * productoVenta.getCantidad();
+        if (venta.getPrecioTotal() == null) {
+            for (ProductoVenta productoVenta : ventaProductoDTO.getProductosVenta()) {
+                precioTotal += productoVenta.getProducto().getProducPrecio() * productoVenta.getCantidad();
+            }
+            venta.setPrecioTotal(precioTotal);
+
         }
-        venta.setPrecioTotal(precioTotal);
 
         // Guardar la venta
         Venta ventaGuardada = ventaRepositorio.save(venta);

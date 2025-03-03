@@ -2,6 +2,7 @@ package com.sena.kokoshop.interfaz;
 
 import java.util.List;
 
+import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.entidades.Empleado;
 
 public interface EmpleadoInterfaz {

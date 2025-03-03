@@ -180,7 +180,8 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            margin-top: 130px; /* Ajustado para evitar que el contenido se oculte bajo el header */
+            margin-top: 130px;
+            /* Ajustado para evitar que el contenido se oculte bajo el header */
             min-height: calc(100vh - 230px);
         }
 
@@ -300,7 +301,10 @@
                 height: auto;
             }
 
-            .col-3, .logo_section, .menu-bar, .login {
+            .col-3,
+            .logo_section,
+            .menu-bar,
+            .login {
                 max-width: 100%;
                 flex: 0 0 100%;
                 text-align: center;
@@ -337,12 +341,12 @@
                     </div>
                 </div>
 
-                    <div th:if="${isAuthenticated}" class="user-section">
-                        <span class="user-name" th:text="${username}"></span>
-                        <a href="/logout" class="logout-button">Cerrar sesión</a>
-                    </div>
+                <div th:if="${isAuthenticated}" class="user-section">
+                    <span class="user-name" th:text="${username}"></span>
+                    <a href="/logout" class="logout-button">Cerrar sesión</a>
                 </div>
             </div>
+        </div>
         </div>
         <center>
             <div class="nav-bar">
@@ -357,103 +361,83 @@
     </header>
 
     <main class="main-content">
-        <div class="product-container">
-            <div class="product-image">
-                <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
-            </div>
-            <div class="product-details">
-                <h1 class="product-title" th:text="${producto.producNom}">Chaqueta de cuero</h1>
-                <p class="product-description" th:text="${producto.producDescripcion}">Descripción del producto</p>
-                <p class="product-price" th:text="${producto.producPrecio}">$ 63,000 COP</p>
-
-                <label for="quantity">Cantidad</label>
-                <div class="quantity-controls">
-                    <button class="quantity-btn">-</button>
-                    <input id="quantity" type="number" value="1" min="1" th:max="${producto.cantidad}">
-                    <button class="quantity-btn">+</button>
+        <form th:action="@{/catalogo/compra/}" method="get">
+            <div class="product-container">
+                <div class="product-image">
+                    <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
                 </div>
+                <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
+                <input type="hidden" name="email" th:value="${username}">
+                <div class="product-details">
+                    <h1 class="product-title" th:text="${producto.producNom}">Chaqueta de cuero</h1>
+                    <p class="product-description" th:text="${producto.producDescripcion}">Descripción del producto</p>
+                    <p class="product-price" th:text="${producto.producPrecio}">$ 63,000 COP</p>
 
-                <a class="buy-now" th:href="@{/catalogo/compra/{id}(id=${producto.idProducto})}">Comprar ahora</a>
+                    <label for="quantity">Cantidad</label>
+                    <div class="quantity-controls">
+                        <a class="quantity-btn">-</a>
+                        <input id="quantity" name="cantidad" th:value="*{cantidad}" type="number" min="1"
+                            th:max="${producto.cantidad}">
+                        <a class="quantity-btn">+</a>
+                    </div>
+
+                    <button class="buy-now">Comprar ahora</button>
+                </div>
             </div>
-        </div>
+        </form>
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const quantityInput = document.getElementById('quantity');
             const decreaseBtn = document.querySelector('.quantity-btn:first-child');
             const increaseBtn = document.querySelector('.quantity-btn:last-child');
             const maxQuantity = parseInt(quantityInput.getAttribute('max') || 10);
             const buyNowBtn = document.querySelector('.buy-now');
             const productoNombre = document.querySelector('.product-title').textContent;
-            
+
             // Obtener el texto del precio
             let productoPrecioText = document.querySelector('.product-price').textContent;
-            
+
             // Extraer solo los números y puntos/comas para números decimales
             // Primero reemplazamos comas por puntos para estandarizar
             let precioLimpio = productoPrecioText.replace(/,/g, '.');
-            
+
             // Luego extraemos el primer número válido que encontremos (incluidos decimales)
             let match = precioLimpio.match(/\d+(\.\d+)?/);
             let productoPrecio = match ? parseFloat(match[0]) : 0.0;
-    
+
             // Función para actualizar la cantidad
             function updateQuantity(newValue) {
                 // Asegurarse de que el valor esté dentro de los límites
                 if (newValue < 1) newValue = 1;
                 if (newValue > maxQuantity) newValue = maxQuantity;
-                
+
                 // Actualizar el valor
                 quantityInput.value = newValue;
             }
-    
+
             // Evento para el botón de disminuir
-            decreaseBtn.addEventListener('click', function() {
+            decreaseBtn.addEventListener('click', function () {
                 const currentValue = parseInt(quantityInput.value);
                 updateQuantity(currentValue - 1);
             });
-    
+
             // Evento para el botón de aumentar
-            increaseBtn.addEventListener('click', function() {
+            increaseBtn.addEventListener('click', function () {
                 const currentValue = parseInt(quantityInput.value);
                 updateQuantity(currentValue + 1);
             });
-    
+
             // Evento para validar entradas manuales
-            quantityInput.addEventListener('change', function() {
+            quantityInput.addEventListener('change', function () {
                 let value = parseInt(this.value);
                 if (isNaN(value)) value = 1;
                 updateQuantity(value);
             });
-    
-            // Modificar el botón de compra para incluir todos los parámetros
-            if (buyNowBtn) {
-                buyNowBtn.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevenir navegación para poder modificar la URL
-                    
-                    // Obtener el href original
-                    const originalHref = buyNowBtn.getAttribute('href');
-                    
-                    // Si el href ya tiene parámetros (usando Thymeleaf), preservamos el ID del producto
-                    let baseUrl = originalHref;
-                    if (baseUrl.includes('?')) {
-                        baseUrl = baseUrl.split('?')[0]; // Parte base de la URL
-                    }
-                    
-                    // Construir la nueva URL con parámetros
-                    const cantidad = quantityInput.value;
-                    const newUrl = `${baseUrl}?cantidad=${cantidad}&precio=${productoPrecio}&nombre=${encodeURIComponent(productoNombre)}`;
-                    
-                    console.log("Precio original:", productoPrecioText);
-                    console.log("Precio extraído como float:", productoPrecio);
-                    console.log("URL de compra:", newUrl);
-                    
-                    // Navegar a la nueva URL
-                    window.location.href = newUrl;
-                });
-            }
+
         });
     </script>
 </body>
+
 </html>

@@ -7,5 +7,5 @@ import com.sena.kokoshop.entidades.Empleado;
 
 @Repository
 public interface EmpleadoRepositorio extends JpaRepository<Empleado, Long> {
-
+    
 }

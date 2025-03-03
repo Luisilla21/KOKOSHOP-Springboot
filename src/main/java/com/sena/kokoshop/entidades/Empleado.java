@@ -26,16 +26,16 @@ public class Empleado {
     @JoinColumn(name = "idUser") // Foreign Key
     private Usuario usuario;
 
-    @Column(name = "salario", nullable = false, length = 10)
+    @Column(name = "salario", nullable = true, length = 10)
     private Double salario;
 
-    @Column(name = "horaEntrada", nullable = false, length = 5)
+    @Column(name = "horaEntrada", nullable = true, length = 5)
     private String horaEntrada;
 
-    @Column(name = "horaSalida", nullable = false, length = 5)
+    @Column(name = "horaSalida", nullable = true, length = 5)
     private String horaSalida;
 
-    @Column(name = "horasTrabajadas", nullable = false, length = 10)
+    @Column(name = "horasTrabajadas", nullable = true, length = 10)
     private String horasTrabajadas;
 
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)

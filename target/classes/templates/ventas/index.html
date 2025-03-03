@@ -214,5 +214,32 @@
         </div>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".btn-danger").forEach(button => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault();
+                const url = this.getAttribute("href");
+                Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "¡No podrás revertir esto!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, eliminar!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                        setTimeout(() => {
+                            window.location.href = "/ventas/";
+                        }, 1000); // Redirige después de 1 segundo
+                    }
+                });
+            });
+        });
+    });
+</script>
 
 </html>

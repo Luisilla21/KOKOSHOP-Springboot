@@ -80,28 +80,30 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 col-sm-12 container justify-content-center card">
                 <div class="card-body">
-                    <form th:action="@{/ventas}" th:object="${ventaProductoDTO}" method="post">
+                    <form th:action="@{/ventas/actualizar/{idVenta}(idVenta=${ventaProductoDTO.venta.idVenta})}" 
+                    th:object="${ventaProductoDTO}" method="post">
                         <h1 class="text-center">Registro de Ventas</h1>
 
                         <div class="form-group mb-3">
                             <label>Cliente:</label>
-                            <select class="form-control" th:field="*{venta.cliente}">
+                            <select class="form-control" th:field="*{venta.cliente.usuarioID}">
                                 <option value="" selected>Seleccionar</option>
-
-                                <option th:each="cliente : ${clientes}" th:value="${cliente.usuarioID}"
-                                    th:text="${cliente.nombre}"></option>
+                                <option th:each="cliente : ${clientes}" th:value="${cliente.usuarioID}" 
+                                        th:text="${cliente.nombre}" 
+                                        th:selected="${cliente.usuarioID == ventaProductoDTO.venta.cliente.usuarioID}">
+                                </option>
                             </select>
                         </div>
 
                         <div class="form-group mb-3">
                             <label>Empleado:</label>
-                            <select class="form-control" th:field="*{venta.empleado}">
+                            <select class="form-control" th:field="*{venta.empleado.id}">
                                 <option value="" selected>Seleccionar</option>
-
-                                <option th:each="empleado : ${empleados}" th:value="${empleado.id}"
-                                    th:text="${empleado.usuario.nombre}"></option>
+                                <option th:each="empleado : ${empleados}" th:value="${empleado.id}" 
+                                        th:text="${empleado.usuario.nombre}"
+                                        th:selected="${empleado.id == ventaProductoDTO.venta.empleado.id}">
+                                </option>
                             </select>
-                        </div>
 
                         <div class="form-group mb-3">
                             <label>Fecha de Venta:</label>
@@ -115,7 +117,18 @@
 
                         <div class="form-group mb-3">
                             <label>Estado de Venta:</label>
-                            <input type="text" class="form-control" th:field="*{venta.estadoVenta}" required>
+                            <select name="estadoVenta" th:field="*{venta.estadoVenta}" class="form-control" required>
+                                <option value="" disabled selected>Seleccione un estado de venta</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Pagado">Pagado</option>
+                                <option value="Preparando">Preparando</option>
+                                <option value="Enviado">Enviado</option>
+                                <option value="Entregado">Entregado</option>
+                                <option value="Cancelado">Cancelado</option>
+                                <option value="Fallido">Fallido</option>
+                                <option value="Devuelto">Devuelto</option>
+                                <option value="Reembolsado">Reembolsado</option>
+                            </select>
                         </div>
 
                         <div class="form-group mb-3">
@@ -160,46 +173,46 @@
 
     <script th:inline="javascript">
         $(document).ready(function () {
+            // Get products from Thymeleaf
+            var productos = /*[[${productos}]]*/ [];
+            
             $('#agregar-producto').click(function () {
-                // Obtener el contenedor de productos
+                // Get the container
                 var productosContainer = $('#productos-container');
-
-                // Obtener el índice actual basado en la cantidad de productos ya agregados
-                var currentIndex = productosContainer.find('.productos-row').length + 1;                // Clonar el elemento plantilla oculto
-                var nuevoElemento = $('#producto-template').clone();
-
-                // Eliminar el ID para evitar duplicados
-                nuevoElemento.removeAttr('id');
-
-                // Mostrar el nuevo elemento
-                nuevoElemento.show();
-
-                // Actualizar los atributos 'name' y 'th:field' de los campos para reflejar el nuevo índice
-                nuevoElemento.find('select').each(function () {
-                    var nameOriginal = $(this).attr('name');
-                    var nameActualizado = nameOriginal.replace(/\[0\]/, '[' + currentIndex + ']');
-                    $(this).attr('name', nameActualizado);
-                    $(this).attr('th:field', '*{productosVenta[' + currentIndex + '].producto}');
+                
+                // Get current index
+                var currentIndex = productosContainer.children('div').length;
+                
+                // Create new product row
+                var newRow = $('<div class="mb-3"></div>');
+                
+                // Create product dropdown
+                var selectHtml = '<select class="form-control mb-2" name="productosVenta[' + currentIndex + '].producto">';
+                selectHtml += '<option value="">Seleccionar</option>';
+                
+                // Add product options
+                productos.forEach(function(producto) {
+                    selectHtml += '<option value="' + producto.idProducto + '">' + 
+                        producto.producNom + ' - ' + producto.producPrecio + '</option>';
                 });
-
-                nuevoElemento.find('input').each(function () {
-                    var nameOriginal = $(this).attr('name');
-                    var nameActualizado = nameOriginal.replace(/\[0\]/, '[' + currentIndex + ']');
-                    $(this).attr('name', nameActualizado);
-                    $(this).attr('th:field', '*{productosVenta[' + currentIndex + '].cantidad}');
-                });
-
-                // Limpiar los valores de los campos antes de agregar el nuevo elemento
-                nuevoElemento.find('input').val('');
-
-                // Agregar el nuevo elemento al contenedor
-                productosContainer.append(nuevoElemento);
+                
+                selectHtml += '</select>';
+                
+                // Create quantity input
+                var inputHtml = '<input type="number" class="form-control mb-3" ' + 
+                    'name="productosVenta[' + currentIndex + '].cantidad" placeholder="Cantidad">';
+                
+                // Add elements to row
+                newRow.append(selectHtml).append(inputHtml);
+                
+                // Add separator
+                newRow.append('<hr>');
+                
+                // Add to container
+                productosContainer.append(newRow);
             });
         });
-
-
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

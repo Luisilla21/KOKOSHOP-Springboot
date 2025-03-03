@@ -67,22 +67,27 @@ public class VentaController {
     }
 
     @GetMapping("/ventas/editar/{id}")
-    public String mostrarFormularioDeEditar(@PathVariable Long id, Model modelo) {
-        VentaProductoDTO vDto = ventaService.buscarVentaProductoDTO(id);
-        if (vDto == null) {
-            // Redirige o muestra un mensaje de error si la venta no existe
-            return "redirect:/ventas";
-        }
-        modelo.addAttribute("ventaProductoDTO", vDto);
-        return "ventas/editar_venta";
-    }
-
-    @PostMapping("/ventas/actualizar/{idVenta}")
-    public String actualizarVenta(@PathVariable Long idVenta,
-            @ModelAttribute("ventaProductoDTO") VentaProductoDTO vDTO) {
-        ventaService.actualizarVenta(vDTO);
+public String mostrarFormularioDeEditar(@PathVariable Long id, Model modelo) {
+    VentaProductoDTO vDto = ventaService.buscarVentaProductoDTO(id);
+    if (vDto == null) {
+        // Redirige o muestra un mensaje de error si la venta no existe
         return "redirect:/ventas";
     }
+    modelo.addAttribute("ventaProductoDTO", vDto);
+    modelo.addAttribute("clientes", usuarioInterfaz.listarTodosLosUsuarios());
+    modelo.addAttribute("empleados", empleadoInterfaz.listarTodosLosEmpleados());
+    modelo.addAttribute("productos", productoInterfaz.listarTodosLosProductos());
+    return "ventas/editar_venta";
+}
+
+@PostMapping("/ventas/actualizar/{idVenta}")
+public String actualizarVenta(@PathVariable Long idVenta,
+        @ModelAttribute("ventaProductoDTO") VentaProductoDTO vDTO) {
+    // Ensure the venta ID is set correctly
+    vDTO.getVenta().setIdVenta(idVenta);
+    ventaService.actualizarVenta(vDTO);
+    return "redirect:/ventas";
+}
 
     @GetMapping("/ventas/{id}")
     public String eliminarVenta(@PathVariable Long id) {

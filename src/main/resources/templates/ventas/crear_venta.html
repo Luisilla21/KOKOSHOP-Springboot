@@ -115,7 +115,18 @@
 
                         <div class="form-group mb-3">
                             <label>Estado de Venta:</label>
-                            <input type="text" class="form-control" th:field="*{venta.estadoVenta}" required>
+                            <select name="estadoVenta" th:field="*{venta.estadoVenta}" class="form-control" required>
+                                <option value="" disabled selected>Seleccione un estado de venta</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Pagado">Pagado</option>
+                                <option value="Preparando">Preparando</option>
+                                <option value="Enviado">Enviado</option>
+                                <option value="Entregado">Entregado</option>
+                                <option value="Cancelado">Cancelado</option>
+                                <option value="Fallido">Fallido</option>
+                                <option value="Devuelto">Devuelto</option>
+                                <option value="Reembolsado">Reembolsado</option>
+                            </select>
                         </div>
 
                         <div class="form-group mb-3">

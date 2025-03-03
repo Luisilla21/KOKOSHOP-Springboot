@@ -89,29 +89,47 @@ public class VentaProductoService {
     }
 
     public void actualizarVenta(VentaProductoDTO dto) {
-        Venta ventaExistente = ventaRepositorio.findById(dto.getVentaId())
+        Venta ventaExistente = ventaRepositorio.findById(dto.getVenta().getIdVenta())
                 .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
-        Venta venta = dto.getVenta();
-
-        List<ProductoVenta> productosExistentes = productoVentaRepositorio.obtenerProductosPorIdVenta(dto.getVentaId());
-        List<ProductoVenta> productos = dto.getProductosVenta();
-
-        ventaExistente.setPrecioTotal(venta.getPrecioTotal());
-        ventaExistente.setFechaVenta(venta.getFechaVenta());
-        ventaExistente.setTipoVenta(venta.getTipoVenta());
-        ventaExistente.setEstadoVenta(venta.getEstadoVenta());
-
-        ventaRepositorio.save(ventaExistente);
-
+        
+        // Actualizar los campos de la venta
+        ventaExistente.setFechaVenta(dto.getVenta().getFechaVenta());
+        ventaExistente.setTipoVenta(dto.getVenta().getTipoVenta());
+        ventaExistente.setEstadoVenta(dto.getVenta().getEstadoVenta());
+        ventaExistente.setCliente(dto.getVenta().getCliente());
+        ventaExistente.setEmpleado(dto.getVenta().getEmpleado());
+    
+        // Eliminar relaciones de productos existentes
+        List<ProductoVenta> productosExistentes = productoVentaRepositorio.obtenerProductosPorIdVenta(ventaExistente.getIdVenta());
         for (ProductoVenta productoExistente : productosExistentes) {
             productoVentaRepositorio.deleteById(productoExistente.getId());
         }
-
-        for (ProductoVenta productoNuevo : productos) {
+    
+        // Calcular nuevo precio total antes de guardar la venta
+        Float precioTotal = 0.0f;
+    
+        // Guardar nuevas relaciones producto-venta
+        for (ProductoVenta productoNuevo : dto.getProductosVenta()) {
+            if (productoNuevo.getProducto() == null || productoNuevo.getCantidad() == null) {
+                continue; // Evita productos inválidos
+            }
+    
+            // Obtener producto desde la BD para calcular precio
+            Producto producto = productoRepositorio.findById(productoNuevo.getProducto().getIdProducto())
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    
+            precioTotal += producto.getProducPrecio() * productoNuevo.getCantidad();
+            
+            // Asociar la venta al producto y guardar
             productoNuevo.setVenta(ventaExistente);
             productoVentaRepositorio.save(productoNuevo);
         }
+    
+        // Ahora sí, actualizar y guardar la venta con el nuevo precio total
+        ventaExistente.setPrecioTotal(precioTotal);
+        ventaRepositorio.save(ventaExistente);
     }
+    
 
     public void eliminarVentaProductos(Long id) {
         Venta venta = ventaRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Venta no encontrada"));

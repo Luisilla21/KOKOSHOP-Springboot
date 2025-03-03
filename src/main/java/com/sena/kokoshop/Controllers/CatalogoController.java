@@ -141,7 +141,7 @@ public class CatalogoController {
         ventaProductoDTO.getVenta()
                 .setPrecioTotal(productoVenta.getProducto().getProducPrecio() * productoVenta.getCantidad() + 10000);
         ventaProductoDTO.getVenta().setTipoVenta("Virtual");
-        ventaProductoDTO.getVenta().setEstadoVenta("En proceso");
+        ventaProductoDTO.getVenta().setEstadoVenta("Pendiente");
 
         ventaProductoDTO.getProductosVenta().add(productoVenta);
 

@@ -34,13 +34,10 @@
                 </div>
 
                 <div class="col-4 login">
-                    <div class="login-registrarse" th:unless="${isAuthenticated}">
-                        <a class="btn-lr" href="/login">Iniciar sesión</a>
-                        <a class="btn-lr" href="/registro">Registrarse</a>
-                    </div>
+
 
                     <div class="navbar-nav">
-                        <div class="dropdown " th:if="${isAuthenticated}">
+                        <div class="dropdown ">
                             <a class="nav-link text-white dropdown-toggle" href="#" role="button"
                                 data-bs-toggle="dropdown" id="dropdownMenuLink" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false" th:text="${username}"
@@ -62,7 +59,6 @@
                                 <div sec:authorize="hasAuthority('ROLE_CLIENTE')">
                                     <li><a class="dropdown-item"
                                             th:href="@{/cliente/mis-compras/{email}(email=${username})}">Mis Compras</a>
-
                                     </li>
                                 </div>
                                 <li>
@@ -84,7 +80,7 @@
                 <nav class="main-menu">
 
 
-                    <a href="#principal">Principal</a>
+                    <a th:href="@{/}">Principal</a>
 
                     <a th:href="@{catalogo}">Catálogo</a>
 
@@ -97,75 +93,42 @@
 
     </header>
     <main>
-        <section class="imagen-principal">
-            <div class="capa-oscura"></div>
-            <div class="text-img-principal">
-                ¡Encuentra lo que necesitas!
-            </div>
-        </section>
-
-        <!-- Sección de productos -->
-        <section class="catalogo">
-            <h1>NOVEDADES</h1>
-            <div class="productos">
-                <div th:each="producto : ${productos}" class="producto">
-                    <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
-                        <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
-                    </a>
-                    <a th:href="@{/catalogo/producto/{id}(id=${producto.idProducto})}">
-                        <div class="text-product">
-                            <span th:text="${producto.producNom}" th:value="${producto.producNom}" class="nom-producto"
-                                href="">nombre</span>
-                            <span th:text="${producto.producPrecio}" th:value="${producto.producNom}"
-                                class="precio">precio</span>
-                        </div>
-                    </a>
+        <div class="container">
+            <h1>Ventas</h1>
+            <div class="row">
+                <div class="col-lg-3">
+                    <span th:yext="${username}"></span>
+                    <a th:href="@{/ventas/nueva}" class="btn btn-primary btn-sm mb3"> Registrar Venta</a>
                 </div>
             </div>
-        </section>
+            <br>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Precio Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="productoVenta : ${productosVenta}">
+                        <td th:text="${productoVenta.getProducto().getProducNom()}"></td>
+                        <td th:text="${productoVenta.getCantidad()}"></td>
+                        <td th:text="${productoVenta.getProducto().getProducPrecio()}"></td>
+                        <td th:text="${productoVenta.getCantidad() * productoVenta.getProducto().getProducPrecio()}">
+                        </td>
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
     </main>
 
 
-    <footer>
-        <div class="pie-pagina">
-            <div class="redes">
-                <h5>Síguenos en</h5>
-                <ul>
-                    <li><a class="logo-social" href="https://wa.me/c/573219313578" target="_blank"><img
-                                th:src="@{images/wpp.png}" alt="WhatsApp"></a></li>
-                    <li><a class="logo-social" href="https://www.facebook.com/people/KokoShop-Colombia/61564941809696/"
-                            target="_blank"><img th:src="@{images/Facebook_Logo.png}" alt="Facebook"></a>
-                    </li>
-                    <li><a class="logo-social" href="https://instagram.com/kokoshop_10?igshid=MzRlODBiNWFlZA=="
-                            target="_blank"><img th:src="@{images/Instagram_icon.png}" alt="Instagram"></a></li>
-                    <li><a class="logo-social" href="https://x.com/KokoShopCOL" target="_blank"><img
-                                th:src="@{images/X.png}" alt="Twitter"></a></li>
-                </ul>
-            </div>
-            <div class="ubicacion">
-                <h5>Encuéntranos en</h5>
-                <div class="map">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11209.072868276553!2d-74.14402175539946!3d4.59829808980877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1710714810135!5m2!1ses-419!2sco"
-                        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-            <div class="acerca-de">
-                <h5>Acerca de Kokoshop</h5>
-                <p>
-                    ¡Descubre la nueva era de la moda femenina en nuestra tienda online! Desde prendas
-                    personalizadas hasta
-                    experiencias de compra en 3D y recomendaciones de estilo, estamos redefiniendo la forma en que
-                    te
-                    relacionas con la moda. Únete a nosotros para explorar colecciones exclusivas y descubrir tu
-                    estilo único.
-                </p>
-                <div class="container">
-                </div>
-                <div class="copyright">
-                    <p>&copy; 2024 Kokoshop. Todos los derechos reservados.</p>
-                </div>
-    </footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

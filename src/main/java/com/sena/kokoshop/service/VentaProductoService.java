@@ -71,6 +71,17 @@ public class VentaProductoService {
         return listaDTO;
     }
 
+    public List<VentaProductoDTO> listarVentasCliente(Long idCliente) {
+        List<VentaProductoDTO> listaDTO = new ArrayList<>();
+        List<Venta> ventas = ventaRepositorio.findByCliente_Id(idCliente);
+        for (Venta venta : ventas) {
+            List<ProductoVenta> productos = venta.getProductos();
+            VentaProductoDTO dto = new VentaProductoDTO(venta, productos);
+            listaDTO.add(dto);
+        }
+        return listaDTO;
+    }
+
     public VentaProductoDTO buscarVentaProductoDTO(Long id) {
         Venta venta = ventaRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Venta no encontrada"));
         List<ProductoVenta> productos = venta.getProductos();

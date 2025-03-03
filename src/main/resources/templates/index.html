@@ -60,7 +60,10 @@
                                 </div>
 
                                 <div sec:authorize="hasAuthority('ROLE_CLIENTE')">
-                                    <li><a class="dropdown-item" href="/cliente/mis-compras">Mis Compras</a></li>
+                                    <li><a class="dropdown-item"
+                                            th:href="@{/cliente/mis-compras/{email}(email=${username})}">Mis Compras</a>
+
+                                    </li>
                                 </div>
                                 <li>
                                     <hr class="dropdown-divider">

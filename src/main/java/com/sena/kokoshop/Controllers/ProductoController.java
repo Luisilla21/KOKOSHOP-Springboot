@@ -102,7 +102,7 @@ public class ProductoController {
     @GetMapping("/productos/{id}")
     public String eliminarProducto(@PathVariable Long id) {
         interfaz.eliminarProducto(id);
-        return "redirect:/productos";
+        return "redirect:/productos/";
     }
 
     @GetMapping("/productos/imagen/{id}")

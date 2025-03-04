@@ -334,9 +334,25 @@
                                             <td th:text="${venta.fechaVenta}">01/03/2025</td>
                                             <td th:text="${venta.precioTotal + ' $'}">100 $</td>
                                             <td>
-                                                <span th:if="${venta.estadoVenta == 'Completada'}" class="badge bg-success">Completada</span>
-                                                <span th:if="${venta.estadoVenta == 'Pendiente'}" class="badge bg-warning">Pendiente</span>
-                                                <span th:if="${venta.estadoVenta == 'Cancelada'}" class="badge bg-danger">Cancelada</span>
+                                                <span th:if="${venta.estadoVenta == 'Pendiente'}"
+                                                    class="badge bg-warning">Pendiente</span>
+                                                <span th:if="${venta.estadoVenta == 'Pagado'}"
+                                                    class="badge bg-primary">Pagado</span>
+                                                <span th:if="${venta.estadoVenta == 'Preparando'}"
+                                                    class="badge bg-info">Preparando</span>
+                                                <span th:if="${venta.estadoVenta == 'Enviado'}"
+                                                    class="badge bg-secondary">Enviado</span>
+                                                <span th:if="${venta.estadoVenta == 'Entregado'}"
+                                                    class="badge bg-success">Entregado</span>
+                                                <span th:if="${venta.estadoVenta == 'Cancelado'}"
+                                                    class="badge bg-danger">Cancelado</span>
+                                                <span th:if="${venta.estadoVenta == 'Fallido'}"
+                                                    class="badge bg-dark">Fallido</span>
+                                                <span th:if="${venta.estadoVenta == 'Devuelto'}"
+                                                    class="badge bg-light text-dark">Devuelto</span>
+                                                <span th:if="${venta.estadoVenta == 'Reembolsado'}"
+                                                    class="badge bg-success-subtle text-success">Reembolsado</span>
+
                                             </td>
                                         </tr>
                                     </tbody>
@@ -369,9 +385,12 @@
                                             <td th:text="${producto.cantidad}">5</td>
                                             <td th:text="${producto.producPrecio + ' $'}">50 $</td>
                                             <td>
-                                                <span th:if="${producto.cantidad <= 5}" class="badge bg-danger">Crítico</span>
-                                                <span th:if="${producto.cantidad > 5 && producto.cantidad <= 10}" class="badge bg-warning">Bajo</span>
-                                                <span th:if="${producto.cantidad > 10}" class="badge bg-success">Normal</span>
+                                                <span th:if="${producto.cantidad <= 5}"
+                                                    class="badge bg-danger">Crítico</span>
+                                                <span th:if="${producto.cantidad > 5 && producto.cantidad <= 10}"
+                                                    class="badge bg-warning">Bajo</span>
+                                                <span th:if="${producto.cantidad > 10}"
+                                                    class="badge bg-success">Normal</span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -408,7 +427,7 @@
                 labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                 datasets: [{
                     label: 'Ventas Mensuales',
-                    data: /*[[${ventasMensuales}]]*/ [10, 15, 25, 35, 35, 35, 35, 35, 35, 35, 40, 55], // Datos reales enviados desde el controlador
+                    data: /*[[${ventasMensuales}]]*/[10, 15, 25, 35, 35, 35, 35, 35, 35, 35, 40, 55], // Datos reales enviados desde el controlador
                     backgroundColor: 'rgba(78, 115, 223, 0.2)',
                     borderColor: 'rgba(78, 115, 223, 1)',
                     borderWidth: 2,
@@ -416,13 +435,13 @@
                     tension: 0.3
                 }]
             };
-    
+
             // Datos para gráfico de productos por categoría
             const productosData = {
-                labels: /*[[${categoriasPrendas}]]*/ ['Camisetas', 'Pantalones', 'Zapatos', 'Accesorios'], // Default data for testing
+                labels: /*[[${categoriasPrendas}]]*/['Camisetas', 'Pantalones', 'Zapatos', 'Accesorios'], // Default data for testing
                 datasets: [{
                     label: 'Productos por Categoría',
-                    data: /*[[${productosPorCategoria}]]*/ [12, 19, 8, 15], // Default data for testing
+                    data: /*[[${productosPorCategoria}]]*/[12, 19, 8, 15], // Default data for testing
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.8)',
                         'rgba(54, 162, 235, 0.8)',
@@ -434,19 +453,19 @@
                     borderWidth: 1
                 }]
             };
-    
+
             // Datos para gráfico de empleados
             const empleadosData = {
-                labels: /*[[${nombresEmpleados}]]*/ ['Juan', 'María', 'Carlos', 'Ana', 'Pedro'], // Default data for testing
+                labels: /*[[${nombresEmpleados}]]*/['Juan', 'María', 'Carlos', 'Ana', 'Pedro'], // Default data for testing
                 datasets: [{
                     label: 'Ventas por Empleado',
-                    data: /*[[${ventasPorEmpleado}]]*/ [30, 45, 25, 38, 40], // Default data for testing
+                    data: /*[[${ventasPorEmpleado}]]*/[30, 45, 25, 38, 40], // Default data for testing
                     backgroundColor: 'rgba(28, 200, 138, 0.8)',
                     borderColor: 'rgba(28, 200, 138, 1)',
                     borderWidth: 1
                 }]
             };
-    
+
             // Configuración del gráfico de ventas
             const ventasChart = new Chart(
                 document.getElementById('ventasChart'),
@@ -477,7 +496,7 @@
                     }
                 }
             );
-    
+
             // Configuración del gráfico de productos
             const productosChart = new Chart(
                 document.getElementById('productosChart'),
@@ -495,7 +514,7 @@
                     }
                 }
             );
-    
+
             // Configuración del gráfico de empleados
             const empleadosChart = new Chart(
                 document.getElementById('empleadosChart'),

@@ -38,7 +38,7 @@ public class PasswordResetController {
         usuario.setResetToken(token);
         usuarioInterfaz.guardarUsuario(usuario);
 
-        String resetLink = "http://localhost:8080/reset-password?token=" + token;
+        String resetLink = "http://https://kokoshop.up.railway.app/reset-password?token=" + token;
         emailService.sendEmail(email, "Restablecer tu contraseña", 
                 "Haz clic en el siguiente enlace para restablecer tu contraseña: " + resetLink);
 

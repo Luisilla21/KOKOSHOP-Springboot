@@ -34,14 +34,14 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/index", "/registro", "/login","/forgot-password","/reset-password",
-                                "/catalogo","/dashboard", "/vistaProductos", "/nosotros", "/asesoria",
-                                "/css/**", "/js/**", "/images/**","/error**",
+                        .requestMatchers("/", "/index", "/registro", "/login", "/forgot-password", "/reset-password",
+                                "/catalogo", "/vistaProductos", "/nosotros", "/asesoria",
+                                "/css/**", "/js/**", "/images/**", "/error**",
                                 "/webjars/**", "/assets/**",
                                 "/productos/imagen/**", "/catalogo/producto/**")
                         .permitAll()
                         // Change these to match the exact format of your roles
-                        .requestMatchers("/ventas/**", "/productos/**", "/empleados/**")
+                        .requestMatchers("/ventas/**", "/productos/**", "/empleados/**", "/dashboard/**")
                         .hasRole("ADMIN")
                         .requestMatchers("/empleado/**").hasRole("EMPLEADO")
                         .requestMatchers("/compra/**", "/cliente/**").hasRole("CLIENTE")

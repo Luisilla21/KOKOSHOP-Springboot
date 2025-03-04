@@ -58,6 +58,7 @@
 
                                 <div sec:authorize="hasAuthority('ROLE_EMPLEADO')">
                                     <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/productos/}">Productos</a></li>
                                 </div>
 
                                 <div sec:authorize="hasAuthority('ROLE_CLIENTE')">

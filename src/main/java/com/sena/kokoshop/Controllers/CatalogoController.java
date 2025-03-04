@@ -3,8 +3,6 @@ package com.sena.kokoshop.Controllers;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,14 +42,7 @@ public class CatalogoController {
     private VentaProductoService ventaService;
 
     @GetMapping("/catalogo")
-    public String listarProductosCatalogo(@AuthenticationPrincipal User user, Model modelo) {
-        
-        if (user != null) {
-            modelo.addAttribute("username", user.getUsername());
-            modelo.addAttribute("isAuthenticated", true);
-        } else {
-            modelo.addAttribute("isAuthenticated", false);
-        }
+    public String listarProductosCatalogo(Model modelo) {
         modelo.addAttribute("productos", productoInterfaz.listarTodosLosProductos());
         return "catalogo"; // retorna al archivo productos
     }
@@ -111,11 +102,6 @@ public class CatalogoController {
                 .orElseThrow(() -> new RuntimeException("Empleado Admin no encontrado"));
         Usuario usuarioExistente = usuarioRepositorio.findByEmail(usuario.getEmail());
 
-        System.out.println("--------------------------------Usuario: " + usuarioExistente.getNombre());
-        System.out
-                .println("(\"--------------------------------Producto: " + idProducto + " Cantidad: "
-                        + productoVenta.getCantidad());
-
         if (usuarioExistente != null) {
             usuarioExistente.setNombre(usuario.getNombre());
             usuarioExistente.setApellido(usuario.getApellido());
@@ -142,9 +128,7 @@ public class CatalogoController {
                 .setPrecioTotal(productoVenta.getProducto().getProducPrecio() * productoVenta.getCantidad() + 10000);
         ventaProductoDTO.getVenta().setTipoVenta("Virtual");
         ventaProductoDTO.getVenta().setEstadoVenta("Pendiente");
-
         ventaProductoDTO.getProductosVenta().add(productoVenta);
-
         ventaService.guardarVentaConProductos(ventaProductoDTO);
 
         return "redirect:/catalogo";

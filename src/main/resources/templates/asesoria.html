@@ -1,284 +1,175 @@
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        text-decoration: none !important;
-        transition: 0.5s;
-    }
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html>
 
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(120deg, #391f53, #000000);
-        color: #f5ccd4;
-        scroll-behavior: smooth;
-    }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Explora Kokoshop: la tienda online para encontrar las mejores prendas de moda. ¡Novedades, personalización y beneficios exclusivos!">
+    <meta name="keywords" content="moda femenina, tienda online, ropa personalizada, estilo único, Kokoshop">
+    <meta name="cache-control" content="no-cache">
+    <title>KOKOSHOP | Tu Estilo Único</title>
+    <link rel="icon" href="images/KSLogo-transformed.jpeg" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/asesoria-nosotros.css}">
+</head>
 
-    .section-title {
-        font-family: "Lilita One", sans-serif;
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-bottom: 30px;
-        color: #f5ccd4;
-        text-transform: uppercase;
-        text-align: center;
-        letter-spacing: 2px;
-        position: relative;
-    }
-
-    .section-title::after {
-        content: "";
-        display: block;
-        width: 80px;
-        height: 4px;
-        background: #f5ccd4;
-        margin: 10px auto 0;
-        border-radius: 2px;
-    }
-
-    .card {
-        border: none;
-        margin-bottom: 2.5rem;
-        background-color: #1a1a1a;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    }
-
-    .card-body {
-        padding: 2.5rem;
-        position: relative;
-        z-index: 1;
-    }
-
-    .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, #391f53, #b8a4c9);
-        clip-path: circle(20% at 20% 20%);
-        z-index: 0;
-        transition: clip-path 0.5s ease;
-    }
-
-    .card:hover::before {
-        clip-path: circle(80% at 50% 50%);
-    }
-
-    .card-icon {
-        font-size: 3rem;
-        color: #f5ccd4;
-        position: absolute;
-        top: -20px;
-        left: 20px;
-        background-color: #391f53;
-        border-radius: 50%;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        z-index: 2;
-        transform: translateY(50%);
-    }
-
-    .card-title {
-        color: #f5ccd4;
-        font-weight: bold;
-        margin-bottom: 1.5rem;
-        text-transform: uppercase;
-        font-size: 1.75rem;
-        position: relative;
-        z-index: 2;
-        padding-left: 75px;
-        font-family: "Lilita One", sans-serif;
-    }
-
-    .card-text {
-        color: #f5ccd4;
-        font-size: 1.1rem;
-        line-height: 1.8;
-        position: relative;
-        z-index: 2;
-        padding-left: 75px;
-    }
-
-    .btn-custom {
-        background: linear-gradient(to right, #391f53, #b8a4c9);
-        border-radius: 20px;
-        padding: 10px 20px;
-        color: #f5ccd4;
-        text-transform: uppercase;
-        font-weight: bold;
-        border: 2px solid #f5ccd4;
-        transition: all 0.3s ease;
-        position: relative;
-        z-index: 2;
-    }
-
-    .btn-custom:hover {
-        background: linear-gradient(to right, #b8a4c9, #391f53);
-        color: #ff86c4;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    }
-
-    .card-image {
-        height: 200px;
-        background-size: cover;
-        background-position: center;
-        border-radius: 10px 10px 0 0;
-    }
-
-    /* Specific images for each card */
-    .card-image.personalizada {
-        background-image: url('https://images.unsplash.com/photo-1520975914304-bd6b07044359');
-    }
-
-    .card-image.estilo {
-        background-image: url('https://images.unsplash.com/photo-1517502166878-35c93a0072bb');
-    }
-
-    .card-image.tendencias {
-        background-image: url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f');
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 130px auto 50px;
-        padding: 0 20px;
-    }
-
-    @media (max-width: 768px) {
-        .card-body {
-            padding: 2rem;
-        }
-
-        .section-title {
-            font-size: 2rem;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-        }
-
-        .card-text {
-            font-size: 1rem;
-        }
-
-        .btn-custom {
-            padding: 0.5rem 1.5rem;
-        }
-
-        .card-title,
-        .card-text {
-            padding-left: 60px;
-        }
-
-        .card-icon {
-            transform: translateY(40%);
-        }
-    }
-
-    .main-menu {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px 0;
-    }
-
-    .nav-bar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-
-    .main-menu a {
-        padding: 10px 15px;
-        text-decoration: none;
-        color: #f5ccd4;
-        font-weight: 600;
-        transition: color 0.3s ease;
-    }
-
-    .main-menu a:hover {
-        color: #ff86c4;
-    }
-</style>
-<center>
-    <div class="nav-bar">
-        <nav class="main-menu">
-
-            <a class="nav-link" th:href="@{/index}">Principal</a>
-
-            <a th:href="@{catalogo}">Productos</a>
-
-            <a th:href="@{nosotros}">Nosotros</a>
-
-            <a th:href="@{/asesoria}">Asesoria</a>
-        </nav>
-    </div>
-</center>
-<div class="container">
-    <h2 class="section-title">Asesorías</h2>
-    <div class="row">
-        <!-- Asesoría Personalizada -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-image personalizada"></div>
-                <div class="card-body">
-                    <div class="card-icon">
-                        <i class="fas fa-user-tie"></i>
+<body>
+    <!-- Incluir el fragmento de la barra de navegación -->
+    <header id="main-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-3 logo_section">
+                    <div class="logo">
+                        <img th:src="@{/images/LOGOKoko-transformed.png}" alt="Logo Imagen" id="logo_koko">
                     </div>
-                    <h5 class="card-title">Asesoría Personalizada</h5>
-                    <p class="card-text">Obtén asesoramiento personalizado para encontrar las prendas que mejor se
-                        adapten a tu estilo y personalidad. Nuestros expertos te guiarán en la elección de outfits para
-                        cualquier ocasión.</p>
-                    <a href="#" class="btn btn-custom">Solicitar Asesoría</a>
+                </div>
+                <div class="col-5 menu-bar">
+
+                </div>
+
+                <div class="col-4 login">
+                    <div class="login-registrarse" th:unless="${isAuthenticated}">
+                        <a class="btn-lr" href="/login">Iniciar sesión</a>
+                        <a class="btn-lr" href="/registro">Registrarse</a>
+                    </div>
+
+                    <div class="navbar-nav">
+                        <div class="dropdown " th:if="${isAuthenticated}">
+                            <a class="nav-link text-white dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" id="dropdownMenuLink" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" th:text="${username}"
+                                style="display: inline-flex;">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+
+                                <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                    <li><a class="dropdown-item" th:href="@{/usuarios/}">Usuarios</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/empleados/}">Empleados</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/productos/}">Productos</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                                </div>
+
+                                <div sec:authorize="hasAuthority('ROLE_EMPLEADO')">
+                                    <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                                </div>
+
+                                <div sec:authorize="hasAuthority('ROLE_CLIENTE')">
+                                    <li><a class="dropdown-item"
+                                            th:href="@{/cliente/mis-compras/{email}(email=${username})}">Mis Compras</a>
+
+                                    </li>
+                                </div>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <div sec:authorize="isAuthenticated()">
+                                    <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <!-- Asesoría de Estilo -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-image estilo"></div>
-                <div class="card-body">
-                    <div class="card-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h5 class="card-title">Asesoría de Estilo</h5>
-                    <p class="card-text">Descubre tu estilo único con la ayuda de nuestros estilistas profesionales. Te
-                        ayudaremos a definir un guardarropa que refleje tu esencia y te haga sentir confiada y
-                        auténtica.</p>
-                    <a href="#" class="btn btn-custom">Descubrir más</a>
-                </div>
-            </div>
-        </div>
-    </div>
+        <center>
+            <div class="nav-bar">
+                <nav class="main-menu">
 
-    <div class="row">
-        <!-- Asesoría de Tendencias -->
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-image tendencias"></div>
-                <div class="card-body">
-                    <div class="card-icon">
-                        <i class="fas fa-chart-line"></i>
+
+                    <a th:href="@{/}">Principal</a>
+
+                    <a th:href="@{catalogo}">Catálogo</a>
+
+                    <a th:href="@{nosotros}">Nosotros</a>
+
+                    <a th:href="@{/asesoria}">Asesoria</a>
+                </nav>
+            </div>
+        </center>
+
+    </header>
+    <main>
+        <div class="container-info">
+            <h2 class="section-title ">Asesorías</h2>
+            <div class="row info-section">
+                <!-- Asesoría Personalizada -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-image personalizada"></div>
+                        <div class="card-body">
+                            <div class="card-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <h5 class="card-title">Asesoría Personalizada</h5>
+                            <p class="card-text">Obtén asesoramiento personalizado para encontrar las prendas que mejor
+                                se
+                                adapten a tu estilo y personalidad. Nuestros expertos te guiarán en la elección de
+                                outfits para
+                                cualquier ocasión.</p>
+                            <a href="https://wa.me/c/573219313578" class="btn btn-custom card-link">Solicitar
+                                Asesoría</a>
+                        </div>
                     </div>
-                    <h5 class="card-title">Asesoría de Tendencias</h5>
-                    <p class="card-text">Mantente al día con las últimas tendencias de la moda. Nuestro equipo de
-                        asesores te proporcionará información actualizada sobre lo que está en tendencia y cómo
-                        incorporarlo en tu estilo diario.</p>
-                    <a href="#" class="btn btn-custom">Explorar Tendencias</a>
+                </div>
+                <!-- Asesoría de Estilo -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-image estilo"></div>
+                        <div class="card-body">
+                            <div class="card-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <h5 class="card-title">Asesoría de Estilo</h5>
+                            <p class="card-text">Descubre tu estilo único con la ayuda de nuestros estilistas
+                                profesionales. Te
+                                ayudaremos a definir un guardarropa que refleje tu esencia y te haga sentir confiada y
+                                auténtica.</p>
+                            <a href="https://wa.me/c/573219313578" class="m-2 btn btn-custom">Descubrir más</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Asesoría de Tendencias -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-image tendencias"></div>
+                        <div class="card-body">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h5 class="card-title">Asesoría de Tendencias</h5>
+                            <p class="card-text">Mantente al día con las últimas tendencias de la moda. Nuestro equipo
+                                de
+                                asesores te proporcionará información actualizada sobre lo que está en tendencia y cómo
+                                incorporarlo en tu estilo diario.</p>
+                            <a href="https://wa.me/c/573219313578" class="btn btn-custom">Explorar Tendencias</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
+
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

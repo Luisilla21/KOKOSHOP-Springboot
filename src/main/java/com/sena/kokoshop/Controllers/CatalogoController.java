@@ -72,11 +72,13 @@ public class CatalogoController {
         return "vistaProductos";
     }
 
-    @GetMapping("/catalogo/compra/")
+    @PostMapping("/catalogo/interfazCompra/")
     public String mostraInterfazCompra(@RequestParam("idProducto") Long idProducto,
             @RequestParam("cantidad") Integer cantidad, @RequestParam("email") String email, Model modelo) {
         Producto producto = productoInterfaz.obtenerProductoPorId(idProducto);
         Usuario usuario = usuarioRepositorio.findByEmail(email);
+        System.out.println("---------------------------------------usuario: " + usuario.getUsuarioID());
+
         System.out.println("---------------------------------------cantidad: " + cantidad);
 
         if (producto == null) {

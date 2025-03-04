@@ -361,7 +361,7 @@
     </header>
 
     <main class="main-content">
-        <form th:action="@{/catalogo/compra/}" method="get">
+        <form method="post">
             <div class="product-container">
                 <div class="product-image">
                     <img alt="img" th:src="@{'/productos/imagen/' + ${producto.idProducto}}" class="img-producto">
@@ -381,7 +381,8 @@
                         <a class="quantity-btn">+</a>
                     </div>
 
-                    <button class="buy-now">Comprar ahora</button>
+                    <button class="buy-now" th:formaction="@{/catalogo/interfazCompra/}">Comprar ahora</button>
+                    <button class="buy-now" th:formaction="@{/carrito/agregar/}">Agregar al Carrito</button>
                 </div>
             </div>
         </form>

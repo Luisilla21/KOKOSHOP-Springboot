@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sena.kokoshop.entidades.Carrito;
 import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.entidades.Rol;
 import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.interfaz.ProductoInterfaz;
 import com.sena.kokoshop.interfaz.RolInterfaz;
 import com.sena.kokoshop.interfaz.UsuarioInterfaz;
+import com.sena.kokoshop.repositorio.CarritoRepositorio;
 
 @Controller
 public class UsuarioController {
@@ -36,6 +38,9 @@ public class UsuarioController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CarritoRepositorio carritoRepositorio;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios/")
@@ -132,12 +137,16 @@ public class UsuarioController {
 
         // Asignar un rol por defecto (por ejemplo, CLIENTE)
         Rol clienteRol = rolInterfaz.findByNombre("CLIENTE");
-        System.out.println("--------------------Rol: " + clienteRol.getNombre());
+        
         usuario.setRol(clienteRol);
+        
+        Usuario usuarioNuevo = interfaz.guardarUsuario(usuario);
 
-        System.out.println("--------------------Usuario: " + usuario.getRol().getNombre());
-
-        interfaz.guardarUsuario(usuario);
+        // Crear un carrito vacío para el nuevo usuario
+        Carrito carrito = new Carrito();
+        carrito.setCliente(usuarioNuevo);
+        carrito.setPrecioTotal(0.0f);
+        carritoRepositorio.save(carrito);
         return "redirect:/login?registroExitoso";// Redirige al login con un mensaje
     }
 

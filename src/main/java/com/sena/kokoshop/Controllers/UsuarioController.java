@@ -53,6 +53,8 @@ public class UsuarioController {
 
     @PostMapping("/usuarios/")
     public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario) {
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
         interfaz.guardarUsuario(usuario);
         return "redirect:/usuarios/";
 
@@ -75,6 +77,7 @@ public class UsuarioController {
             Model modelo) {
         Usuario usuarioExistente = interfaz.obtenerUsuarioporId(usuarioID);
         if (usuarioExistente != null) {
+
             usuarioExistente.setNombre(usuario.getNombre());
             usuarioExistente.setApellido(usuario.getApellido());
             usuarioExistente.setTipoDocumento(usuario.getTipoDocumento());
@@ -82,7 +85,6 @@ public class UsuarioController {
             usuarioExistente.setDireccion(usuario.getDireccion());
             usuarioExistente.setCiudad(usuario.getCiudad());
             usuarioExistente.setEmail(usuario.getEmail());
-            usuarioExistente.setPassword(usuario.getPassword());
             usuarioExistente.setTelefono(usuario.getTelefono());
             usuarioExistente.setCompras(usuario.getCompras());
             usuarioExistente.setRol(usuario.getRol());

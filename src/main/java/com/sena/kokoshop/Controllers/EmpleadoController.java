@@ -1,6 +1,7 @@
 package com.sena.kokoshop.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,9 @@ public class EmpleadoController {
     @Autowired
     private RolInterfaz rolInterfaz;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/empleados/")
     public String listarEmpleados(Model modelo) {
         modelo.addAttribute("usuariosEmpleados", usuarioEmpleadoService.listarTodosLosEmpleados());
@@ -42,6 +46,7 @@ public class EmpleadoController {
     public String guardarEmpleado(@ModelAttribute("usuarioEmpleado") UsuarioEmpleadoDTO dto) {
         Rol empleadoRol = rolInterfaz.findByNombre("EMPLEADO");
         Usuario usuario = dto.getUsuario();
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuario.setRol(empleadoRol);
         Empleado empleado = dto.getEmpleado();
 

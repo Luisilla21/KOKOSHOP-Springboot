@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.entidades.Empleado;
 import com.sena.kokoshop.repositorio.EmpleadoRepositorio;
 

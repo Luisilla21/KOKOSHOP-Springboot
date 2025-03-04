@@ -1,6 +1,5 @@
 package com.sena.kokoshop.configuracion;
 
-import java.util.Optional;
 import com.sena.kokoshop.entidades.Rol;
 import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.interfaz.RolInterfaz;
@@ -9,7 +8,6 @@ import com.sena.kokoshop.interfaz.EmpleadoInterfaz;
 import com.sena.kokoshop.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.util.Optionals;
 import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

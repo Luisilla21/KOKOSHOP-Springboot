@@ -53,6 +53,9 @@ public class Usuario implements UserDetails {
     @Column(name = "password", nullable = false, length = 150)
     private String password;
 
+    @Column(name = "reset_token", unique = true, length = 100)
+    private String resetToken;
+
     @Column(name = "telefono", nullable = true, length = 10)
     private String telefono;
 
@@ -181,6 +184,14 @@ public class Usuario implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+    
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 
     public Rol getRol() {

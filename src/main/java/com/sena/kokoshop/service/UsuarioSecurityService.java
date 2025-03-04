@@ -23,7 +23,9 @@ public class UsuarioSecurityService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // Buscar el usuario por su email (o nombre de usuario)
-        Usuario usuario = usuarioRepositorio.findByEmail(email);
+        Usuario usuario = usuarioRepositorio.findByEmail(email); 
+
+
 
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuario no encontrado con el email: " + email);

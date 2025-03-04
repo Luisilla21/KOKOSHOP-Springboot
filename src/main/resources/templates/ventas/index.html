@@ -166,12 +166,21 @@
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <a th:href="@{/dashboard/}" class="active"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/dashboard/}" class="active">
+            <i class="fa fa-fw fa-dashboard"></i> Dashboard
+        </a>
         <a th:href="@{/productos/}"><i class="fa fa-fw fa-home"></i> Control de Productos</a>
-        <a th:href="@{/empleados/}"><i class="fa fa-fw fa-users"></i> Control de empleados</a>
-        <a th:href="@{/usuarios/}"><i class="fa fa-fw fa-user"></i> Control de usuarios</a>
         <a th:href="@{/ventas}"><i class="fa fa-fw fa-shopping-cart"></i> Control de Ventas</a>
+        
+        <!-- Opciones solo visibles para ADMIN -->
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/empleados/}">
+            <i class="fa fa-fw fa-users"></i> Control de empleados
+        </a>
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/usuarios/}">
+            <i class="fa fa-fw fa-user"></i> Control de usuarios
+        </a>
     </div>
+    
 
     <div class="main">
         <!-- Incluir el fragmento de la barra de navegación -->
@@ -208,9 +217,9 @@
                         <td th:text="${ventaProducto.venta.tipoVenta}">Tipo de Venta</td>
                         <td th:text="${ventaProducto.venta.estadoVenta}">Estado de Venta</td>
                         <td>
-                            <a th:href="@{/ventas/editar/{id}(id=${ventaProducto.venta.idVenta})}"
-                                class="btn btn-info">Editar</a>
-                        </td>
+                            <a th:href="@{/ventas/editar/{id}(id=${ventaProducto.venta.idVenta})}" class="btn btn-info">Editar</a>
+                            <a th:href="@{/ventas/{id}(id=${ventaProducto.venta.idVenta})}" class="btn btn-danger btn-eliminar">Eliminar</a>
+                        </td>                        
                     </tr>
                 </tbody>
             </table>
@@ -225,7 +234,7 @@
                 event.preventDefault();
                 const url = this.getAttribute("href");
                 Swal.fire({
-                    title: "¿Estás seguro?",
+                    title: "¿Estás seguro de eliminar esta venta?",
                     text: "¡No podrás revertir esto!",
                     icon: "warning",
                     showCancelButton: true,

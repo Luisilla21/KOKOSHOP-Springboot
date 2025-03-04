@@ -41,10 +41,10 @@ public class SecurityConfig {
                                 "/productos/imagen/**", "/catalogo/producto/**")
                         .permitAll()
                         // Change these to match the exact format of your roles
-                        .requestMatchers("/ventas/**", "/productos/**", "/empleados/**", "/dashboard/**")
-                        .hasRole("ADMIN")
+                        .requestMatchers("/ventas/**", "/productos/**").hasAnyRole("ADMIN", "EMPLEADO")
+                        .requestMatchers("/empleados/**", "/dashboard/**","/usuarios/**").hasRole("ADMIN")
                         .requestMatchers("/empleado/**").hasRole("EMPLEADO")
-                        .requestMatchers("/compra/**", "/cliente/**").hasRole("CLIENTE")
+                        .requestMatchers("/compra/**", "/cliente/**").hasRole("CLIENTE")                        
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

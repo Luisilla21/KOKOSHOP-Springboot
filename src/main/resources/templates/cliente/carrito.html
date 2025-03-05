@@ -451,6 +451,25 @@
             });
 
         });
+
+        // Llama a la función cuando se carga la página
+
+        function calcularTotales() {
+            let subtotal = 0;
+            let costoEnvio = 10000; // Costo de envío fijo
+
+            document.querySelectorAll(".cart-item").forEach(item => {
+                let cantidad = parseInt(item.querySelector(".quantity-input").value);
+                let precioUnitario = parseInt(item.querySelector("#precio-unitario").textContent);
+
+                let subtotalProducto = cantidad * precioUnitario;
+                subtotal += subtotalProducto;
+            });
+
+            // Mostrar los valores calculados en la vista
+            document.getElementById("subtotal").textContent = subtotal.toLocaleString("es-CO");
+            document.getElementById("total").textContent = (subtotal + costoEnvio).toLocaleString("es-CO");
+        }
     </script>
 </body>
 

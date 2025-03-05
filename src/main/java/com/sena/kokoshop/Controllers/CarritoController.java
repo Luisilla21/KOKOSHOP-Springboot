@@ -16,11 +16,9 @@ import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.entidades.ProductoCarrito;
 import com.sena.kokoshop.entidades.ProductoVenta;
 import com.sena.kokoshop.service.CarritoProductoService;
-import com.sena.kokoshop.repositorio.CarritoRepositorio;
+import com.sena.kokoshop.service.ProductoInterfaz;
 import com.sena.kokoshop.repositorio.UsuarioRepositorio;
-import com.sena.kokoshop.service.CarritoProductoService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class CarritoController {
@@ -30,6 +28,9 @@ public class CarritoController {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
+    private ProductoInterfaz productoInterfaz;
 
     @GetMapping("/carrito/ver/{email}")
     public String verCarrito(@PathVariable String email, Model model) {
@@ -59,16 +60,17 @@ public class CarritoController {
         return "redirect:/catalogo";
     }
 
-    @PostMapping("/carrito/eliminar/")
-    public void eliminarProductoDelCarrito(@RequestParam("idProducto") Long idProducto,
-            @RequestParam("email") String email, Model modelo) {
+    @PostMapping("/carrito/eliminar")
+    public String eliminarProductoDelCarrito(@RequestParam("idProducto") Long idProducto,
+                                             @RequestParam("email") String email) {
         carritoProductoService.eliminarProductoDelCarrito(idProducto, email);
+        return "redirect:/carrito/ver/" + email;
     }
 
     @PostMapping("/carrito/interfazCompra/")
     public String mostraInterfazCompra(@RequestParam("carritoProductoDTO") CarritoProductoDTO carritoProductoDTO,
             @RequestParam("cantidad") Integer cantidad, @RequestParam("email") String email, Model modelo) {
-        Producto producto = productoInterfaz.obtenerProductoPorId(idProducto);
+        Producto producto = productoInterfaz.obtenerProductoPorId(carritoProductoDTO.getCarrito().getIdCarrito());
         Usuario usuario = usuarioRepositorio.findByEmail(email);
         System.out.println("---------------------------------------usuario: " + usuario.getUsuarioID());
 
@@ -87,6 +89,23 @@ public class CarritoController {
         modelo.addAttribute("usuario", usuario);
 
         return "compra";
+    }
+
+    @PostMapping("/carrito/procederCompra")
+    public String procederCompra(@RequestParam("email") String email, Model model) {
+        CarritoProductoDTO carritoProductoDTO = carritoProductoService.listarCarritoPorUsuario(email);
+
+        // Si productosCarrito es null, inicializarlo como una lista vacía
+        List<ProductoCarrito> productosCarrito = carritoProductoDTO.getProductosCarrito();
+        if (productosCarrito == null) {
+            productosCarrito = new ArrayList<>();
+        }
+
+        model.addAttribute("carritoProductoDTO", carritoProductoDTO);
+        model.addAttribute("productosCarrito", productosCarrito);
+        model.addAttribute("usuario", usuarioRepositorio.findByEmail(email));
+
+        return "compra_carrito";
     }
 
 }

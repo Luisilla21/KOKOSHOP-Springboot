@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "carritos")
 public class Carrito {
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCarrito;
 
@@ -28,7 +28,6 @@ public class Carrito {
     @Column(nullable = false)
     private Float precioTotal;
 
-    
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)
     private List<ProductoCarrito> productos = new ArrayList<>();
 
@@ -52,8 +51,8 @@ public class Carrito {
         return idCarrito;
     }
 
-    public void setIdCarrito(Long idVenta) {
-        this.idCarrito = idVenta;
+    public void setIdCarrito(Long idCarrito) {
+        this.idCarrito = idCarrito;
     }
 
     public Usuario getCliente() {
@@ -63,7 +62,6 @@ public class Carrito {
     public void setCliente(Usuario cliente) {
         this.cliente = cliente;
     }
-
 
     public Float getPrecioTotal() {
         return precioTotal;
@@ -80,7 +78,4 @@ public class Carrito {
     public void setProductos(List<ProductoCarrito> productos) {
         this.productos = productos;
     }
-
-    
-
 }

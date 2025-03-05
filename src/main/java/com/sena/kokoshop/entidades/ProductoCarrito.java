@@ -12,12 +12,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "productosCarrito")
 public class ProductoCarrito {
-        @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idVenta", nullable = false)
+    @JoinColumn(name = "carritoId", nullable = false)
     private Carrito carrito;
 
     @ManyToOne
@@ -74,6 +74,4 @@ public class ProductoCarrito {
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
-
-    
 }

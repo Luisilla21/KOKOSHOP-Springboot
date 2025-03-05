@@ -128,5 +128,11 @@ public String actualizarVenta(@PathVariable Long idVenta,
         return "detalles-compra";
     }
 
+    @PostMapping("/catalogo/compra/venta")
+    public String guardarVentaDesdeCarrito(@ModelAttribute("ventaProductoDTO") VentaProductoDTO ventaProductoDTO, @RequestParam("email") String email) {
+        ventaService.guardarVentaDesdeCarrito(ventaProductoDTO, email);
+        return "redirect:/ventas";
+    }
+
 }
 

@@ -216,29 +216,29 @@
         .main-menu a:hover {
             color: #ff86c4;
         }
-        .quantity-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    font-size: 20px;
-    font-weight: bold;
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-}
 
-.quantity-btn:hover {
-    background: linear-gradient(135deg, #2575fc, #6a11cb);
-    transform: scale(1.1);
-    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
-}
+        .quasntity-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        }
 
+        .qusantity-btn:hover {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            transform: scale(1.1);
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 
@@ -324,7 +324,10 @@
             <div class="card">
                 <h3 class="card-title">Carrito de Compras</h3>
 
-                <form id="cart-form" action="" method="post" class="container-info">
+                <form action="" method="post" class="container-info" th:object="${carritoProductoDTO}">
+
+                    <input type="hidden" name="email" th:value="${username}">
+
                     <div class="factura row">
                         <div class="col-8">
                             <div class="cart-container">
@@ -338,12 +341,13 @@
                                         <div class="factura-detalle">
                                             <span>Producto:</span>
                                             <span th:text="${productoCarrito.getProducto().getProducNom()}"></span>
-                                            <span class="remove-item-btn" th:data-id="${productoCarrito.getProducto().getIdProducto()}">🗑️</span>
+                                            <span class="remove-item-btn"
+                                                th:data-id="${productoCarrito.getProducto().getIdProducto()}">🗑️</span>
                                         </div>
                                         <div class="factura-detalle">
                                             <span>Precio unitario:</span>
-                                            <span>$ <span class="precio-unitario" 
-                                                th:text="${productoCarrito.getProducto().getProducPrecio()}"></span></span>
+                                            <span>$ <span id="precio-unitario"
+                                                    th:text="${productoCarrito.getProducto().getProducPrecio()}"></span></span>
                                         </div>
                                         <div class="factura-detalle">
                                             <span>Cantidad:</span>
@@ -371,23 +375,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="checkout-btn">Proceder al pago</button>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="factura-titulo">Resumen de Compra</div>
                             <div class="factura-detalle">
                                 <span>Subtotal:</span>
-                                <span>$ <span id="subtotal">0.00</span></span>
+                                <span>$ <span id="subtotal"></span> COP</span>
                             </div>
                             <div class="factura-detalle">
                                 <span>Envío:</span>
-                                <span>$ <span id="envio">10000.00</span></span>
+                                <span>$ <span id="envio">10000</span> COP</span>
                             </div>
                             <div class="factura-total">
                                 <span>Total:</span>
-                                <span>$ <span id="total">0.00</span></span>
+                                <input type="hidden">
+                                <span>$ <span id="total"></span> COP</span>
                             </div>
+
+                            <button class="btn-primary btn">Proceder al pago</button>
+
                         </div>
                     </div>
                 </form>
@@ -404,116 +411,47 @@
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
     <script>
-       document.addEventListener("DOMContentLoaded", function () {
-    function calculateSubtotals() {
-        let cartItems = document.querySelectorAll(".cart-item");
-        let totalSubtotal = 0;
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtener todos los botones de aumentar y disminuir
 
-        cartItems.forEach(item => {
-            let precioUnitario = parseFloat(item.querySelector(".precio-unitario").textContent);
-            let cantidad = parseInt(item.querySelector(".quantity-input").value);
-            let itemSubtotal = precioUnitario * cantidad;
-            
-            item.querySelector(".item-subtotal").textContent = itemSubtotal.toFixed(2);
-            totalSubtotal += itemSubtotal;
-        });
+            calcularTotales();
+            document.querySelectorAll(".quantity-btn").forEach(button => {
+                button.addEventListener("click", function () {
+                    let productId = this.getAttribute("data-id"); // Obtener ID del producto
+                    let inputField = document.querySelector(`.quantity-input[data-id='${productId}']`); // Seleccionar input relacionado
+                    let maxQuantity = parseInt(inputField.getAttribute("max")); // Obtener cantidad máxima permitida
+                    let currentValue = parseInt(inputField.value); // Valor actual
 
-        let envio = parseFloat(document.getElementById("envio").textContent);
-        let total = totalSubtotal + envio;
-
-        document.getElementById("subtotal").textContent = totalSubtotal.toFixed(2);
-        document.getElementById("total").textContent = total.toFixed(2);
-    }
-
-    // Quantity buttons functionality
-    document.querySelectorAll(".quantity-btn").forEach(button => {
-        button.addEventListener("click", function () {
-            let productId = this.getAttribute("data-id");
-            let inputField = document.querySelector(`.quantity-input[data-id='${productId}']`);
-            let maxQuantity = parseInt(inputField.getAttribute("max"));
-            let currentValue = parseInt(inputField.value);
-
-            if (this.classList.contains("increase-btn") && currentValue < maxQuantity) {
-                inputField.value = currentValue + 1;
-            } else if (this.classList.contains("decrease-btn") && currentValue > 1) {
-                inputField.value = currentValue - 1;
-            }
-
-            calculateSubtotals();
-
-            // Send update to server
-            updateProductQuantity(productId, inputField.value);
-        });
-    });
-
-    // Input quantity change
-    document.querySelectorAll(".quantity-input").forEach(input => {
-        input.addEventListener("change", function () {
-            let productId = this.getAttribute("data-id");
-            let maxQuantity = parseInt(this.getAttribute("max"));
-            let currentValue = parseInt(this.value);
-
-            if (currentValue > maxQuantity) {
-                this.value = maxQuantity;
-            } else if (currentValue < 1) {
-                this.value = 1;
-            }
-
-            calculateSubtotals();
-
-            // Send update to server
-            updateProductQuantity(productId, this.value);
-        });
-    });
-
-    // Remove item functionality
-    document.querySelectorAll(".remove-item-btn").forEach(button => {
-        button.addEventListener("click", function () {
-            let productId = this.getAttribute("data-id");
-            let email = document.querySelector('.nav-link') ? 
-                        document.querySelector('.nav-link').textContent.trim() : 
-                        '';
-            
-            // Enviar solicitud para eliminar el producto del carrito
-            fetch("/carrito/eliminar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: `idProducto=${productId}&email=${email}`
-            })
-            .then(response => {
-                // Recargar la página para actualizar el carrito
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Hubo un error al eliminar el producto del carrito");
+                    if (this.classList.contains("increase-btn") && currentValue < maxQuantity) {
+                        inputField.value = currentValue + 1;
+                    } else if (this.classList.contains("decrease-btn") && currentValue > 1) {
+                        inputField.value = currentValue - 1;
+                    }
+                });
             });
-        });
-    });
 
-    // Function to update product quantity on server
-    function updateProductQuantity(productId, cantidad) {
-        let email = document.querySelector('.nav-link') ? 
-                    document.querySelector('.nav-link').textContent.trim() : 
-                    '';
-        
-        fetch("/carrito/actualizar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: `idProducto=${productId}&cantidad=${cantidad}&email=${email}`
-        })
-        .catch(error => {
-            console.error("Error actualizando cantidad:", error);
-        });
-    }
+            function calcularTotales() {
+                let subtotal = 0;
+                let costoEnvio = 10000; // Costo de envío fijo
 
-    // Initial calculation
-    calculateSubtotals();
-});
+                document.querySelectorAll(".cart-item").forEach(item => {
+                    let cantidad = parseInt(item.querySelector(".quantity-input").value);
+                    let precioUnitario = parseInt(item.querySelector("#precio-unitario").textContent);
+
+                    let subtotalProducto = cantidad * precioUnitario;
+                    subtotal += subtotalProducto;
+                });
+
+                // Mostrar los valores calculados en la vista
+                document.getElementById("subtotal").textContent = subtotal.toLocaleString("es-CO");
+                document.getElementById("total").textContent = (subtotal + costoEnvio).toLocaleString("es-CO");
+            }
+
+        });
+
+        // Llama a la función cuando se carga la página
+
+
     </script>
 </body>
 

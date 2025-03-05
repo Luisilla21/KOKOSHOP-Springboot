@@ -14,6 +14,7 @@ import com.sena.kokoshop.dto.CarritoProductoDTO;
 import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.entidades.ProductoCarrito;
+import com.sena.kokoshop.entidades.ProductoVenta;
 import com.sena.kokoshop.service.CarritoProductoService;
 import com.sena.kokoshop.repositorio.CarritoRepositorio;
 import com.sena.kokoshop.repositorio.UsuarioRepositorio;
@@ -48,20 +49,44 @@ public class CarritoController {
     }
 
     @PostMapping("/carrito/agregar")
-public String agregarProductoAlCarrito(
-        @RequestParam("idProducto") Long idProducto,
-        @RequestParam("cantidad") Integer cantidad,
-        @RequestParam("email") String email) {
-    
-    carritoProductoService.agregarProductoAlCarrito(idProducto, cantidad, email);
-    
-    return "redirect:/catalogo";
-}
+    public String agregarProductoAlCarrito(
+            @RequestParam("idProducto") Long idProducto,
+            @RequestParam("cantidad") Integer cantidad,
+            @RequestParam("email") String email) {
+
+        carritoProductoService.agregarProductoAlCarrito(idProducto, cantidad, email);
+
+        return "redirect:/catalogo";
+    }
 
     @PostMapping("/carrito/eliminar/")
     public void eliminarProductoDelCarrito(@RequestParam("idProducto") Long idProducto,
             @RequestParam("email") String email, Model modelo) {
         carritoProductoService.eliminarProductoDelCarrito(idProducto, email);
+    }
+
+    @PostMapping("/carrito/interfazCompra/")
+    public String mostraInterfazCompra(@RequestParam("carritoProductoDTO") CarritoProductoDTO carritoProductoDTO,
+            @RequestParam("cantidad") Integer cantidad, @RequestParam("email") String email, Model modelo) {
+        Producto producto = productoInterfaz.obtenerProductoPorId(idProducto);
+        Usuario usuario = usuarioRepositorio.findByEmail(email);
+        System.out.println("---------------------------------------usuario: " + usuario.getUsuarioID());
+
+        System.out.println("---------------------------------------cantidad: " + cantidad);
+
+        if (producto == null) {
+            return "redirect:/productos";
+        }
+
+        ProductoVenta productoVenta = new ProductoVenta();
+        productoVenta.setProducto(producto);
+        productoVenta.setCantidad(cantidad);
+
+        modelo.addAttribute("producto", producto);
+        modelo.addAttribute("productoVenta", productoVenta);
+        modelo.addAttribute("usuario", usuario);
+
+        return "compra";
     }
 
 }

@@ -301,7 +301,10 @@
             <div class="card">
                 <h3 class="card-title">Carrito de Compras</h3>
 
-                <form action="" method="post" class="container-info">
+                <form action="" method="post" class="container-info" th:object="${carritoProductoDTO}">
+
+                    <input type="hidden" name="email" th:value="${username}">
+
                     <div class="factura row">
                         <div class="col-8">
 
@@ -348,23 +351,26 @@
 
 
                                 </div>
-                                <button class="checkout-btn">Proceder al pago</button>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="factura-titulo">Resumen de Compra</div>
                             <div class="factura-detalle">
                                 <span>Subtotal:</span>
-                                <span>$ <span id="subtotal"></span></span>
+                                <span>$ <span id="subtotal"></span> COP</span>
                             </div>
                             <div class="factura-detalle">
                                 <span>Envío:</span>
-                                <span>$ <span id="envio"></span></span>
+                                <span>$ <span id="envio">10000</span> COP</span>
                             </div>
                             <div class="factura-total">
                                 <span>Total:</span>
-                                <span>$ <span id="total"></span></span>
+                                <input type="hidden">
+                                <span>$ <span id="total"></span> COP</span>
                             </div>
+
+                            <button class="btn-primary btn">Proceder al pago</button>
+
                         </div>
                     </div>
                 </form>
@@ -383,6 +389,8 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Obtener todos los botones de aumentar y disminuir
+
+            calcularTotales();
             document.querySelectorAll(".quantity-btn").forEach(button => {
                 button.addEventListener("click", function () {
                     let productId = this.getAttribute("data-id"); // Obtener ID del producto
@@ -414,6 +422,25 @@
             });
 
         });
+
+        // Llama a la función cuando se carga la página
+
+        function calcularTotales() {
+            let subtotal = 0;
+            let costoEnvio = 10000; // Costo de envío fijo
+
+            document.querySelectorAll(".cart-item").forEach(item => {
+                let cantidad = parseInt(item.querySelector(".quantity-input").value);
+                let precioUnitario = parseInt(item.querySelector("#precio-unitario").textContent);
+
+                let subtotalProducto = cantidad * precioUnitario;
+                subtotal += subtotalProducto;
+            });
+
+            // Mostrar los valores calculados en la vista
+            document.getElementById("subtotal").textContent = subtotal.toLocaleString("es-CO");
+            document.getElementById("total").textContent = (subtotal + costoEnvio).toLocaleString("es-CO");
+        }
     </script>
 </body>
 

@@ -371,7 +371,8 @@
                 <div class="product-details">
                     <h1 class="product-title" th:text="${producto.producNom}">Chaqueta de cuero</h1>
                     <p class="product-description" th:text="${producto.producDescripcion}">Descripción del producto</p>
-                    <p class="product-price" th:text="${producto.producPrecio}">$ 63,000 COP</p>
+                    <span>$ <span class="product-price" th:text="${producto.producPrecio}">$ 63,000 COP</span>
+                        COP</span>
 
                     <label for="quantity">Cantidad</label>
                     <div class="quantity-controls">

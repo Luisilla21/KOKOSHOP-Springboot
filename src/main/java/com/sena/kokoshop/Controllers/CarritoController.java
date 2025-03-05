@@ -1,5 +1,8 @@
 package com.sena.kokoshop.Controllers;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sena.kokoshop.dto.CarritoProductoDTO;
 import com.sena.kokoshop.entidades.Usuario;
+import com.sena.kokoshop.entidades.Producto;
+import com.sena.kokoshop.entidades.ProductoCarrito;
+import com.sena.kokoshop.service.CarritoProductoService;
 import com.sena.kokoshop.repositorio.CarritoRepositorio;
 import com.sena.kokoshop.repositorio.UsuarioRepositorio;
 import com.sena.kokoshop.service.CarritoProductoService;
@@ -25,7 +32,18 @@ public class CarritoController {
 
     @GetMapping("/carrito/ver/{email}")
     public String verCarrito(@PathVariable String email, Model model) {
-        model.addAttribute("carrito", carritoProductoService.listarCarritoPorUsuario(email));
+        CarritoProductoDTO carritoProductoDTO = carritoProductoService.listarCarritoPorUsuario(email);
+        List<Producto> productos = new ArrayList<>();
+        List<ProductoCarrito> productosCarrito = carritoProductoDTO.getProductosCarrito();
+
+        for (ProductoCarrito productoCarrito : productosCarrito) {
+            productos.add(productoCarrito.getProducto());
+        }
+
+        model.addAttribute("productos", productos);
+        model.addAttribute("productosCarrito", productosCarrito);
+        model.addAttribute("carritoProductoDTO", carritoProductoDTO);
+
         return "cliente/carrito";
     }
 

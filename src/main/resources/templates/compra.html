@@ -311,7 +311,9 @@
                     <div class="form-section-title">Datos de Pago</div>
 
                     <label class="form-label">Monto a Pagar</label>
-                    <input type="text" class="form-control" id="monto-pagar" placeholder="Monto a Pagar" readonly>
+                    <input type="text" class="form-control" id="monto-pagar"
+                        th:value="${productoVenta.cantidad * producto.producPrecio + 10000}" placeholder="Monto a Pagar"
+                        readonly>
 
                     <button type="submit" class="btn btn-primary">Pagar con Nequi a este número: 321 9313578</button>
                 </div>

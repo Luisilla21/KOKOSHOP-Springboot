@@ -321,22 +321,24 @@
                 margin-top: 20px;
             }
         }
+
         .btn-rosado {
-    background-color: #e83e8c !important; /* Color rosado */
-    color: white !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    font-size: 16px !important;
-    border-radius: 5px !important;
-    cursor: pointer !important;
-    width: 100% !important;
-    text-align: center !important;
-}
+            background-color: #e83e8c !important;
+            /* Color rosado */
+            color: white !important;
+            border: none !important;
+            padding: 10px 20px !important;
+            font-size: 16px !important;
+            border-radius: 5px !important;
+            cursor: pointer !important;
+            width: 100% !important;
+            text-align: center !important;
+        }
 
-.btn-rosado:hover {
-    background-color: #d63384 !important; /* Rosado más oscuro al pasar el mouse */
-}
-
+        .btn-rosado:hover {
+            background-color: #d63384 !important;
+            /* Rosado más oscuro al pasar el mouse */
+        }
     </style>
 </head>
 
@@ -401,13 +403,9 @@
                     </div>
 
                     <button class="buy-now" th:formaction="@{/catalogo/interfazCompra/}">Comprar ahora</button>
-                    <form th:action="@{/carrito/agregar}" method="post" class="add-to-cart-form">
-                        <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
-                        <input type="hidden" name="cantidad" id="quantityInput" th:value="1">
-                        <input type="hidden" name="email" th:value="${username}">
-                        <button type="submit" class="btn-rosado">Agregar al Carrito</button>
-                    </form>
-                    
+
+                    <button th:formaction="@{/carrito/agregar}" class="btn-rosado">Agregar al Carrito</button>
+
                 </div>
             </div>
         </form>
@@ -469,7 +467,7 @@
             document.querySelectorAll(".add-to-cart-form").forEach(form => {
                 form.addEventListener("submit", function (event) {
                     event.preventDefault(); // Evita la recarga inmediata
-    
+
                     Swal.fire({
                         title: "¡Agregaste este producto a tu carrito!",
                         text: "¡Ve a revisarlo!",
@@ -481,7 +479,7 @@
             });
         });
     </script>
-    
+
 </body>
 
 </html>

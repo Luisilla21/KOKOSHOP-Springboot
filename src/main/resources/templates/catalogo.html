@@ -16,9 +16,27 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
+<style>
+    .btn-rosado {
+    background-color: #e83e8c !important; /* Color rosado */
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    text-align: center !important;
+}
 
+.btn-rosado:hover {
+    background-color: #d63384 !important; /* Rosado más oscuro al pasar el mouse */
+}
+
+</style>
 <body>
     <!-- Incluir el fragmento de la barra de navegación -->
     <header id="main-header">
@@ -122,6 +140,16 @@
 
                         </div>
                     </a>
+                    <!-- Formulario para agregar al carrito -->
+                    <form th:action="@{/carrito/agregar/}" method="post" class="add-to-cart-form">
+                        <input type="hidden" name="idProducto" th:value="${producto.idProducto}">
+                        <input type="hidden" name="cantidad" value="1">
+                        <input type="hidden" name="email" th:value="${username}">
+                        <button type="submit" class="btn-rosado">
+                            <img src="/images/carrito.png" alt="Agregar al carrito" width="20px"> Agregar al carrito
+                        </button>
+                    </form>
+                    
                 </div>
 
             </div>
@@ -154,6 +182,24 @@
             productos.forEach(producto => producto.classList.remove('hidden'));
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".add-to-cart-form").forEach(form => {
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault(); // Evita la recarga inmediata
+    
+                    Swal.fire({
+                        title: "¡Agregaste este producto a tu carrito!",
+                        text: "¡Ve a revisarlo!",
+                        icon: "success"
+                    }).then(() => {
+                        form.submit(); // Envía el formulario después de la alerta
+                    });
+                });
+            });
+        });
+    </script>
+    
     <!-- Bootstrap JS (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

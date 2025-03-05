@@ -29,12 +29,16 @@ public class CarritoController {
         return "cliente/carrito";
     }
 
-    @PostMapping("/carrito/agregar/")
-    public String agregarProductoAlCarrito(@RequestParam("idProducto") Long idProducto,
-            @RequestParam("cantidad") Integer cantidad, @RequestParam("email") String email, Model modelo) {
-        carritoProductoService.agregarProductoAlCarrito(idProducto, cantidad, email);
-        return "redirect:/catalogo";
-    }
+    @PostMapping("/carrito/agregar")
+public String agregarProductoAlCarrito(
+        @RequestParam("idProducto") Long idProducto,
+        @RequestParam("cantidad") Integer cantidad,
+        @RequestParam("email") String email) {
+    
+    carritoProductoService.agregarProductoAlCarrito(idProducto, cantidad, email);
+    
+    return "redirect:/catalogo";
+}
 
     @PostMapping("/carrito/eliminar/")
     public void eliminarProductoDelCarrito(@RequestParam("idProducto") Long idProducto,

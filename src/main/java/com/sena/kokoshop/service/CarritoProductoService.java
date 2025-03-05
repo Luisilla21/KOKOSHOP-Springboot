@@ -1,5 +1,7 @@
 package com.sena.kokoshop.service;
 
+import java.util.List;
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,17 +146,22 @@ public class CarritoProductoService {
 
     public void vaciarCarrito(String email) {
         Usuario usuario = usuarioRepositorio.findByEmail(email);
-        Carrito carrito = carritoRepositorio.findByCliente_Id(usuario.getUsuarioID());
-        for (ProductoCarrito productoCarrito : carrito.getProductos()) {
-            Producto producto = productoCarrito.getProducto();
-            Integer cantidad = productoCarrito.getCantidad();
-            Integer cantidadActual = producto.getCantidad();
-            producto.setCantidad(cantidadActual + cantidad);
-            productoRepositorio.save(producto);
+        CarritoProductoDTO carritoProductoDTO = listarCarritoPorUsuario(usuario.getEmail());
+        List<ProductoCarrito> productosCarrito = carritoProductoDTO.getProductosCarrito();
+
+        for (ProductoCarrito productoCarrito : productosCarrito) {
+            productoCarritoRepositorio.deleteById(productoCarrito.getId());
         }
-        carrito.getProductos().clear();
-        carrito.setPrecioTotal(0.0f);
+    }
+
+    public void realizarPedido(Usuario usuario, CarritoProductoDTO carritoProductoDTO) {
+        Carrito carrito = carritoProductoDTO.getCarrito();
+        carrito.setCliente(usuario);
         carritoRepositorio.save(carrito);
+        for (ProductoCarrito productoCarrito : carritoProductoDTO.getProductosCarrito()) {
+            productoCarrito.setCarrito(carrito);
+            productoCarritoRepositorio.save(productoCarrito);
+        }
     }
 
 }

@@ -104,17 +104,7 @@ public class CatalogoController {
                 .orElseThrow(() -> new RuntimeException("Empleado Admin no encontrado"));
         Usuario usuarioExistente = usuarioRepositorio.findByEmail(usuario.getEmail());
 
-        if (usuarioExistente != null) {
-            usuarioExistente.setNombre(usuario.getNombre());
-            usuarioExistente.setApellido(usuario.getApellido());
-            usuarioExistente.setTipoDocumento(usuario.getTipoDocumento());
-            usuarioExistente.setNumeroDocumento(usuario.getNumeroDocumento());
-            usuarioExistente.setDireccion(usuario.getDireccion());
-            usuarioExistente.setCiudad(usuario.getCiudad());
-            usuarioExistente.setTelefono(usuario.getTelefono());
-            usuarioExistente.setCompras(usuario.getCompras());
-            usuarioInterfaz.actualizarUsuario(usuarioExistente);
-        }
+
 
         VentaProductoDTO ventaProductoDTO = new VentaProductoDTO();
         Venta venta = new Venta();
@@ -137,5 +127,6 @@ public class CatalogoController {
 
     }
 
+    
     
 }

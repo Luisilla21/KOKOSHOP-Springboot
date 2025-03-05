@@ -2,22 +2,32 @@ package com.sena.kokoshop.Controllers;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sena.kokoshop.dto.CarritoProductoDTO;
+import com.sena.kokoshop.dto.VentaProductoDTO;
+import com.sena.kokoshop.entidades.Venta;
 import com.sena.kokoshop.entidades.Usuario;
+import com.sena.kokoshop.interfaz.UsuarioInterfaz;
+import com.sena.kokoshop.entidades.Empleado;
 import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.entidades.ProductoCarrito;
 import com.sena.kokoshop.entidades.ProductoVenta;
 import com.sena.kokoshop.service.CarritoProductoService;
-import com.sena.kokoshop.service.ProductoInterfaz;
+import com.sena.kokoshop.repositorio.CarritoRepositorio;
+import com.sena.kokoshop.repositorio.EmpleadoRepositorio;
 import com.sena.kokoshop.repositorio.UsuarioRepositorio;
+import com.sena.kokoshop.service.VentaProductoService;
+
+import com.sena.kokoshop.service.CarritoProductoService;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -30,7 +40,13 @@ public class CarritoController {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
-    private ProductoInterfaz productoInterfaz;
+    private EmpleadoRepositorio empleadoRepositorio;
+
+    @Autowired
+    private UsuarioInterfaz usuarioInterfaz;
+
+    @Autowired
+    private VentaProductoService ventaService;
 
     @GetMapping("/carrito/ver/{email}")
     public String verCarrito(@PathVariable String email, Model model) {
@@ -68,44 +84,87 @@ public class CarritoController {
     }
 
     @PostMapping("/carrito/interfazCompra/")
-    public String mostraInterfazCompra(@RequestParam("carritoProductoDTO") CarritoProductoDTO carritoProductoDTO,
-            @RequestParam("cantidad") Integer cantidad, @RequestParam("email") String email, Model modelo) {
-        Producto producto = productoInterfaz.obtenerProductoPorId(carritoProductoDTO.getCarrito().getIdCarrito());
+    public String mostraInterfazCompra(
+            @ModelAttribute("carritoProductoDTO") CarritoProductoDTO carritoProductoDTO, // Recibe el objeto desde el
+                                                                                         // formulario
+            @RequestParam("email") String email, // Recibe el email como parámetro
+            Model modelo) {
+
         Usuario usuario = usuarioRepositorio.findByEmail(email);
-        System.out.println("---------------------------------------usuario: " + usuario.getUsuarioID());
 
-        System.out.println("---------------------------------------cantidad: " + cantidad);
+        List<Producto> productos = new ArrayList<>();
 
-        if (producto == null) {
-            return "redirect:/productos";
-        }
-
-        ProductoVenta productoVenta = new ProductoVenta();
-        productoVenta.setProducto(producto);
-        productoVenta.setCantidad(cantidad);
-
-        modelo.addAttribute("producto", producto);
-        modelo.addAttribute("productoVenta", productoVenta);
-        modelo.addAttribute("usuario", usuario);
-
-        return "compra";
-    }
-
-    @PostMapping("/carrito/procederCompra")
-    public String procederCompra(@RequestParam("email") String email, Model model) {
-        CarritoProductoDTO carritoProductoDTO = carritoProductoService.listarCarritoPorUsuario(email);
-
-        // Si productosCarrito es null, inicializarlo como una lista vacía
         List<ProductoCarrito> productosCarrito = carritoProductoDTO.getProductosCarrito();
-        if (productosCarrito == null) {
-            productosCarrito = new ArrayList<>();
+        for (ProductoCarrito productoCarrito : productosCarrito) {
+            productos.add(productoCarrito.getProducto());
         }
 
-        model.addAttribute("carritoProductoDTO", carritoProductoDTO);
-        model.addAttribute("productosCarrito", productosCarrito);
-        model.addAttribute("usuario", usuarioRepositorio.findByEmail(email));
+        modelo.addAttribute("usuario", usuario);
+        modelo.addAttribute("productos", productos);
+        modelo.addAttribute("productosCarrito", productosCarrito);
+        modelo.addAttribute("carritoProductoDTO", carritoProductoDTO);
 
-        return "compra_carrito";
+        return "cliente/compra-carrito";
     }
 
+    @PostMapping("/carrito/compra/")
+    public String realizarPedido(@ModelAttribute("usuario") Usuario usuario,
+            @ModelAttribute CarritoProductoDTO carritoProductoDTO, Model modelo) {
+
+        // First, ensure the user is saved or retrieved from the database
+        Usuario usuarioExistente = usuarioInterfaz.obtenerUsuarioporId(usuario.getUsuarioID());
+
+        System.out.println("--------------Usuario: " + usuario.getUsuarioID());
+        if (usuarioExistente != null) {
+            usuarioExistente.setNombre(usuario.getNombre());
+            usuarioExistente.setApellido(usuario.getApellido());
+            usuarioExistente.setTipoDocumento(usuario.getTipoDocumento());
+            usuarioExistente.setNumeroDocumento(usuario.getNumeroDocumento());
+            usuarioExistente.setDireccion(usuario.getDireccion());
+            usuarioExistente.setCiudad(usuario.getCiudad());
+            usuarioExistente.setTelefono(usuario.getTelefono());
+            usuarioExistente.setCompras(usuario.getCompras());
+            usuarioInterfaz.actualizarUsuario(usuarioExistente);
+        }
+
+        Empleado admin = empleadoRepositorio.findById(1L)
+                .orElseThrow(() -> new RuntimeException("Empleado Admin no encontrado"));
+
+        VentaProductoDTO ventaProductoDTO = new VentaProductoDTO();
+        Venta venta = new Venta();
+        venta.setCliente(usuarioExistente); // Use the persisted user
+        venta.setEmpleado(admin);
+        venta.setFechaVenta(new Date(System.currentTimeMillis()));
+
+        List<ProductoVenta> productosVenta = new ArrayList<>();
+        Float precioTotal = 10000.0f; // Shipping cost
+
+        // First pass: create ProductoVenta and calculate total price
+        for (ProductoCarrito productoCarrito : carritoProductoDTO.getProductosCarrito()) {
+            ProductoVenta productoVenta = new ProductoVenta();
+            productoVenta.setProducto(productoCarrito.getProducto());
+            productoVenta.setCantidad(productoCarrito.getCantidad());
+            productoVenta.setVenta(venta);
+
+            productosVenta.add(productoVenta);
+
+            precioTotal += productoCarrito.getProducto().getProducPrecio() * productoCarrito.getCantidad();
+
+            System.out.println("--------------Producto: " + productoVenta.getProducto().getProducNom());
+            System.out.println("--------------Cantidad: " + productoCarrito.getCantidad());
+        }
+
+        venta.setPrecioTotal(precioTotal);
+        venta.setTipoVenta("Virtual");
+        venta.setEstadoVenta("Pendiente");
+
+        ventaProductoDTO.setVenta(venta);
+        ventaProductoDTO.setProductos(productosVenta);
+
+        ventaService.guardarVentaConProductos(ventaProductoDTO);
+
+        carritoProductoService.vaciarCarrito(usuarioExistente.getEmail());
+
+        return "cliente/compra-exitosa";
+    }
 }

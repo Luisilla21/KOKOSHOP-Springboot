@@ -217,7 +217,7 @@
             color: #ff86c4;
         }
 
-        .quantity-btn {
+        .quasntity-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -234,7 +234,7 @@
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .quantity-btn:hover {
+        .qusantity-btn:hover {
             background: linear-gradient(135deg, #2575fc, #6a11cb);
             transform: scale(1.1);
             box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
@@ -346,7 +346,7 @@
                                         </div>
                                         <div class="factura-detalle">
                                             <span>Precio unitario:</span>
-                                            <span>$ <span class="precio-unitario"
+                                            <span>$ <span id="precio-unitario"
                                                     th:text="${productoCarrito.getProducto().getProducPrecio()}"></span></span>
                                         </div>
                                         <div class="factura-detalle">
@@ -427,49 +427,31 @@
                     } else if (this.classList.contains("decrease-btn") && currentValue > 1) {
                         inputField.value = currentValue - 1;
                     }
-
-                    calculateSubtotals();
-
-                    // Send update to server
-                    updateProductQuantity(productId, inputField.value);
                 });
             });
 
-            // Input quantity change
-            document.querySelectorAll(".quantity-input").forEach(input => {
-                input.addEventListener("change", function () {
-                    let productId = this.getAttribute("data-id");
-                    let maxQuantity = parseInt(this.getAttribute("max"));
-                    let currentValue = parseInt(this.value);
+            function calcularTotales() {
+                let subtotal = 0;
+                let costoEnvio = 10000; // Costo de envío fijo
 
-                    if (currentValue > maxQuantity) {
-                        this.value = maxQuantity;
-                    } else if (currentValue < 1) {
-                        this.value = 1;
-                    }
+                document.querySelectorAll(".cart-item").forEach(item => {
+                    let cantidad = parseInt(item.querySelector(".quantity-input").value);
+                    let precioUnitario = parseInt(item.querySelector("#precio-unitario").textContent);
+
+                    let subtotalProducto = cantidad * precioUnitario;
+                    subtotal += subtotalProducto;
                 });
-            });
+
+                // Mostrar los valores calculados en la vista
+                document.getElementById("subtotal").textContent = subtotal.toLocaleString("es-CO");
+                document.getElementById("total").textContent = (subtotal + costoEnvio).toLocaleString("es-CO");
+            }
 
         });
 
         // Llama a la función cuando se carga la página
 
-        function calcularTotales() {
-            let subtotal = 0;
-            let costoEnvio = 10000; // Costo de envío fijo
 
-            document.querySelectorAll(".cart-item").forEach(item => {
-                let cantidad = parseInt(item.querySelector(".quantity-input").value);
-                let precioUnitario = parseInt(item.querySelector("#precio-unitario").textContent);
-
-                let subtotalProducto = cantidad * precioUnitario;
-                subtotal += subtotalProducto;
-            });
-
-            // Mostrar los valores calculados en la vista
-            document.getElementById("subtotal").textContent = subtotal.toLocaleString("es-CO");
-            document.getElementById("total").textContent = (subtotal + costoEnvio).toLocaleString("es-CO");
-        }
     </script>
 </body>
 

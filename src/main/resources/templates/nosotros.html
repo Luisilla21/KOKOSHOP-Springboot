@@ -54,6 +54,7 @@
                                     <li><a class="dropdown-item" th:href="@{/empleados/}">Empleados</a></li>
                                     <li><a class="dropdown-item" th:href="@{/productos/}">Productos</a></li>
                                     <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/dashboard/}">Dashboard</a></li>
                                 </div>
 
                                 <div sec:authorize="hasAuthority('ROLE_EMPLEADO')">
@@ -63,6 +64,10 @@
                                 <div sec:authorize="hasAuthority('ROLE_CLIENTE')">
                                     <li><a class="dropdown-item"
                                             th:href="@{/cliente/mis-compras/{email}(email=${username})}">Mis Compras</a>
+
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            th:href="@{/carrito/ver/{email}(email=${username})}">Carrito</a>
 
                                     </li>
                                 </div>

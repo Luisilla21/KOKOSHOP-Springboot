@@ -1,6 +1,7 @@
 package com.sena.kokoshop.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Service;
 import com.sena.kokoshop.dto.VentaProductoDTO;
 import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.entidades.ProductoVenta;
+import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.entidades.Venta;
 import com.sena.kokoshop.repositorio.ProductoRepositorio;
 import com.sena.kokoshop.repositorio.ProductoVentaRepositorio;
+import com.sena.kokoshop.repositorio.UsuarioRepositorio;
 import com.sena.kokoshop.repositorio.VentaRepositorio;
 
 import jakarta.transaction.Transactional;
@@ -27,6 +30,12 @@ public class VentaProductoService {
 
     @Autowired
     private ProductoRepositorio productoRepositorio;
+
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
+    private CarritoProductoService carritoProductoService;
 
     @Transactional
     public void guardarVentaConProductos(VentaProductoDTO ventaProductoDTO) {
@@ -58,6 +67,35 @@ public class VentaProductoService {
             producto.setCantidad(cantidadActual - cantidad);
             productoRepositorio.save(producto);
         }
+    }
+
+    @Transactional
+    public void guardarVentaDesdeCarrito(VentaProductoDTO ventaProductoDTO, String email) {
+        Usuario usuario = usuarioRepositorio.findByEmail(email);
+        Venta venta = new Venta();
+        venta.setCliente(usuario);
+        venta.setEmpleado(null); // Asignar empleado si es necesario
+        venta.setFechaVenta(new Date());
+        venta.setTipoVenta("Online");
+        venta.setEstadoVenta("Pendiente");
+
+        Float precioTotal = 0.0f;
+        for (ProductoVenta productoVenta : ventaProductoDTO.getProductosVenta()) {
+            Producto producto = productoRepositorio.findById(productoVenta.getProducto().getIdProducto()).orElse(null);
+            if (producto != null) {
+                productoVenta.setVenta(venta);
+                productoVenta.setProducto(producto);
+                precioTotal += producto.getProducPrecio() * productoVenta.getCantidad();
+                producto.setCantidad(producto.getCantidad() - productoVenta.getCantidad());
+                productoRepositorio.save(producto);
+                productoVentaRepositorio.save(productoVenta);
+            }
+        }
+        venta.setPrecioTotal(precioTotal);
+        ventaRepositorio.save(venta);
+
+        // Vaciar el carrito después de la compra
+        carritoProductoService.vaciarCarrito(email);
     }
 
     public List<VentaProductoDTO> listarTodasLasVentas() {

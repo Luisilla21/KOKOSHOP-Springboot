@@ -82,7 +82,17 @@
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility('password')">👁️</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                            <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility('confirmPassword')">👁️</button>
+                        </div>
                     </div>
                     <input type="hidden" name="roles[0].nombre" value="Usuario">
                     <button type="submit" class="btn btn-primary w-100">Registrar</button>
@@ -101,6 +111,15 @@
     
     <!-- Script para validación y alertas -->
     <script>
+        function togglePasswordVisibility(id) {
+            const input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const registroForm = document.getElementById('registroForm');
             
@@ -109,13 +128,23 @@
                 
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
                 
                 // Validación simple
-                if (!email || !password) {
+                if (!email || !password || !confirmPassword) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Por favor completa todos los campos.",
+                    });
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Las contraseñas no coinciden.",
                     });
                     return;
                 }

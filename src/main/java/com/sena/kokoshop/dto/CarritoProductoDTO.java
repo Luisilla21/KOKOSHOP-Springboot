@@ -11,7 +11,6 @@ public class CarritoProductoDTO {
     private List<ProductoCarrito> productosCarrito = new ArrayList<>();
 
     public CarritoProductoDTO() {
-
     }
 
     public CarritoProductoDTO(Carrito carrito, List<ProductoCarrito> productosCarrito) {
@@ -38,5 +37,4 @@ public class CarritoProductoDTO {
     public Long getCarritoId() {
         return carrito.getIdCarrito();
     }
-    
 }

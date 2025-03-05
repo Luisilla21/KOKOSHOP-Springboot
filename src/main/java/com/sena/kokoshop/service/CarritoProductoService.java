@@ -2,9 +2,11 @@ package com.sena.kokoshop.service;
 
 import java.util.List;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import com.sena.kokoshop.dto.CarritoProductoDTO;
 import com.sena.kokoshop.entidades.Carrito;
 import com.sena.kokoshop.entidades.Producto;
@@ -106,7 +108,31 @@ public class CarritoProductoService {
         return carritoProductoDTO;
     }
 
-    public void eliminarProductoDelCarrito(Long idProductoCarrito, String email) {
+    @Transactional
+    public void eliminarProductoDelCarrito(Long idProducto, String email) {
+        Usuario usuario = usuarioRepositorio.findByEmail(email);
+        Carrito carrito = carritoRepositorio.findByCliente_Id(usuario.getUsuarioID());
+        List<ProductoCarrito> productosCarrito = productoCarritoRepositorio.findByProductoIdProductoAndCarritoIdCarrito(idProducto, carrito.getIdCarrito());
+    
+        if (!productosCarrito.isEmpty()) {
+            ProductoCarrito productoCarrito = productosCarrito.get(0); // Tomar solo un producto
+            Producto producto = productoCarrito.getProducto();
+    
+            if (productoCarrito.getCantidad() > 1) {
+                productoCarrito.setCantidad(productoCarrito.getCantidad() - 1);
+                productoCarritoRepositorio.save(productoCarrito);
+            } else {
+                productoCarritoRepositorio.delete(productoCarrito);
+            }
+    
+            // Devolver la cantidad al inventario
+            producto.setCantidad(producto.getCantidad() + 1);
+            productoRepositorio.save(producto);
+        }
+    }
+    
+
+    public void eliminarProductoDelCarritoPorId(Long idProductoCarrito, String email) {
         Usuario usuario = usuarioRepositorio.findByEmail(email);
         Carrito carrito = carritoRepositorio.findByCliente_Id(usuario.getUsuarioID());
         ProductoCarrito productoCarrito = productoCarritoRepositorio.findById(idProductoCarrito).get();

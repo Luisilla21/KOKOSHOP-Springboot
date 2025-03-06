@@ -350,12 +350,15 @@
                                     <div class="col-8">
                                         <div class="factura-detalle">
                                             <span>Producto:</span>
+                                            <input type="hidden" name="email" th:value="${username}">
 
                                             <span th:text="${productoCarrito.getProducto().getProducNom()}"></span>
-                                            <form th:action="@{/carrito/eliminar}" method="post" style="display:inline;">
-                                                <input type="hidden" name="idProducto" th:value="${productoCarrito.getProducto().getIdProducto()}">
-                                                <input type="hidden" name="email" th:value="${username}">
-                                                <button type="submit" class="remove-item-btn" style="background:none;border:none;color:red;cursor:pointer;">🗑️</button>
+                                            <form th:action="@{/carrito/eliminar}" method="post"
+                                                style="display:inline;">
+                                                <input type="hidden" name="idProducto"
+                                                    th:value="${productoCarrito.getProducto().getIdProducto()}">
+                                                <button type="submit" class="remove-item-btn"
+                                                    style="background:none;border:none;color:red;cursor:pointer;">🗑️</button>
                                             </form>
                                         </div>
                                         <div class="factura-detalle">
@@ -406,10 +409,7 @@
                                 <span>$ <span id="total"></span> COP</span>
                             </div>
 
-                            <form th:action="@{/carrito/procederCompra}" method="post">
-                                <input type="hidden" name="email" th:value="${username}">
-                                <button type="submit" class="btn-primary btn">Proceder al pago</button>
-                            </form>
+                            <button type="submit" class="btn-primary btn">Proceder al pago</button>
 
                         </div>
                     </div>

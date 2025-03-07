@@ -37,6 +37,11 @@ public class VentaProductoService {
     @Autowired
     private CarritoProductoService carritoProductoService;
 
+    public Venta obtenerVentaPorId(Long id) {
+        return ventaRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+    }
+    
+
     @Transactional
     public void guardarVentaConProductos(VentaProductoDTO ventaProductoDTO) {
         Venta venta = ventaProductoDTO.getVenta();

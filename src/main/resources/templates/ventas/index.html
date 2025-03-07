@@ -219,6 +219,9 @@
                         <td>
                             <a th:href="@{/ventas/editar/{id}(id=${ventaProducto.venta.idVenta})}" class="btn btn-info">Editar</a>
                             <a th:href="@{/ventas/{id}(id=${ventaProducto.venta.idVenta})}" class="btn btn-danger btn-eliminar">Eliminar</a>
+                            <a th:href="@{/ventas/imprimir/{id}(id=${ventaProducto.venta.idVenta})}" class="btn btn-secondary">
+                                <i class="fa fa-print"></i> Imprimir
+                            </a>                            
                         </td>                        
                     </tr>
                 </tbody>

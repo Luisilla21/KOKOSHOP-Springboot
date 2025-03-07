@@ -114,7 +114,6 @@ public class CarritoProductoService {
         Optional<ProductoCarrito> productoCarrito = productoCarritoRepositorio.findById(idProductoCarrito);
         productoCarritoRepositorio.deleteById(idProductoCarrito);
     }
-    
 
     public void eliminarProductoDelCarritoPorId(Long idProductoCarrito, String email) {
         Usuario usuario = usuarioRepositorio.findByEmail(email);

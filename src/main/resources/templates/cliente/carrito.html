@@ -332,83 +332,85 @@
 
                 <form th:action="@{/carrito/interfazCompra/}" method="post" class="container-info"
                     th:object="${carritoProductoDTO}">
-                    
-                    <input type="hidden" name="email" th:value="${username}">
-                    <input type="hidden" th:field="${carritoProductoDTO.carrito}"
-                        th:value="${carritoProductoDTO.getCarrito()}">
-                    <div class="factura row">
-                        <div class="col-8">
-                            <div class="cart-container">
-                                <div class="cart-item row" th:each="productoCarrito, stat : *{productosCarrito}">
-                                    <div class="col-4 container-img">
-                                        <img th:src="@{'/productos/imagen/' + ${productoCarrito.getProducto().getIdProducto()}}"
-                                            class="img-producto">
-                                    </div>
-                                    <input type="hidden" name="idProducto"
-                                        th:value="${productoCarrito.getProducto().getIdProducto()}"
-                                        th:field="*{productosCarrito[__${stat.index}__].producto}">
-                                    <div class="col-8">
-                                        <div class="factura-detalle">
-                                            <span>Producto:</span>
-                                            <span th:text="${productoCarrito.getProducto().getProducNom()}"></span>
-                                            <a th:href="@{/carrito/eliminar/{email}/{idProductoCarrito}(email=${username}, idProductoCarrito=${productoCarrito.id})}"
-                                                style="background:none;border:none;color:red;cursor:pointer;"
-                                                class="remove-item-btn">🗑️</a>
-
-
+                    <div th:if="${carritoVacio}">carrito vacio</div>
+                    <div th:unless="${carritoVacio}">
+                        <input type="hidden" name="email" th:value="${username}">
+                        <input type="hidden" th:field="${carritoProductoDTO.carrito}"
+                            th:value="${carritoProductoDTO.getCarrito()}">
+                        <div class="factura row">
+                            <div class="col-8">
+                                <div class="cart-container">
+                                    <div class="cart-item row" th:each="productoCarrito, stat : *{productosCarrito}">
+                                        <div class="col-4 container-img">
+                                            <img th:src="@{'/productos/imagen/' + ${productoCarrito.getProducto().getIdProducto()}}"
+                                                class="img-producto">
                                         </div>
-                                        <div class="factura-detalle">
-                                            <span>Precio unitario:</span>
-                                            <span>$ <span id="precio-unitario"
-                                                    th:text="${productoCarrito.getProducto().getProducPrecio()}"></span></span>
-                                        </div>
-                                        <div class="factura-detalle">
-                                            <span>Cantidad:</span>
-                                            <div>
-                                                <!-- Botón de restar cantidad -->
-                                                <a class="quantity-btn btn btn-secondary decrease-btn"
-                                                    th:data-id="${productoCarrito.getProducto().getIdProducto()}">-</a>
+                                        <input type="hidden" name="idProducto"
+                                            th:value="${productoCarrito.getProducto().getIdProducto()}"
+                                            th:field="*{productosCarrito[__${stat.index}__].producto}">
+                                        <div class="col-8">
+                                            <div class="factura-detalle">
+                                                <span>Producto:</span>
+                                                <span th:text="${productoCarrito.getProducto().getProducNom()}"></span>
+                                                <a th:href="@{/carrito/eliminar/{email}/{idProductoCarrito}(email=${username}, idProductoCarrito=${productoCarrito.id})}"
+                                                    style="background:none;border:none;color:red;cursor:pointer;"
+                                                    class="remove-item-btn">🗑️</a>
 
-                                                <!-- Input con cantidad -->
-                                                <input class="quantity-input" name="cantidad"
-                                                    th:value="${productoCarrito.getCantidad()}"
-                                                    th:field="*{productosCarrito[__${stat.index}__].cantidad}"
-                                                    type="number" min="1"
-                                                    th:max="${productoCarrito.getProducto().getCantidad()}"
-                                                    th:data-id="${productoCarrito.getProducto().getIdProducto()}">
 
-                                                <!-- Botón de aumentar cantidad -->
-                                                <a class="quantity-btn btn btn-secondary increase-btn"
-                                                    th:data-id="${productoCarrito.getProducto().getIdProducto()}">+</a>
                                             </div>
-                                        </div>
+                                            <div class="factura-detalle">
+                                                <span>Precio unitario:</span>
+                                                <span>$ <span id="precio-unitario"
+                                                        th:text="${productoCarrito.getProducto().getProducPrecio()}"></span></span>
+                                            </div>
+                                            <div class="factura-detalle">
+                                                <span>Cantidad:</span>
+                                                <div>
+                                                    <!-- Botón de restar cantidad -->
+                                                    <a class="quantity-btn btn btn-secondary decrease-btn"
+                                                        th:data-id="${productoCarrito.getProducto().getIdProducto()}">-</a>
 
-                                        <div class="factura-detalle">
-                                            <span>Subtotal:</span>
-                                            <span>$ <span class="item-subtotal"></span></span>
+                                                    <!-- Input con cantidad -->
+                                                    <input class="quantity-input" name="cantidad"
+                                                        th:value="${productoCarrito.getCantidad()}"
+                                                        th:field="*{productosCarrito[__${stat.index}__].cantidad}"
+                                                        type="number" min="1"
+                                                        th:max="${productoCarrito.getProducto().getCantidad()}"
+                                                        th:data-id="${productoCarrito.getProducto().getIdProducto()}">
+
+                                                    <!-- Botón de aumentar cantidad -->
+                                                    <a class="quantity-btn btn btn-secondary increase-btn"
+                                                        th:data-id="${productoCarrito.getProducto().getIdProducto()}">+</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="factura-detalle">
+                                                <span>Subtotal:</span>
+                                                <span>$ <span class="item-subtotal"></span></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="factura-titulo">Resumen de Compra</div>
-                            <div class="factura-detalle">
-                                <span>Subtotal:</span>
-                                <span>$ <span id="subtotal"></span> COP</span>
-                            </div>
-                            <div class="factura-detalle">
-                                <span>Envío:</span>
-                                <span>$ <span id="envio">10000</span> COP</span>
-                            </div>
-                            <div class="factura-total">
-                                <span>Total:</span>
-                                <input type="hidden">
-                                <span>$ <span id="total"></span> COP</span>
-                            </div>
+                            <div class="col-4">
+                                <div class="factura-titulo">Resumen de Compra</div>
+                                <div class="factura-detalle">
+                                    <span>Subtotal:</span>
+                                    <span>$ <span id="subtotal"></span> COP</span>
+                                </div>
+                                <div class="factura-detalle">
+                                    <span>Envío:</span>
+                                    <span>$ <span id="envio">10000</span> COP</span>
+                                </div>
+                                <div class="factura-total">
+                                    <span>Total:</span>
+                                    <input type="hidden">
+                                    <span>$ <span id="total"></span> COP</span>
+                                </div>
 
-                            <button type="submit" class="btn-primary btn">Proceder al pago</button>
+                                <button type="submit" class="btn-primary btn">Proceder al pago</button>
 
+                            </div>
                         </div>
                     </div>
                 </form>

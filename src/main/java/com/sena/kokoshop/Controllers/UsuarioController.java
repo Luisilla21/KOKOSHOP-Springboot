@@ -115,7 +115,7 @@ public class UsuarioController {
         }
         if (logout != null) {
             model.addAttribute("logout", "Has cerrado sesión exitosamente.");
-            return "index";
+            return "redirect:/index";
         }
         if (registroExitoso != null) {
             model.addAttribute("registroExitoso", "¡Registro exitoso! Ahora puedes iniciar sesión.");
@@ -137,9 +137,9 @@ public class UsuarioController {
 
         // Asignar un rol por defecto (por ejemplo, CLIENTE)
         Rol clienteRol = rolInterfaz.findByNombre("CLIENTE");
-        
+
         usuario.setRol(clienteRol);
-        
+
         Usuario usuarioNuevo = interfaz.guardarUsuario(usuario);
 
         // Crear un carrito vacío para el nuevo usuario

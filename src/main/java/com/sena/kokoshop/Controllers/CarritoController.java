@@ -54,10 +54,14 @@ public class CarritoController {
         List<Producto> productos = new ArrayList<>();
         List<ProductoCarrito> productosCarrito = carritoProductoDTO.getProductosCarrito();
 
+        Boolean carritoVacio = productosCarrito.isEmpty();
+        System.out.println("----------------------------Carrito vacio: " + carritoVacio);
+
         for (ProductoCarrito productoCarrito : productosCarrito) {
             productos.add(productoCarrito.getProducto());
         }
 
+        model.addAttribute("carritoVacio", carritoVacio);
         model.addAttribute("productos", productos);
         model.addAttribute("productosCarrito", productosCarrito);
         model.addAttribute("carritoProductoDTO", carritoProductoDTO);

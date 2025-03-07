@@ -367,21 +367,23 @@
                                         </div>
                                         <div class="factura-detalle">
                                             <span>Cantidad:</span>
+                                            <div>
+                                                <!-- Botón de restar cantidad -->
+                                                <a class="quantity-btn btn btn-secondary decrease-btn"
+                                                    th:data-id="${productoCarrito.getProducto().getIdProducto()}">-</a>
 
-                                            <!-- Botón de restar cantidad -->
-                                            <a class="quantity-btn decrease-btn"
-                                                th:data-id="${productoCarrito.getProducto().getIdProducto()}">-</a>
+                                                <!-- Input con cantidad -->
+                                                <input class="quantity-input" name="cantidad"
+                                                    th:value="${productoCarrito.getCantidad()}"
+                                                    th:field="*{productosCarrito[__${stat.index}__].cantidad}"
+                                                    type="number" min="1"
+                                                    th:max="${productoCarrito.getProducto().getCantidad()}"
+                                                    th:data-id="${productoCarrito.getProducto().getIdProducto()}">
 
-                                            <!-- Input con cantidad -->
-                                            <input class="quantity-input" name="cantidad"
-                                                th:value="${productoCarrito.getCantidad()}"
-                                                th:field="*{productosCarrito[__${stat.index}__].cantidad}" type="number"
-                                                min="1" th:max="${productoCarrito.getProducto().getCantidad()}"
-                                                th:data-id="${productoCarrito.getProducto().getIdProducto()}">
-
-                                            <!-- Botón de aumentar cantidad -->
-                                            <a class="quantity-btn increase-btn"
-                                                th:data-id="${productoCarrito.getProducto().getIdProducto()}">+</a>
+                                                <!-- Botón de aumentar cantidad -->
+                                                <a class="quantity-btn btn btn-secondary increase-btn"
+                                                    th:data-id="${productoCarrito.getProducto().getIdProducto()}">+</a>
+                                            </div>
                                         </div>
 
                                         <div class="factura-detalle">

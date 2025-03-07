@@ -109,26 +109,10 @@ public class CarritoProductoService {
     }
 
     @Transactional
-    public void eliminarProductoDelCarrito(Long idProducto, String email) {
-        Usuario usuario = usuarioRepositorio.findByEmail(email);
-        Carrito carrito = carritoRepositorio.findByCliente_Id(usuario.getUsuarioID());
-        List<ProductoCarrito> productosCarrito = productoCarritoRepositorio.findByProductoIdProductoAndCarritoIdCarrito(idProducto, carrito.getIdCarrito());
-    
-        if (!productosCarrito.isEmpty()) {
-            ProductoCarrito productoCarrito = productosCarrito.get(0); // Tomar solo un producto
-            Producto producto = productoCarrito.getProducto();
-    
-            if (productoCarrito.getCantidad() > 1) {
-                productoCarrito.setCantidad(productoCarrito.getCantidad() - 1);
-                productoCarritoRepositorio.save(productoCarrito);
-            } else {
-                productoCarritoRepositorio.delete(productoCarrito);
-            }
-    
-            // Devolver la cantidad al inventario
-            producto.setCantidad(producto.getCantidad() + 1);
-            productoRepositorio.save(producto);
-        }
+    public void eliminarProductoDelCarrito(Long idProductoCarrito) {
+
+        Optional<ProductoCarrito> productoCarrito = productoCarritoRepositorio.findById(idProductoCarrito);
+        productoCarritoRepositorio.deleteById(idProductoCarrito);
     }
     
 

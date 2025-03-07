@@ -17,7 +17,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Long> {
     List<Usuario> findUsuariosByRolCliente();
 
     @Query("SELECT u FROM Usuario u WHERE u.email = :email")
-    Usuario findByEmail(@Param("email") String email);
+    Usuario findByEmail(@Param("email") String email);    
 
     // Devuelve directamente un Usuario
     Optional<Usuario> findByResetToken(String token); // Maneja el caso de que el token no exista

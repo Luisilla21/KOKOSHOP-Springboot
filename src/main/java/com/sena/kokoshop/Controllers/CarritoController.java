@@ -78,7 +78,7 @@ public class CarritoController {
 
     @PostMapping("/carrito/eliminar")
     public String eliminarProductoDelCarrito(@RequestParam("idProducto") Long idProducto,
-                                             @RequestParam("email") String email) {
+            @RequestParam("email") String email) {
         carritoProductoService.eliminarProductoDelCarrito(idProducto, email);
         return "redirect:/carrito/ver/" + email;
     }
@@ -91,6 +91,8 @@ public class CarritoController {
             Model modelo) {
 
         Usuario usuario = usuarioRepositorio.findByEmail(email);
+
+        System.out.println("-----------------------------Usuario: " + email);
 
         List<Producto> productos = new ArrayList<>();
 

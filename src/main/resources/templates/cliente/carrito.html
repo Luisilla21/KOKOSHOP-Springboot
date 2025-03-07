@@ -350,7 +350,6 @@
                                     <div class="col-8">
                                         <div class="factura-detalle">
                                             <span>Producto:</span>
-                                            <input type="hidden" name="email" th:value="${username}">
 
                                             <span th:text="${productoCarrito.getProducto().getProducNom()}"></span>
                                             <form th:action="@{/carrito/eliminar}" method="post"

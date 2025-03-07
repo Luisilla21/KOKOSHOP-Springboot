@@ -43,15 +43,38 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <span th:text="${username}">Usuario</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" th:href="@{/usuarios}">Usuarios</a></li>
-                            <li><a class="dropdown-item" th:href="@{/empleados/}">Empleados</a></li>
-                            <li><a class="dropdown-item" th:href="@{/productos/}">Productos</a></li>
-                            <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+
+                            <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                <li><a class="dropdown-item" th:href="@{/usuarios/}">Usuarios</a></li>
+                                <li><a class="dropdown-item" th:href="@{/empleados/}">Empleados</a></li>
+                                <li><a class="dropdown-item" th:href="@{/productos/}">Productos</a></li>
+                                <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                                <li><a class="dropdown-item" th:href="@{/dashboard/}">Dashboard</a></li>
+                            </div>
+
+                            <div sec:authorize="hasAuthority('ROLE_EMPLEADO')">
+                                <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                                <li><a class="dropdown-item" th:href="@{/productos/}">Productos</a></li>
+                            </div>
+
+                            <div sec:authorize="hasAuthority('ROLE_CLIENTE')">
+                                <li><a class="dropdown-item"
+                                        th:href="@{/cliente/mis-compras/{email}(email=${username})}">Mis Compras</a>
+
+                                </li>
+                                <li><a class="dropdown-item"
+                                        th:href="@{/carrito/ver/{email}(email=${username})}">Carrito</a>
+
+                                </li>
+                            </div>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                            <div sec:authorize="isAuthenticated()">
+                                <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                            </div>
+
                         </ul>
                     </div>
                 </div>

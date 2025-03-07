@@ -58,6 +58,7 @@
 
                                 <div sec:authorize="hasAuthority('ROLE_EMPLEADO')">
                                     <li><a class="dropdown-item" th:href="@{/ventas}">Ventas</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/productos/}">Productos</a></li>
                                 </div>
 
                                 <div sec:authorize="hasAuthority('ROLE_CLIENTE')">
@@ -137,7 +138,7 @@
                 <h5>Síguenos en</h5>
                 <ul>
                     <li><a class="logo-social" href="https://wa.me/c/573219313578" target="_blank"><img
-                                th:src="@{images/wpp.png}" alt="WhatsApp"></a></li>
+                                th:src="@{images/whatsapp-messenger.png}" alt="WhatsApp"></a></li>
                     <li><a class="logo-social" href="https://www.facebook.com/people/KokoShop-Colombia/61564941809696/"
                             target="_blank"><img th:src="@{images/Facebook_Logo.png}" alt="Facebook"></a>
                     </li>
@@ -149,10 +150,10 @@
             </div>
             <div class="ubicacion">
                 <h5>Encuéntranos en</h5>
+                <h6>Centro Comercial Pasaje Paisa Local 200 Bogotá, Colombia</h6>
+                <h6> Calle 10#11-08, Bogotá</h6>
                 <div class="map">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11209.072868276553!2d-74.14402175539946!3d4.59829808980877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sco!4v1710714810135!5m2!1ses-419!2sco"
-                        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3826.7952638270626!2d-74.0793686!3d4.599897599999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9909b022fb05%3A0xd76f235d1d6ea53e!2sCentro%20Comercial%20Pasaje%20Paisa!5e1!3m2!1ses!2sco!4v1741309136561!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
             <div class="acerca-de">

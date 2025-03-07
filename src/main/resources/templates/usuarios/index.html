@@ -164,14 +164,23 @@
 </head>
 
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <a th:href="@{/dashboard/}" class="active"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-        <a th:href="@{/productos/}"><i class="fa fa-fw fa-home"></i> Control de Productos</a>
-        <a th:href="@{/empleados/}"><i class="fa fa-fw fa-users"></i> Control de empleados</a>
-        <a th:href="@{/usuarios/}"><i class="fa fa-fw fa-user"></i> Control de usuarios</a>
-        <a th:href="@{/ventas}"><i class="fa fa-fw fa-shopping-cart"></i> Control de Ventas</a>
-    </div>
+   <!-- Sidebar -->
+   <div class="sidebar">
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/dashboard/}" class="active">
+        <i class="fa fa-fw fa-dashboard"></i> Dashboard
+    </a>
+    <a th:href="@{/productos/}"><i class="fa fa-fw fa-home"></i> Control de Productos</a>
+    <a th:href="@{/ventas}"><i class="fa fa-fw fa-shopping-cart"></i> Control de Ventas</a>
+    
+    <!-- Opciones solo visibles para ADMIN -->
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/empleados/}">
+        <i class="fa fa-fw fa-users"></i> Control de empleados
+    </a>
+    <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/usuarios/}">
+        <i class="fa fa-fw fa-user"></i> Control de usuarios
+    </a>
+</div>
+
 
     <div class="main">
         <!-- Incluir el fragmento de la barra de navegación -->
@@ -259,5 +268,11 @@
         });
     });
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
 </html>

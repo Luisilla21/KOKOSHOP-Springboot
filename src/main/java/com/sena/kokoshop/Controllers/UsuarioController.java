@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sena.kokoshop.dto.VentaProductoDTO;
 import com.sena.kokoshop.entidades.Carrito;
+import com.sena.kokoshop.entidades.EstadoCuenta;
 import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.entidades.ProductoVenta;
 import com.sena.kokoshop.entidades.Rol;
@@ -26,6 +27,7 @@ import com.sena.kokoshop.interfaz.ProductoInterfaz;
 import com.sena.kokoshop.interfaz.RolInterfaz;
 import com.sena.kokoshop.interfaz.UsuarioInterfaz;
 import com.sena.kokoshop.repositorio.CarritoRepositorio;
+import com.sena.kokoshop.repositorio.EstadoCuentaRepositorio;
 import com.sena.kokoshop.repositorio.UsuarioRepositorio;
 import com.sena.kokoshop.service.VentaProductoService;
 
@@ -53,10 +55,27 @@ public class UsuarioController {
     @Autowired
     private VentaProductoService ventaService;
 
+    @Autowired
+    private EstadoCuentaRepositorio estadoCuentaRepositorio;
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/usuarios/")
     public String listarUsuarios(Model modelo) {
-        modelo.addAttribute("usuarios", interfaz.listarTodosLosUsuarios());
+        List<Usuario> usuarios = interfaz.listarTodosLosUsuarios();
+        List<Usuario> usuariosHabilitados = new ArrayList<>();
+        List<Usuario> usuariosDeshabilitados = new ArrayList<>();
+
+        usuarios.forEach(usuario -> {
+            if ("HABILITADA".equals(usuario.getEstadoCuenta().getNombre())) {
+                usuariosHabilitados.add(usuario);
+            } else {
+                usuariosDeshabilitados.add(usuario);
+
+            }
+        });
+        modelo.addAttribute("usuariosHabilitados", usuariosHabilitados);
+        modelo.addAttribute("usuariosDeshabilitados", usuariosDeshabilitados);
+
         return "usuarios/index"; // retorna al archivo usuarios
     }
 
@@ -70,7 +89,9 @@ public class UsuarioController {
     @PostMapping("/usuarios/")
     public String guardarUsuario(@ModelAttribute("usuario") Usuario usuario) {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        EstadoCuenta estadoCuenta = estadoCuentaRepositorio.findByNombre("HABILITADA");
 
+        usuario.setEstadoCuenta(estadoCuenta);
         interfaz.guardarUsuario(usuario);
         return "redirect:/usuarios/";
 
@@ -79,11 +100,13 @@ public class UsuarioController {
     @GetMapping("/usuarios/editar/{usuarioID}")
     public String mostrarFormularioDeEditar(@PathVariable Long usuarioID, Model modelo) {
         Usuario usuario = interfaz.obtenerUsuarioporId(usuarioID);
+
         if (usuario == null) {
             // Redirige o muestra un mensaje de error si el cliente no existe
             return "redirect:/usuarios";
         }
         System.out.println("--------------Usuario: " + usuario.getRol().getNombre());
+
         modelo.addAttribute("usuario", usuario);
         return "usuarios/editar_usuario";
     }
@@ -104,15 +127,30 @@ public class UsuarioController {
             usuarioExistente.setTelefono(usuario.getTelefono());
             usuarioExistente.setCompras(usuario.getCompras());
             usuarioExistente.setRol(usuario.getRol());
+            usuarioExistente.setEstadoCuenta(usuario.getEstadoCuenta());
             interfaz.actualizarUsuario(usuarioExistente);
         }
         return "redirect:/usuarios/";
 
     }
 
-    @GetMapping("/usuarios/{usuarioID}")
+    @GetMapping("/usuarios/eliminar/{usuarioID}")
     public String eliminarUsuario(@PathVariable Long usuarioID) {
-        interfaz.eliminarUsuario(usuarioID);
+        Usuario usuario = interfaz.obtenerUsuarioporId(usuarioID);
+        EstadoCuenta estadoCuenta = estadoCuentaRepositorio.findByNombre("DESHABILITADA");
+
+        usuario.setEstadoCuenta(estadoCuenta);
+        interfaz.actualizarUsuario(usuario);
+        return "redirect:/usuarios/";
+    }
+
+    @GetMapping("/usuarios/habilitar/{usuarioID}")
+    public String habilitarUsuario(@PathVariable Long usuarioID) {
+        Usuario usuario = interfaz.obtenerUsuarioporId(usuarioID);
+        EstadoCuenta estadoCuenta = estadoCuentaRepositorio.findByNombre("HABILITADA");
+
+        usuario.setEstadoCuenta(estadoCuenta);
+        interfaz.actualizarUsuario(usuario);
         return "redirect:/usuarios/";
     }
 
@@ -122,7 +160,7 @@ public class UsuarioController {
             @RequestParam(value = "registroExitoso", required = false) String registroExitoso,
             Model model) {
         if (error != null) {
-            model.addAttribute("error", "Credenciales inválidas. Intenta de nuevo.");
+            model.addAttribute("error", "Credenciales inválidas o cuenta deshabilitada.");
         }
         if (logout != null) {
             model.addAttribute("logout", "Has cerrado sesión exitosamente.");
@@ -151,6 +189,10 @@ public class UsuarioController {
 
         usuario.setRol(clienteRol);
 
+        EstadoCuenta estadoCuenta = estadoCuentaRepositorio.findByNombre("HABILITADA");
+
+        usuario.setEstadoCuenta(estadoCuenta);
+
         Usuario usuarioNuevo = interfaz.guardarUsuario(usuario);
 
         // Crear un carrito vacío para el nuevo usuario
@@ -162,18 +204,13 @@ public class UsuarioController {
     }
 
     @GetMapping({ "/", "/index" })
-    public String mostrarPaginaDeInicio(@AuthenticationPrincipal User user, Model model) {
+    public String mostrarPaginaDeInicio(Model model) {
         List<Producto> productos = productoInterfaz.listarTodosLosProductos();
 
         List<Producto> productosLimitados = productos.stream().limit(4).toList();
 
         model.addAttribute("productos", productosLimitados);
-        if (user != null) {
-            model.addAttribute("username", user.getUsername());
-            model.addAttribute("isAuthenticated", true);
-        } else {
-            model.addAttribute("isAuthenticated", false);
-        }
+
         return "index"; // Asegúrate de que la vista "index.html" exista
     }
 

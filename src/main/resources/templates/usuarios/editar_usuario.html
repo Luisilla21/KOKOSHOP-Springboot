@@ -197,14 +197,27 @@
                         <div>
                             <label>Rol:</label>
                             <select name="rol" th:field="*{rol}" class="form-control" required>
-                                <option th:if="rol==1" th:value="*{rol}" th:field="*{rol}" selected>Adminisyrador
+                                <option th:if="rol==1" th:value="*{rol}" th:field="*{rol}" selected>ADMIN
                                 </option>
-                                <option th:if="rol==2" th:value="*{rol}" th:field="*{rol}" selected>Empleado</option>
-                                <option th:if="rol==3" th:value="*{rol}" th:field="*{rol}" selected>Cliente</option>
+                                <option th:if="rol==2" th:value="*{rol}" th:field="*{rol}" selected>EMPLEADO</option>
+                                <option th:if="rol==3" th:value="*{rol}" th:field="*{rol}" selected>CLIENTE</option>
                                 </option>
-                                <option value="1">Administrador</option>
-                                <option value="2">Empleado</option>
-                                <option value="3">Cliente</option>
+                                <option value="1">ADMIN</option>
+                                <option value="2">EMPLEADO</option>
+                                <option value="3">CLIENTE</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div>
+                            <label>Rol:</label>
+                            <select name="rol" th:field="*{estadoCuenta}" class="form-control" required>
+                                <option th:if="rol==1" th:value="*{estadoCuenta}" th:field="*{estadoCuenta}" selected>
+                                    HABILITADA
+                                </option>
+                                <option th:if="rol==2" th:value="*{estadoCuenta}" th:field="*{estadoCuenta}" selected>
+                                    DESHABILITADA</option>
+                                <option value="1">HABILITADA</option>
+                                <option value="2">DESHABILITADA</option>
                             </select>
                         </div>
                         <br>

@@ -69,6 +69,10 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "idRol", nullable = false)
     private Rol rol;
 
+    @ManyToOne
+    @JoinColumn(name = "idEstado", nullable = false)
+    private EstadoCuenta estadoCuenta;
+
     // Constructor sin parámetros
     public Usuario() {
     }
@@ -77,7 +81,7 @@ public class Usuario implements UserDetails {
     public Usuario(Long id, String nombre, String apellido, String numeroDocumento, String tipoDocumento,
             String direccion, String ciudad,
             String email, String password, String telefono,
-            Empleado empleado, List<Venta> compras, Rol rol) {
+            Empleado empleado, List<Venta> compras, Rol rol, EstadoCuenta estadoCuenta) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -91,13 +95,14 @@ public class Usuario implements UserDetails {
         this.empleado = empleado;
         this.compras = compras;
         this.rol = rol;
+        this.estadoCuenta = estadoCuenta;
     }
 
     // Constructor sin el ID
     public Usuario(String nombre, String apellido, String numeroDocumento, String tipoDocumento, String direccion,
             String ciudad,
             String email, String password, String telefono,
-            Empleado empleado, List<Venta> compras, Rol rol) {
+            Empleado empleado, List<Venta> compras, Rol rol, EstadoCuenta estadoCuenta) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.numeroDocumento = numeroDocumento;
@@ -110,6 +115,7 @@ public class Usuario implements UserDetails {
         this.empleado = empleado;
         this.compras = compras;
         this.rol = rol;
+        this.estadoCuenta = estadoCuenta;
     }
 
     // Getters y Setters
@@ -189,7 +195,7 @@ public class Usuario implements UserDetails {
     public String getResetToken() {
         return resetToken;
     }
-    
+
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
     }
@@ -226,6 +232,14 @@ public class Usuario implements UserDetails {
         this.compras = compras;
     }
 
+    public EstadoCuenta getEstadoCuenta() {
+        return estadoCuenta;
+    }
+
+    public void setEstadoCuenta(EstadoCuenta estadoCuenta) {
+        this.estadoCuenta = estadoCuenta;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Devuelve los roles/autoridades del usuario
@@ -254,7 +268,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true; // La cuenta está habilitada
+        return estadoCuenta != null && "HABILITADA".equalsIgnoreCase(estadoCuenta.getNombre());
     }
 
     @Override

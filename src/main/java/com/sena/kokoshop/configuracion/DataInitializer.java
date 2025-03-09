@@ -4,7 +4,9 @@ import com.sena.kokoshop.entidades.Rol;
 import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.interfaz.RolInterfaz;
 import com.sena.kokoshop.entidades.Empleado;
+import com.sena.kokoshop.entidades.EstadoCuenta;
 import com.sena.kokoshop.interfaz.EmpleadoInterfaz;
+import com.sena.kokoshop.repositorio.EstadoCuentaRepositorio;
 import com.sena.kokoshop.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,12 +28,20 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private EmpleadoInterfaz empleadoInterfaz;
 
+    @Autowired
+    private EstadoCuentaRepositorio estadoCuentaRepositorio;
+    
+
     @Override
     public void run(String... args) throws Exception {
         // Crear roles si no existen
         crearRolSiNoExiste("ADMIN");
         crearRolSiNoExiste("EMPLEADO");
         crearRolSiNoExiste("CLIENTE");
+
+        //Crear estados de usuario si no existen
+        crearRolEstadoUsuarioSiNoExiste("HABILITADA");
+        crearRolEstadoUsuarioSiNoExiste("DESHABILITADA");
         crearAdmin();
     }
 
@@ -41,6 +51,15 @@ public class DataInitializer implements CommandLineRunner {
             rol.setNombre(nombreRol);
             rolInterfaz.save(rol);
             System.out.println("Rol creado: " + nombreRol); // Log para verificar
+        }
+    }
+
+    private void crearRolEstadoUsuarioSiNoExiste(String nombreEstado) {
+        if (estadoCuentaRepositorio.findByNombre(nombreEstado) == null) {
+            EstadoCuenta estadoCuenta = new EstadoCuenta();
+            estadoCuenta.setNombre(nombreEstado);
+            estadoCuentaRepositorio.save(estadoCuenta);
+            System.out.println("Estado cuenta creado: " + nombreEstado); // Log para verificar
         }
     }
 
@@ -60,6 +79,8 @@ public class DataInitializer implements CommandLineRunner {
             admin.setNombre("Admin");
             admin.setApellido("Kokoshop");
             admin.setEmail("admin@gmail.com");
+            EstadoCuenta estadoCuenta = estadoCuentaRepositorio.findByNombre("HABILITADA");
+            admin.setEstadoCuenta(estadoCuenta);
             admin.setPassword(passwordEncoder.encode("1234567890")); // Contraseña encriptada
             admin.setRol(adminRole);
             usuarioRepository.save(admin);

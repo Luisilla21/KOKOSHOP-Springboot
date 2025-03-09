@@ -273,7 +273,7 @@
                         <td th:text="${usuario.telefono}">Teléfono</td>
                         <td>
                             <a th:href="@{/usuarios/habilitar/{id}(id=${usuario.usuarioID})}"
-                                class="btn btn-primary">Habilitar</a>
+                                class="btn btn-success">Habilitar</a>
                         </td>
                     </tr>
                 </tbody>
@@ -289,13 +289,36 @@
                 event.preventDefault();
                 const url = this.getAttribute("href");
                 Swal.fire({
-                    title: "¿Estás seguro de eliminar este usuario?",
-                    text: "¡No podrás revertir esto!",
+                    title: "¿Estás seguro de deshabilitar este usuario?",
+                    text: "Se podrás revertir esta acción, el usuario ya no podra iniciar sesión",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: "Sí, eliminar!"
+                    confirmButtonText: "Sí, deshabilitar!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                        setTimeout(() => {
+                            window.location.href = "/usuarios/";
+                        }, 1000); // Redirige después de 1 segundo
+                    }
+                });
+            });
+        });
+
+        document.querySelectorAll(".btn-success").forEach(button => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault();
+                const url = this.getAttribute("href");
+                Swal.fire({
+                    title: "¿Estás seguro de habilitar este usuario?",
+                    text: "Ahora el usuario podra iniciar sesión",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, deshabilitar!"
                 }).then((result) => {
                     if (result.isConfirmed) {
                         window.location.href = url;

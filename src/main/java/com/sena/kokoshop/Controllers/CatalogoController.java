@@ -102,9 +102,20 @@ public class CatalogoController {
             Model modelo) {
         Empleado admin = empleadoRepositorio.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Empleado Admin no encontrado"));
-        Usuario usuarioExistente = usuarioRepositorio.findByEmail(usuario.getEmail());
+        Usuario usuarioExistente = usuarioRepositorio.findById(usuario.getUsuarioID())
+                .orElseThrow(() -> new RuntimeException("Usuario Admin no encontrado"));
 
-
+        if (usuarioExistente != null) {
+            usuarioExistente.setNombre(usuario.getNombre());
+            usuarioExistente.setApellido(usuario.getApellido());
+            usuarioExistente.setTipoDocumento(usuario.getTipoDocumento());
+            usuarioExistente.setNumeroDocumento(usuario.getNumeroDocumento());
+            usuarioExistente.setDireccion(usuario.getDireccion());
+            usuarioExistente.setCiudad(usuario.getCiudad());
+            usuarioExistente.setTelefono(usuario.getTelefono());
+            usuarioExistente.setCompras(usuario.getCompras());
+            usuarioInterfaz.actualizarUsuario(usuarioExistente);
+        }
 
         VentaProductoDTO ventaProductoDTO = new VentaProductoDTO();
         Venta venta = new Venta();
@@ -127,6 +138,4 @@ public class CatalogoController {
 
     }
 
-    
-    
 }

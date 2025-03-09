@@ -1,21 +1,29 @@
 package com.sena.kokoshop.Controllers;
 
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.*;
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import com.sena.kokoshop.dto.VentaProductoDTO;
 import com.sena.kokoshop.entidades.ProductoVenta;
 import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.entidades.Venta;
-import com.sena.kokoshop.entidades.Producto;
 import com.sena.kokoshop.interfaz.EmpleadoInterfaz;
 import com.sena.kokoshop.interfaz.ProductoInterfaz;
 import com.sena.kokoshop.interfaz.UsuarioInterfaz;
@@ -99,6 +107,8 @@ public class VentaController {
         model.addAttribute("productoVenta", new ProductoVenta());
         return "fragments :: nuevo-producto";
     }
+
+    
 
     @GetMapping("/imprimir/{id}")
     public void generarFactura(@PathVariable Long id, HttpServletResponse response) throws Exception {

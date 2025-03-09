@@ -46,7 +46,7 @@
         }
 
         .cart-item {
-            height: auto;
+            height: 150px;
             margin-bottom: 20px;
         }
 
@@ -55,7 +55,6 @@
         }
 
         .img-producto {
-            width: 100%;
 
             aspect-ratio: 3/4;
             object-fit: cover;
@@ -332,7 +331,10 @@
 
                 <form th:action="@{/carrito/interfazCompra/}" method="post" class="container-info"
                     th:object="${carritoProductoDTO}">
-                    <div th:if="${carritoVacio}">carrito vacio</div>
+                    <div th:if="${carritoVacio}">
+                        <h2>Tu carrito de Kokoshop esta vacio</h2>
+                        <span>Continua comprando en <a th:href="@{/}">KOKOSHOP</a></span>
+                    </div>
                     <div th:unless="${carritoVacio}">
                         <input type="hidden" name="email" th:value="${username}">
                         <input type="hidden" th:field="${carritoProductoDTO.carrito}"
@@ -343,7 +345,7 @@
                                     <div class="cart-item row" th:each="productoCarrito, stat : *{productosCarrito}">
                                         <div class="col-4 container-img">
                                             <img th:src="@{'/productos/imagen/' + ${productoCarrito.getProducto().getIdProducto()}}"
-                                                class="img-producto">
+                                                class="img-producto img-fluid">
                                         </div>
                                         <input type="hidden" name="idProducto"
                                             th:value="${productoCarrito.getProducto().getIdProducto()}"
@@ -376,17 +378,13 @@
                                                         th:field="*{productosCarrito[__${stat.index}__].cantidad}"
                                                         type="number" min="1"
                                                         th:max="${productoCarrito.getProducto().getCantidad()}"
-                                                        th:data-id="${productoCarrito.getProducto().getIdProducto()}">
+                                                        th:data-id="${productoCarrito.getProducto().getIdProducto()}"
+                                                        id="cantidad">
 
                                                     <!-- Botón de aumentar cantidad -->
                                                     <a class="quantity-btn btn btn-secondary increase-btn"
                                                         th:data-id="${productoCarrito.getProducto().getIdProducto()}">+</a>
                                                 </div>
-                                            </div>
-
-                                            <div class="factura-detalle">
-                                                <span>Subtotal:</span>
-                                                <span>$ <span class="item-subtotal"></span></span>
                                             </div>
                                         </div>
                                     </div>
@@ -400,7 +398,7 @@
                                 </div>
                                 <div class="factura-detalle">
                                     <span>Envío:</span>
-                                    <span>$ <span id="envio">10000</span> COP</span>
+                                    <span>$ <span id="envio">10.000</span> COP</span>
                                 </div>
                                 <div class="factura-total">
                                     <span>Total:</span>
@@ -436,14 +434,30 @@
                     let productId = this.getAttribute("data-id"); // Obtener ID del producto
                     let inputField = document.querySelector(`.quantity-input[data-id='${productId}']`); // Seleccionar input relacionado
                     let maxQuantity = parseInt(inputField.getAttribute("max")); // Obtener cantidad máxima permitida
+                    let subtotaltxt = document.getElementById("subtotal");
+                    let totaltxt = document.getElementById("total");
+                    let precioUnitario = parseInt(document.querySelector("#precio-unitario").textContent);
+
                     let currentValue = parseInt(inputField.value); // Valor actual
 
                     if (this.classList.contains("increase-btn") && currentValue < maxQuantity) {
                         inputField.value = currentValue + 1;
+                        calcularTotales();
+
+
                     } else if (this.classList.contains("decrease-btn") && currentValue > 1) {
                         inputField.value = currentValue - 1;
+                        calcularTotales();
+
+
                     }
                 });
+            });
+
+            let cantidadInput = document.getElementById("cantidad");
+
+            cantidadInput.addEventListener("input", function (event) {
+                calcularTotales();
             });
 
             function calcularTotales() {

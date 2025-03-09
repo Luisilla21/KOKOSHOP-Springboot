@@ -27,9 +27,6 @@ import com.sena.kokoshop.repositorio.UsuarioRepositorio;
 import com.sena.kokoshop.service.CarritoProductoService;
 import com.sena.kokoshop.service.VentaProductoService;
 
-import com.sena.kokoshop.service.CarritoProductoService;
-import org.springframework.web.bind.annotation.PostMapping;
-
 @Controller
 public class CarritoController {
 
@@ -171,6 +168,5 @@ public class CarritoController {
 
         carritoProductoService.vaciarCarrito(usuarioExistente.getEmail());
 
-        return "index";
-    }
+        return "redirect:/index";    }
 }

@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sena.kokoshop.dto.UsuarioEmpleadoDTO;
 import com.sena.kokoshop.entidades.Empleado;
+import com.sena.kokoshop.entidades.EstadoCuenta;
 import com.sena.kokoshop.entidades.Rol;
 import com.sena.kokoshop.entidades.Usuario;
 import com.sena.kokoshop.interfaz.RolInterfaz;
+import com.sena.kokoshop.repositorio.EstadoCuentaRepositorio;
 import com.sena.kokoshop.service.UsuarioEmpleadoService;
 
 @Controller
@@ -27,6 +29,9 @@ public class EmpleadoController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EstadoCuentaRepositorio estadoCuentaRepositorio;
 
     @GetMapping("/empleados/")
     public String listarEmpleados(Model modelo) {
@@ -47,6 +52,10 @@ public class EmpleadoController {
         Rol empleadoRol = rolInterfaz.findByNombre("EMPLEADO");
         Usuario usuario = dto.getUsuario();
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+        EstadoCuenta estadoCuenta = estadoCuentaRepositorio.findByNombre("HABILITADA");
+
+        usuario.setEstadoCuenta(estadoCuenta);
         usuario.setRol(empleadoRol);
         Empleado empleado = dto.getEmpleado();
 

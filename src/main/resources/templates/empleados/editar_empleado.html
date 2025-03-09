@@ -194,6 +194,18 @@
                             <input type="text" name="telefono" th:field="*{usuario.telefono}" class="form-control"
                                 placeholder="Escriba el teléfono del empleado" required>
                         </div>
+                        <div>
+                            <label>Estado de Cuenta:</label>
+                            <select name="estadoCuenta" th:field="*{usuario.estadoCuenta}" class="form-control" required>
+                                <option th:if="rol==1" th:value="*{usuario.estadoCuenta}" th:field="*{usuario.estadoCuenta}" selected>
+                                    HABILITADA
+                                </option>
+                                <option th:if="rol==2" th:value="*{usuario.estadoCuenta}" th:field="*{usuario.estadoCuenta}" selected>
+                                    DESHABILITADA</option>
+                                <option value="1">HABILITADA</option>
+                                <option value="2">DESHABILITADA</option>
+                            </select>
+                        </div>
                         <br>
                         <div class="form-group">
                             <label>Salario:</label>

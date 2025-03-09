@@ -209,8 +209,8 @@
                         </div>
                         <br>
                         <div>
-                            <label>Rol:</label>
-                            <select name="rol" th:field="*{estadoCuenta}" class="form-control" required>
+                            <label>Estado de Cuenta:</label>
+                            <select name="estadoCuenta" th:field="*{estadoCuenta}" class="form-control" required>
                                 <option th:if="rol==1" th:value="*{estadoCuenta}" th:field="*{estadoCuenta}" selected>
                                     HABILITADA
                                 </option>

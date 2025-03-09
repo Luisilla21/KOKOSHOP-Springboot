@@ -394,69 +394,149 @@
                                 <span>Total:</span>
                                 <span>$ <span id="total"></span> COP</span>
                             </div>
+                            <input type="hidden" name="idUsuario" th:field="*{usuario.usuarioID}">
 
-                            <div class="form-section">
-                                <div class="form-section-title">Información Personal</div>
-                                <input type="hidden" name="idUsuario" th:field="*{usuario.usuarioID}">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label class="form-label">Tipo de Documento</label>
-                                        <select name="tipoDocumento" th:field="*{usuario.tipoDocumento}"
-                                            class="form-control" required>
-                                            <option value="" disabled selected>Seleccione un tipo de documento</option>
-                                            <option value="C.C">Cédula de ciudadanía</option>
-                                            <option value="C.E">Cédula de extranjería</option>
-                                            <option value="P.E.P">Permiso Especial de Permanencia</option>
-                                            <option value="D.I.E">Documento de identificación extranjero</option>
-                                        </select>
+                            <div th:if="${usuario.nombre == null}" class="mt-2">
+
+                                <div class="form-section">
+                                    <div class="form-section-title">Información Personal</div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Tipo de Documento</label>
+                                            <select name="tipoDocumento" th:field="*{usuario.tipoDocumento}"
+                                                class="form-control" required>
+                                                <option value="" disabled selected>Seleccione un tipo de documento
+                                                </option>
+                                                <option value="C.C">Cédula de ciudadanía</option>
+                                                <option value="C.E">Cédula de extranjería</option>
+                                                <option value="P.E.P">Permiso Especial de Permanencia</option>
+                                                <option value="D.I.E">Documento de identificación extranjero</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Número de Documento</label>
+                                            <input type="text" name="numeroDocumento"
+                                                th:field="*{usuario.numeroDocumento}" class="form-control" required>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Número de Documento</label>
-                                        <input type="text" name="numeroDocumento" th:field="*{usuario.numeroDocumento}"
-                                            class="form-control" required>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Nombres</label>
+                                            <input type="text" class="form-control" id="nombres" placeholder="Nombres"
+                                                th:field="*{usuario.nombre}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Apellidos</label>
+                                            <input type="text" class="form-control" id="apellidos"
+                                                placeholder="Apellidos" th:field="*{usuario.apellido}" required>
+                                        </div>
                                     </div>
+
+                                    <label class="form-label">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Correo Electrónico"
+                                        th:field="*{usuario.email}" required>
+
+                                    <label class="form-label">Número de Contacto</label>
+                                    <input type="tel" class="form-control" id="telefono" th:field="*{usuario.telefono}"
+                                        placeholder="Número de Contacto" required>
                                 </div>
 
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="nombres" placeholder="Nombres"
-                                            th:field="*{usuario.nombre}" required>
+                                <!-- Sección de Dirección de Entrega -->
+                                <div class="form-section">
+                                    <div class="form-section-title">Dirección de Entrega</div>
+
+                                    <label class="form-label">Dirección</label>
+                                    <input type="text" class="form-control" id="direccion"
+                                        th:field="*{usuario.direccion}" placeholder="Dirección" required>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Ciudad</label>
+                                            <input type="text" class="form-control" id="ciudad"
+                                                th:field="*{usuario.ciudad}" placeholder="Ciudad" required>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Apellidos</label>
-                                        <input type="text" class="form-control" id="apellidos" placeholder="Apellidos"
-                                            th:field="*{usuario.apellido}" required>
-                                    </div>
+
                                 </div>
-
-                                <label class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="email" placeholder="Correo Electrónico"
-                                    th:field="*{usuario.email}" required>
-
-                                <label class="form-label">Número de Contacto</label>
-                                <input type="tel" class="form-control" id="telefono" th:field="*{usuario.telefono}"
-                                    placeholder="Número de Contacto" required>
                             </div>
 
-                            <!-- Sección de Dirección de Entrega -->
-                            <div class="form-section">
-                                <div class="form-section-title">Dirección de Entrega</div>
+                            <div th:unless="${usuario.nombre == null}" class="mt-2">
 
-                                <label class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" th:field="*{usuario.direccion}"
-                                    placeholder="Dirección" required>
+                                <div class="form-section">
+                                    <div class="form-section-title">Información Personal</div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Tipo de Documento</label>
+                                            <input type="hidden" name="tipoDocumento"
+                                                th:field="*{usuario.tipoDocumento}" class="form-control" required>
 
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label class="form-label">Ciudad</label>
-                                        <input type="text" class="form-control" id="ciudad" th:field="*{usuario.ciudad}"
-                                            placeholder="Ciudad" required>
+                                            <span th:text="${usuario.tipoDocumento}"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Número de Documento</label>
+                                            <input type="hidden" name="numeroDocumento"
+                                                th:field="*{usuario.numeroDocumento}" class="form-control" required>
+                                            <span th:text="${usuario.numeroDocumento}"></span>
+
+                                        </div>
                                     </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Nombres</label>
+                                            <input type="hidden" class="form-control" id="nombres" placeholder="Nombres"
+                                                th:field="*{usuario.nombre}" required>
+                                            <span th:text="${usuario.nombre}"></span>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Apellidos</label>
+                                            <input type="hidden" class="form-control" id="apellidos"
+                                                placeholder="Apellidos" th:field="*{usuario.apellido}" required>
+                                            <span th:text="${usuario.apellido}"></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+
+                                        <label class="form-label">Correo Electrónico</label>
+                                        <input type="hidden" id="email" placeholder="Correo Electrónico"
+                                            th:field="*{usuario.email}" required>
+                                        <span class="" th:text="${usuario.email}"></span>
+                                    </div>
+
+                                    <label class="form-label">Número de Contacto</label>
+                                    <input type="hidden" class="form-control" id="telefono"
+                                        th:field="*{usuario.telefono}" placeholder="Número de Contacto" required>
+                                    <span th:text="${usuario.telefono}"></span>
+
                                 </div>
 
-                            </div>
+                                <!-- Sección de Dirección de Entrega -->
+                                <div class="form-section">
+                                    <div class="form-section-title">Dirección de Entrega</div>
 
+                                    <div class="mb-2">
+
+                                        <label class="form-label">Dirección</label>
+                                        <input type="hidden" class="form-control" id="direccion"
+                                            th:field="*{usuario.direccion}" placeholder="Dirección" required>
+                                        <span th:text="${usuario.direccion}"></span>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Ciudad</label>
+                                            <input type="hidden" class="form-control" id="ciudad"
+                                                th:field="*{usuario.ciudad}" placeholder="Ciudad" required>
+                                            <span th:text="${usuario.ciudad}"></span>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                             <button class="btn-primary btn">Proceder al pago</button>
 
                         </div>

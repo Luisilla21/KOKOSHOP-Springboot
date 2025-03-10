@@ -29,13 +29,13 @@ public class Empleado {
     @Column(name = "salario", nullable = true, length = 10)
     private Double salario;
 
-    @Column(name = "horaEntrada", nullable = true, length = 5)
+    @Column(name = "horaEntrada", nullable = true, length = 50)
     private String horaEntrada;
 
-    @Column(name = "horaSalida", nullable = true, length = 5)
+    @Column(name = "horaSalida", nullable = true, length = 50)
     private String horaSalida;
 
-    @Column(name = "horasTrabajadas", nullable = true, length = 10)
+    @Column(name = "horasTrabajadas", nullable = true, length = 50)
     private String horasTrabajadas;
 
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
